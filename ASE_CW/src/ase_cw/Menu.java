@@ -1,8 +1,6 @@
 package ase_cw;
 
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Represents a menu composed of food items proposed by the restaurant
@@ -28,23 +26,65 @@ public class Menu {
     }
 
     /**
-     * Gets the menu of the restaurant
-     * @return the menu proposed by the restaurant
+     * Gets the menu items of a specific category
+     * @param category of the menu items to get
+     * @return the menu items of a specific category
      */
-    public Map<Category, ? super Set<MenuItem>> getMenu() {
-        return menu;
+    public TreeSet<MenuItem> getValue(Category category) {
+
+        return ((TreeSet<MenuItem>) menu.get(category));
     }
 
     /**
-     * TODO
-     * @return
+     * Gets the categories (keys) available in the menu
+     * @return the categories (keys) available in the menu
+     */
+    public Set<Category> getKeys() {
+
+        return menu.keySet();
+    }
+
+    /**
+     * Adds a set of menu items, whose category is the same, into the menu
+     * @param key Category of the set of menu items to add
+     * @param value Set of menu items of the same category to add
+     */
+    public void addValue(Category key, Set<MenuItem> value) {
+
+        menu.put(key, value); //reminder : check that key = value.category !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+
+    /**
+     * Represents this menu as a String
+     * @return the string that represents this menu
      */
     @Override
     public String toString() {
-        //TODO
-        return "";
+        Set<MenuItem> menu_items; //Set of menu items of one category
+        String res; //String to be returned
 
+        res = "\n"+Manager.MENU+"\n" + Manager.underlineString(Manager.MENU) +"\n"; //Title of the menu
 
+        /* Getting all the different categories available in the menu
+           Already ordered as specified in the Category enumclass  */
+        Set<Category> categories = getKeys();
+
+        //For all categories
+        for (Category cat : categories) {
+
+            res += "\n" + cat + "\n";
+
+            menu_items = getValue(cat);
+
+            //For all menu items
+            for (MenuItem m_item : menu_items) {
+
+                //Print the current menu item
+                res += m_item.toString();
+            }
+        }
+
+        return res;
     }
 
 }

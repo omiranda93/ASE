@@ -28,6 +28,10 @@ public class ASE_CW {
         MenuItem m7 = new MenuItem(Category.DESSERT, "Tropezienne", 13);
         MenuItem m8 = new MenuItem(Category.DRINKS, "Vodka", 7);
 
+        //Bug examples
+        MenuItem m9 = new MenuItem(Category.MAIN, "Way_Too_Long_Name_That_Wont_Fit_On_The_Bill_Blablablablablablabla", 13);
+        MenuItem m10 = new MenuItem(Category.DRINKS, "Thing", 7777777777.7777777);
+
         Menu menu = new Menu();
         Set<MenuItem> starters = new TreeSet<MenuItem>();
         Set<MenuItem> mains = new TreeSet<MenuItem>();
@@ -36,16 +40,35 @@ public class ASE_CW {
 
         starters.add(m4); starters.add(m6);
         mains.add(m1); mains.add(m3);
-        desserts.add(m2); desserts.add(m7);
+        desserts.add(m7); desserts.add(m2);
         drinks.add(m5); drinks.add(m8);
 
-        menu.getMenu().put(Category.DESSERT, desserts);
+        menu.addValue(Category.DESSERT, desserts);
+        menu.addValue(Category.MAIN, mains);
+        menu.addValue(Category.STARTER, starters);
+        menu.addValue(Category.DRINKS, drinks);
 
-        System.out.println("Res compare = " + m1.compareTo(m2));
-        System.out.println("Cat : " + m1.getCategory() + " and its ordinal value (better for comparing/switch) : "+m1.getCategory().ordinal());
+        System.out.println(menu.toString());
 
-        System.out.println("To string : \n" + m1.toString());
-        System.out.println("To string : \n" + m2.toString());
+//        System.out.println("Res compare = " + m1.compareTo(m2));
+//        System.out.println("Cat : " + m1.getCategory() + " and its ordinal value (better for comparing/switch) : "+m1.getCategory().ordinal());
+
+//        System.out.println(m1.toString());
+//        System.out.println(m2.toString());
+
+        /* Check must be done when storing the things read in MenuItem
+            - Number format (unit price): ---.--
+            - Number size (unit price): 3.2
+            - Dish name must not be too long < Manager.MENU_DISHNAME
+           Check must be done before starting reading anything
+            - Currency : three-letters ISO 4217 --> propose the user to change it before continuing or quit
+            - Currency exists --> propose the user to change it before continuing or quit
+            - Check that the global constants in the Manager class won't overtake Manager.WIDTH_BILL
+        */
+//        System.out.println(m9.toString());
+//        System.out.println(m10.toString());
+
+        //################################################# END TEST MENU ##############################################
     }
     
 }

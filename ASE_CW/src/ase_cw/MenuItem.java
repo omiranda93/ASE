@@ -104,15 +104,17 @@ public class MenuItem implements Comparable<MenuItem> {
     }
 
     /**
-     * TODO
-     * @return
+     * Represents this menu item as a String
+     * @return the string that represents this menu item
      */
     @Override
     public String toString() {
-        //TODO
-        /*return (getCategory() + "\n"
-            +   String.format("%65s", String.format("%-30s %-30.2f %n", getName(), getPrice())));
-        */
-        return "";
+
+        String res = "%-" + Manager.ALINEA_DISHNAME + "s %-" +
+                            Manager.MENU_DISHNAME + "s %-"   +
+                            Manager.PRICE + "s %-"           +
+                            Manager.CURRENCY_SIZE +"s";
+
+        return String.format(res, "", getName().toUpperCase(), getPrice(), Manager.CURRENCY) + "\n";
     }
 }
