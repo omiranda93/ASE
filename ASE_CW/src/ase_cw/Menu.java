@@ -47,11 +47,21 @@ public class Menu {
     /**
      * Adds a set of menu items, whose category is the same, into the menu
      * @param key Category of the set of menu items to add
-     * @param value Set of menu items of the same category to add
+     * @param values Set of menu items of the same category to add
      */
-    public void addValue(Category key, Set<MenuItem> value) {
+    public void addValues(Category key, Set<MenuItem> values) {
 
-        menu.put(key, value); //reminder : check that key = value.category !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        menu.put(key, values); //reminder : check that key = value.category !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+
+    /**
+     * Adds a menu item into the menu
+     * @param key Category of the menu item to add
+     * @param value Menu item to add
+     */
+    public void addValue(Category key, MenuItem value) {
+
+        this.getValue(key).add(value);
     }
 
     /**

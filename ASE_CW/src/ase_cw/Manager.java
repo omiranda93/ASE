@@ -37,6 +37,5 @@ public class Manager {
     public static String underlineString(String s) {
 
         return (new String(new char[s.length()]).replace("\0", "="));
-
     }
 }

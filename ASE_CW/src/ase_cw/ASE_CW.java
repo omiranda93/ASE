@@ -43,10 +43,13 @@ public class ASE_CW {
         desserts.add(m7); desserts.add(m2);
         drinks.add(m5); drinks.add(m8);
 
-        menu.addValue(Category.DESSERT, desserts);
-        menu.addValue(Category.MAIN, mains);
-        menu.addValue(Category.STARTER, starters);
-        menu.addValue(Category.DRINKS, drinks);
+        menu.addValues(Category.DESSERT, desserts);
+        menu.addValues(Category.MAIN, mains);
+        menu.addValues(Category.STARTER, starters);
+        menu.addValues(Category.DRINKS, drinks);
+
+        MenuItem m11 = new MenuItem(Category.DESSERT, "Fondant aux chocolats", 111); //Isn't added thanks to the set container !
+        menu.addValue(Category.DESSERT, m2);
 
         System.out.println(menu.toString());
 
