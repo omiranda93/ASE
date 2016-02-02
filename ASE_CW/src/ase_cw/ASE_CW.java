@@ -59,7 +59,11 @@ public class ASE_CW {
 
 
         //################################################# END TEST MENU ##############################################
-        
+
+        Manager manager = new Manager();
+
+        manager.checkDimensionsBill();
+
         //################################################# BEGIN TEST TestIO ##############################################
         TestIO reader =new TestIO();
         Menu menu = new Menu();

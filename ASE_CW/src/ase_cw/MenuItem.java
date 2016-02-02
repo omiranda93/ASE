@@ -111,7 +111,7 @@ public class MenuItem implements Comparable<MenuItem> {
     public String toString() {
 
         String res = "%-" + Manager.ALINEA_DISHNAME + "s %-" +
-                            Manager.MENU_DISHNAME + "s %-"   +
+                            Manager.DISHNAME_TEXT + "s %-"   +
                             Manager.PRICE + "s %-"           +
                             Manager.CURRENCY_SIZE +"s";
 
