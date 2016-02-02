@@ -11,8 +11,6 @@ import static ase_cw.Category.MAIN;
 import static ase_cw.Category.STARTER;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.HashMap;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -22,34 +20,34 @@ import java.util.TreeSet;
 public class TestIO {
     //Global variables
     //Depending on the OS you may need to change the paths
-    private static String inputFileMenu = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";
-    private static String inputFileOrder = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt ";
+    private static String inputFileMenu = "ASE_CW/src/ase_cw/menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";
+    private static String inputFileOrder = "ASE_CW/src/ase_cw/orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt ";
     
     public void readMenu(Menu menu){
-        BufferedReader readbuffer = null;
+        BufferedReader readBuffer;
         String strRead;
-        String splitarray[];
-        TreeSet <MenuItem> starters = new TreeSet<MenuItem>();
-        TreeSet <MenuItem> mains = new TreeSet<MenuItem>();
-        TreeSet <MenuItem> desserts = new TreeSet<MenuItem>();
-        TreeSet <MenuItem> drinks = new TreeSet<MenuItem>();
+        String splitArray[];
+        TreeSet <MenuItem> starters = new TreeSet<>();
+        TreeSet <MenuItem> mains = new TreeSet<>();
+        TreeSet <MenuItem> desserts = new TreeSet<>();
+        TreeSet <MenuItem> drinks = new TreeSet<>();
         try {
-            readbuffer = new BufferedReader(new FileReader(inputFileMenu));
-            int i = 0;
-            while ((strRead = readbuffer.readLine()) != null) {
-                splitarray = strRead.split(", ");
-                switch(splitarray[2]){
-                    case "Starter": starters.add(new MenuItem(STARTER, splitarray[0], Double.parseDouble(splitarray[1])));
+            readBuffer = new BufferedReader(new FileReader(inputFileMenu));
+
+            while ((strRead = readBuffer.readLine()) != null) {
+                splitArray = strRead.split(", ");
+                switch(splitArray[2]){
+                    case "Starter": starters.add(new MenuItem(STARTER, splitArray[0], Double.parseDouble(splitArray[1])));
                         break;
-                    case "Main": mains.add(new MenuItem(MAIN, splitarray[0], Double.parseDouble(splitarray[1])));
+                    case "Main": mains.add(new MenuItem(MAIN, splitArray[0], Double.parseDouble(splitArray[1])));
                         break;
-                    case "Dessert": desserts.add(new MenuItem(DESSERT, splitarray[0], Double.parseDouble(splitarray[1])));
+                    case "Dessert": desserts.add(new MenuItem(DESSERT, splitArray[0], Double.parseDouble(splitArray[1])));
                         break;
-                    case "Drinks": drinks.add(new MenuItem(DRINKS, splitarray[0], Double.parseDouble(splitarray[1])));
+                    case "Drinks": drinks.add(new MenuItem(DRINKS, splitArray[0], Double.parseDouble(splitArray[1])));
                         break;      
                 }
             }
-            readbuffer.close();
+            readBuffer.close();
             menu.addValues(STARTER, starters);
             menu.addValues(MAIN, mains);
             menu.addValues(DESSERT, desserts);

@@ -26,6 +26,15 @@ public class Menu {
     }
 
     /**
+     * Gets the categories (keys) available in the menu
+     * @return the categories (keys) available in the menu
+     */
+    public Set<Category> getKeys() {
+
+        return menu.keySet();
+    }
+
+    /**
      * Gets the menu items of a specific category
      * @param category of the menu items to get
      * @return the menu items of a specific category
@@ -35,20 +44,17 @@ public class Menu {
         return ((TreeSet<MenuItem>) menu.get(category));
     }
 
+
     /**
-     * Gets the categories (keys) available in the menu
-     * @return the categories (keys) available in the menu
+     * Gets all the menu items of the menu in one set
+     * @return a set of all the menu items available
      */
-    public Set<Category> getKeys() {
-
-        return menu.keySet();
-    }
-
     public TreeSet<MenuItem> getValues() {
-        TreeSet<MenuItem> res = new TreeSet<>();
-        TreeSet<MenuItem> temp;
-        Set<Category> categories = getKeys();
+        TreeSet<MenuItem> res = new TreeSet<>(), temp;
+        Set<Category> categories = getKeys();  //Collecting all the categories available
 
+        /* Since all the categories are needed to access all the meu items (categories are keys leading to values),
+        the idea is to get the menu item sets from each category and merged them using the union "addAll()" method */
         for (Category cat : categories) {
             temp = getValue(cat);
 
