@@ -22,10 +22,10 @@ import java.util.TreeSet;
 public class TestIO {
     //Global variables
     //Depending on the OS you may need to change the paths
-    private static String inputFileMenu = "/Users/omiranda93/NetBeansProjects/ASE/src/ase/menu.txt";
-    private static String inputFileOrder = "/Users/omiranda93/NetBeansProjects/ASE/src/ase/orders.txt";
+    private static String inputFileMenu = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";
+    private static String inputFileOrder = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt ";
     
-    public void readMenu(HashMap menu){
+    public void readMenu(Menu menu){
         BufferedReader readbuffer = null;
         String strRead;
         String splitarray[];
@@ -50,10 +50,11 @@ public class TestIO {
                 }
             }
             readbuffer.close();
-            menu.put("Starter", starters);
-            menu.put("Main", mains);
-            menu.put("Dessert", desserts);
-            menu.put("Drink", drinks);
+            menu.addValues(STARTER, starters);
+            menu.addValues(MAIN, mains);
+            menu.addValues(DESSERT, desserts);
+            menu.addValues(DRINKS, drinks);
+            
         }catch (Exception e){
             System.out.println("There was an error loading the menu from file.");
         }
