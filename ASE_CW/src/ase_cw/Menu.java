@@ -22,7 +22,7 @@ public class Menu {
      * Empty constructor of a Menu
      */
     public Menu() {
-        menu = new EnumMap<Category, Set<MenuItem>>(Category.class);
+        menu = new EnumMap<>(Category.class);
     }
 
     /**
@@ -42,6 +42,20 @@ public class Menu {
     public Set<Category> getKeys() {
 
         return menu.keySet();
+    }
+
+    public TreeSet<MenuItem> getValues() {
+        TreeSet<MenuItem> res = new TreeSet<>();
+        TreeSet<MenuItem> temp;
+        Set<Category> categories = getKeys();
+
+        for (Category cat : categories) {
+            temp = getValue(cat);
+
+            res.addAll(temp);
+        }
+
+        return res;
     }
 
     /**
