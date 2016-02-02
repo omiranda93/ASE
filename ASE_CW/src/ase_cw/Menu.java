@@ -49,7 +49,21 @@ public class Menu {
      * Gets all the menu items of the menu in one set
      * @return a set of all the menu items available
      */
-    public TreeSet<MenuItem> getValues() {
+//    public TreeSet<MenuItem> getValues() {
+//        TreeSet<MenuItem> res = new TreeSet<>(), temp;
+//        Set<Category> categories = getKeys();  //Collecting all the categories available
+//
+//        /* Since all the categories are needed to access all the meu items (categories are keys leading to values),
+//        the idea is to get the menu item sets from each category and merged them using the union "addAll()" method */
+//        for (Category cat : categories) {
+//            temp = getValue(cat);
+//
+//            res.addAll(temp);
+//        }
+//
+//        return res;
+//    }
+    public Map<String, Double> getValues() {
         TreeSet<MenuItem> res = new TreeSet<>(), temp;
         Set<Category> categories = getKeys();  //Collecting all the categories available
 
@@ -60,8 +74,13 @@ public class Menu {
 
             res.addAll(temp);
         }
-
-        return res;
+        
+        Map<String, Double> map = new TreeMap<String, Double>();
+        for (MenuItem m : res){
+            map.put(m.getName(), m.getPrice());
+        }
+        
+        return map;
     }
 
     /**

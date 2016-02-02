@@ -34,6 +34,7 @@ public class Manager {
     public static final int QUANTITY = 2;
     public static final int MAX_TOTAL = 4;
     public static final String MENU = "MENU";
+    public static final int DISCOUNT = 10;
 
     /**
      * "Underline" with the "=" symbol a string

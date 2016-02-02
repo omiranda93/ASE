@@ -70,6 +70,28 @@ public class ASE_CW {
         reader.readMenu(menu);
         System.out.println(menu.toString());
         //################################################# END TEST TestIO ##############################################
+        
+        //################################################### TEST ORDERS ################################################
+        
+        FoodOrder o1 = new FoodOrder(3, "Roast Beef", 1);
+        FoodOrder o2 = new FoodOrder(1, "Smoked Salmon", 2);
+        FoodOrder o3 = new FoodOrder(1, "Carrot Soup", 1);
+        FoodOrder o4 = new FoodOrder(1, "Roast Beef", 2);
+        FoodOrder o5 = new FoodOrder(3, "Chocolate Cake", 1);
+        FoodOrder o6 = new FoodOrder(2, "Carrot Soup", 1);
+        FoodOrder o7 = new FoodOrder(2, "Roast Beef", 1);
+        
+        CollectionFoodOrders ordersCol = new CollectionFoodOrders(menu);
+        ordersCol.addValue(o1.getTableId(), o1);
+        ordersCol.addValue(o2.getTableId(), o2);
+        ordersCol.addValue(o3.getTableId(), o3);
+        ordersCol.addValue(o4.getTableId(), o4);
+        ordersCol.addValue(o5.getTableId(), o5);
+        ordersCol.addValue(o6.getTableId(), o6);
+        ordersCol.addValue(o7.getTableId(), o7);
+        
+        System.out.println(ordersCol.toString());
+        //################################################### END TEST ORDERS ################################################
     }
     
 }
