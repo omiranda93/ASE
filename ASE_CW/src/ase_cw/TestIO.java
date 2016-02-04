@@ -11,6 +11,7 @@ import static ase_cw.Category.MAIN;
 import static ase_cw.Category.STARTER;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -20,8 +21,8 @@ import java.util.TreeSet;
 public class TestIO {
     //Global variables
     //Depending on the OS you may need to change the paths
-    private static String inputFileMenu = "menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";
-    private static String inputFileOrder = "ASE_CW/src/ase_cw/orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt ";
+    private static String inputFileMenu = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";
+    private static String inputFileOrder = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt ";
     
     public void readMenu(Menu menu){
         BufferedReader readBuffer;
@@ -55,6 +56,38 @@ public class TestIO {
             
         }catch (Exception e){
             System.out.println("There was an error loading the menu from file.");
+        }
+    }
+    
+    
+    
+    public void readOrders(CollectionFoodOrders orders){
+        BufferedReader readbuffer = null;
+        String strRead;
+        String splitarray[];
+        TreeSet <FoodOrder> table1 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table2 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table3 = new TreeSet<FoodOrder>();
+        try {
+            readbuffer = new BufferedReader(new FileReader(inputFileOrder));
+            int i = 0;
+            while ((strRead = readbuffer.readLine()) != null) {
+                splitarray = strRead.split(", ");
+                switch(splitarray[0]){
+                    case "1": table1.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;
+                    case "2": table2.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;
+                    case "3": table3.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                }
+            }
+            readbuffer.close();
+            orders.addValues(1, table1);
+            orders.addValues(2, table2);
+            orders.addValues(3, table3);
+        }catch (Exception e){
+            System.out.println("There was an error loading the orders from file.");
         }
     }
 }
