@@ -23,6 +23,7 @@ public class Manager {
      * QUANTITY : Width of the quantity when displaying the details of the orders made
      * MAX_TOTAL : Width of the maximum size of totals (final or not)
      * MENU: Title of the menu
+     * DISCOUNT : Just writing something here because Cecile is going to be angry again
      */
     public static final int WIDTH_BILL = 120;
     public static final int ALINEA_DISHNAME = 2;
@@ -32,7 +33,7 @@ public class Manager {
     public static final int CURRENCY_SIZE = 3;  //ISO 4217
     public static final String CURRENCY = "GBP";    //ISO 4217
     public static final int QUANTITY = 2;
-    public static final int MAX_TOTAL = 4;
+    public static final int MAX_TOTAL = 5;
     public static final String MENU = "MENU";
     public static final int DISCOUNT = 10;
 
