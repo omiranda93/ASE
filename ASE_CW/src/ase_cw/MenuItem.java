@@ -105,16 +105,47 @@ public class MenuItem implements Comparable<MenuItem> {
 
     /**
      * Represents this menu item as a String
+     * NB: Continues printing the menu item's name on another line if too long, with respect to the bill format
      * @return the string that represents this menu item
      */
     @Override
     public String toString() {
+        String temp;
+        int nb_new_lines, i;
+        String result = "";
 
         String res = "%-" + Manager.ALINEA_DISHNAME + "s %-" +
-                            Manager.DISHNAME_TEXT + "s %-"   +
-                            Manager.PRICE + "s %-"           +
-                            Manager.CURRENCY_SIZE +"s";
+                Manager.DISHNAME_TEXT + "s %-"   +
+                Manager.PRICE + "s %-"           +
+                Manager.CURRENCY_SIZE +"s";
 
-        return String.format(res, "", getName().toUpperCase(), getPrice(), Manager.CURRENCY) + "\n";
+        if (getName().length() > Manager.DISHNAME_TEXT) {
+
+            //Number of lines necessary to write the dish's name
+            nb_new_lines = dishName.length() / Manager.DISHNAME_TEXT;
+
+            //For each line
+            for (i = 0; i< nb_new_lines; i++) {
+
+                //If it is not the line finishing printing the dish's name: format the line without the price
+                if (i < nb_new_lines-1) {
+                    temp = dishName.substring(i*(Manager.DISHNAME_TEXT-1), (i+1)*(Manager.DISHNAME_TEXT-1));
+                    result += String.format(res, "", temp.toUpperCase(), "", "") + "\n";
+
+                //If it is the line finishing printing the dish's name: format the line with the price
+                } else if (i == nb_new_lines-1) {
+                    temp = dishName.substring(i*(Manager.DISHNAME_TEXT-1), (i+1)*(Manager.DISHNAME_TEXT-1));
+                    result += String.format(res, "", temp.toUpperCase(), "", "") + "\n";
+                }
+            }
+
+            temp = dishName.substring((nb_new_lines)*(Manager.DISHNAME_TEXT-1), dishName.length());
+            result += String.format(res, "", temp.toUpperCase(), price, Manager.CURRENCY) + "\n";
+
+        } else {
+            result += String.format(res, "", dishName.toUpperCase(), price, Manager.CURRENCY) + "\n";
+        }
+
+        return result;
     }
 }

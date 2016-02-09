@@ -20,10 +20,12 @@ public class Manager {
      * PRICE : Width of the price column when displaying the menu  and the unit price in the orders
      * ALINEA_PRICE : "Tabulation" before displaying the unit price of each ordered item
      * CURRENCY_SIZE : Width of the currency whether it's for displaying the menu or details of orders
+     * CURRENCY : ISO 4217 format of the currency used
      * QUANTITY : Width of the quantity when displaying the details of the orders made
      * MAX_TOTAL : Width of the maximum size of totals (final or not)
      * MENU: Title of the menu
-     * DISCOUNT : Just writing something here because Cecile is going to be angry again
+     * TABLE_SUMMARY : Title of the order summary
+     * DISCOUNT : Discount (why not set a rule for this ???????????????????????????????????????????????????????????????)
      */
     public static final int WIDTH_BILL = 120;
     public static final int ALINEA_DISHNAME = 2;
@@ -33,8 +35,9 @@ public class Manager {
     public static final int CURRENCY_SIZE = 3;  //ISO 4217
     public static final String CURRENCY = "GBP";    //ISO 4217
     public static final int QUANTITY = 2;
-    public static final int MAX_TOTAL = 5;
+    public static final int MAX_TOTAL = 6;
     public static final String MENU = "MENU";
+    public static final String TABLE_SUMMARY = "TABLES SUMMARY";
     public static final int DISCOUNT = 10;
 
     /**
