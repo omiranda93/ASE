@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 /**
  * The collection that holds all the Order objects.
@@ -18,6 +20,10 @@ import java.util.TreeSet;
 public class CollectionFoodOrders {
     private Map<Integer, ? super Set<FoodOrder>> orderCol;
     private Menu menu;
+    private double discount;
+    
+    //Get all the prices of all the dishes in pairs from the Menu class. As we are using a map, traversing the Map to get the price is O(1) complexity so its optimal.
+    private Map<String, Double> NamePricePair = new TreeMap<String, Double>();
 
     /**
      * Creates a new collection of orders
@@ -26,6 +32,7 @@ public class CollectionFoodOrders {
     public CollectionFoodOrders(Menu menu){
         orderCol = new TreeMap<Integer, Set<FoodOrder>>();
         this.menu = menu;
+        NamePricePair = menu.getValues();
     }
 
     /**
@@ -77,6 +84,24 @@ public class CollectionFoodOrders {
     @Override
     public String toString(){
         String result= "";
+                
+        result += "TABLES SUMMARY\n";
+        
+        //Put all the tables in an (ordered) set
+        Set<Integer> tables = this.getKeys();
+        
+        //For each table available
+        for (Integer t : tables){    
+            result += getBill(t) + "\n";
+        }
+        
+        return result;
+    }
+    
+    public String getBill(int tableId){
+        double bill=0;
+        double dishTotal=0;
+        String result="Table " + tableId + " Summary\n";
         
         //Create the string formater to be applied to String.format
         String formater = "%-" 
@@ -87,37 +112,40 @@ public class CollectionFoodOrders {
                 + Manager.MAX_TOTAL + "s %-" 
                 + Manager.CURRENCY_SIZE + "s";
         
-        result += "TABLES SUMMARY\n";
-        
-        //Put all the tables in an (ordered) set
-        Set<Integer> tables = this.getKeys();
-        Set<FoodOrder> orders;
-
-        //Get all the prices of all the dishes in pairs from the Menu class. As we are using a map, traversing the Map to get the price is O(1) complexity so its optimal.
-        Map<String, Double> NamePricePair = menu.getValues();
-        
-        //For each table available
-        for (Integer t : tables){    
-            double tableTotal = 0.0;
-            result += "TABLE " + t + " SUMMARY\n";
-            orders = this.getValue(t);
-            
-            //For each order in this table, print the information required
+        Set<FoodOrder> orders = getValue(tableId);
             for (FoodOrder order : orders){
-               double dishTotal = NamePricePair.get(order.getDishName()) * order.getQuantity();
+               dishTotal = NamePricePair.get(order.getDishName()) * order.getQuantity();
                result += String.format(formater,"",order.getDishName(), order.getQuantity(),"*",NamePricePair.get(order.getDishName()) ,"=" ,dishTotal, Manager.CURRENCY) +"\n";
-               tableTotal += dishTotal;
+               bill += dishTotal;
             }
+        discount = (Manager.DISCOUNT * bill)/100;
+        
         result += "\n";
         
         //Also print the summed total of the table, included the discounted price (if applicable - configured in the manager class)
-        double discount = (Manager.DISCOUNT * tableTotal)/100;
-        result += String.format(formater,"","Total for this table:","","","","",tableTotal, Manager.CURRENCY) +"\n";
+        discount = (Manager.DISCOUNT * bill)/100;
+        result += String.format(formater,"","Total for this table:","","","","",bill, Manager.CURRENCY) +"\n";
         result += String.format(formater,"","Discount:","","","","",discount, Manager.CURRENCY) +"\n";
-        result += String.format(formater,"","Discounted total:","","","","",tableTotal - discount, Manager.CURRENCY) +"\n\n\n";
-        }
+        result += String.format(formater,"","Discounted total:","","","","",bill - discount, Manager.CURRENCY) +"\n\n";
+        
+        //Update the tables bill with the discount (if any)
+        bill -= discount;
         
         return result;
+    }
+    
+    public void showTableBill(){
+        String id = JOptionPane.showInputDialog(null, "Enter table id");
+                
+        if (!this.getKeys().contains(Integer.valueOf(id))){
+            JOptionPane.showMessageDialog(null, "Table ID not existant.");
+            
+        } else{
+        
+        System.out.println(getBill(Integer.valueOf(id)));
+        JOptionPane.showMessageDialog(null,getBill(Integer.valueOf(id)));
+        }
+        
     }
 }
 
