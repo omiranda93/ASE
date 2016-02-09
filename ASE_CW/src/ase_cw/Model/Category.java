@@ -1,4 +1,4 @@
-package ase_cw;
+package ase_cw.Model;
 
 /**
  * Enumeration of the menu item's categories that can be used

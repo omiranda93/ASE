@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ase_cw;
+package ase_cw.Model;
 
-import static ase_cw.Category.DESSERT;
-import static ase_cw.Category.DRINKS;
-import static ase_cw.Category.MAIN;
-import static ase_cw.Category.STARTER;
+import static ase_cw.Model.Category.DESSERT;
+import static ase_cw.Model.Category.DRINKS;
+import static ase_cw.Model.Category.MAIN;
+import static ase_cw.Model.Category.STARTER;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -21,8 +20,8 @@ import java.util.TreeSet;
 public class TestIO {
     //Global variables
     //Depending on the OS you may need to change the paths
-    private static String inputFileMenu = "menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";
-    private static String inputFileOrder = "orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt ";
+    private static String inputFileMenu = "ASE_CW/src/ase_cw/menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";
+    private static String inputFileOrder = "ASE_CW/src/ase_cw/orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt ";
     
     public void readMenu(Menu menu){
         BufferedReader readBuffer;
