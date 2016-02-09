@@ -63,7 +63,7 @@ public class MenuItem implements Comparable<MenuItem> {
     public double getPrice() {
         return price;
     }
-
+    
     /**
      *  Sets the category of this menu item
      * @param category New category of this menu item

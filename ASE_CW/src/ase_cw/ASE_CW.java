@@ -73,6 +73,9 @@ public class ASE_CW {
         CollectionFoodOrders orders = new CollectionFoodOrders(menu);
         reader.readOrders(orders);
         System.out.println(orders.toString());
+        System.out.println(orders.showDishCounter());
+        System.out.println(orders.showUnorderedDishes());
+        //orders.showTableBill();
         //################################################# END TEST TestIO ##############################################
         
 //        //################################################### TEST ORDERS ################################################
