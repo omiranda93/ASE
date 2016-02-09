@@ -75,7 +75,7 @@ public class Menu {
             res.addAll(temp);
         }
         
-        Map<String, Double> map = new TreeMap<String, Double>();
+        Map<String, Double> map = new TreeMap<>();
         for (MenuItem m : res){
             map.put(m.getName(), m.getPrice());
         }
