@@ -23,6 +23,11 @@ public class Menu {
      */
     public Menu() {
         menu = new EnumMap<>(Category.class);
+
+        for (Category cat: Category.values()) {
+            Set<MenuItem> set = new TreeSet<>();
+            menu.put(cat, set);
+        }
     }
 
     /**
