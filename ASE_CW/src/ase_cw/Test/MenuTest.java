@@ -63,17 +63,6 @@ public class MenuTest {
     }
 
     @Test
-    public void testConstructor() {
-//        Map<Category, ? super Set<MenuItem>> enumMap = new EnumMap<>(Category.class);
-//        enumMap.put(Category.STARTER, new TreeSet<MenuItem>());
-//        enumMap.put(Category.MAIN, new TreeSet<MenuItem>());
-//        enumMap.put(Category.DESSERT, new TreeSet<MenuItem>());
-//        enumMap.put(Category.DRINKS, new TreeSet<MenuItem>());
-//
-//        assertEquals("Test on constructor() failed", menu, enumMap);
-    }
-
-    @Test
     public void testGetKeys() {
         assertEquals("Test on getKeys() failed", setKeys, menu.getKeys());
     }
