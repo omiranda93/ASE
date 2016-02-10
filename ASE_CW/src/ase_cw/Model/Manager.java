@@ -55,15 +55,15 @@ public class Manager {
      * May lead to an exception if not
      * @return true if the layout of the bill is correct, false otherwise
      */
-    public boolean checkDimensionsBill() {
-
-        int menu_format = (ALINEA_DISHNAME + DISHNAME_TEXT + PRICE + CURRENCY_SIZE + 3);
-
-        int orders_format = DISHNAME_TEXT + QUANTITY + ALINEA_PRICE + PRICE + MAX_TOTAL + 7;
-
-        /* NB : No need to check the frequency report and the total summary format because they are "sub objects" of
-        menu or table summary layout */
-
-        return ((menu_format <= WIDTH_BILL) || (orders_format <= WIDTH_BILL));
-    }
+//    public boolean checkDimensionsBill() {
+//
+//        int menu_format = (ALINEA_DISHNAME + DISHNAME_TEXT + PRICE + CURRENCY_SIZE + 3);
+//
+//        int orders_format = DISHNAME_TEXT + QUANTITY + ALINEA_PRICE + PRICE + MAX_TOTAL + 7;
+//
+//        /* NB : No need to check the frequency report and the total summary format because they are "sub objects" of
+//        menu or table summary layout */
+//
+//        return ((menu_format <= WIDTH_BILL) || (orders_format <= WIDTH_BILL));
+//    }
 }

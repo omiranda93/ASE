@@ -65,7 +65,7 @@ public class ASE_CW {
 
         Manager manager = new Manager();
 
-        manager.checkDimensionsBill();
+        //manager.checkDimensionsBill();
 
         //################################################# BEGIN TEST TestIO ##############################################
         TestIO reader =new TestIO();

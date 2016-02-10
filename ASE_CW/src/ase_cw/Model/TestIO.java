@@ -11,6 +11,7 @@ import static ase_cw.Model.Category.MAIN;
 import static ase_cw.Model.Category.STARTER;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.TreeSet;
 
 /**
@@ -52,9 +53,13 @@ public class TestIO {
             menu.addValues(MAIN, mains);
             menu.addValues(DESSERT, desserts);
             menu.addValues(DRINKS, drinks);
+            System.out.println(menu.getValues().size()+" #############");
             
-        }catch (Exception e){
+        }catch (IOException e1){
             System.out.println("There was an error loading the menu from file.");
+
+        } catch (WrongCategoryException e2) {
+            System.out.println(e2.getMessage());
         }
     }
     

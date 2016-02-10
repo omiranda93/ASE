@@ -1,10 +1,11 @@
 package ase_cw.Test;
 
-import ase_cw.Model.Category;
-import ase_cw.Model.Menu;
-import ase_cw.Model.MenuItem;
+import ase_cw.Model.*;
 
 import org.junit.*;
+
+import java.util.*;
+
 import static org.junit.Assert.*;
 
 /**
@@ -17,8 +18,13 @@ import static org.junit.Assert.*;
  * @version 1.0
  */
 public class MenuTest {
+
     private Menu menu;
-    private MenuItem menuItem1, menuItem2, menuItem3, menuItem4;
+    private MenuItem menuItem1, menuItem2, menuItem3, menuItem4, menuItem5;
+    private Set<Category> setKeys;
+    private Set<MenuItem> menuItems1, menuItems2;
+    private Map<String, Double> mapValues;
+    private String stringMenu;
 
     @Before
     public void setUp() {
@@ -26,8 +32,29 @@ public class MenuTest {
         menuItem2 = new MenuItem(Category.MAIN, "Roast Beef", 8.8);
         menuItem3 = new MenuItem(Category.DESSERT, "Ice cream", 3.50);
         menuItem4 = new MenuItem(Category.DRINKS, "Ricard", 10);
+        menuItem5 = new MenuItem(Category.DRINKS, "Coca-Cola", 0.8);
 
         menu = new Menu();
+
+        setKeys = new HashSet<Category>() {{
+            add(Category.DESSERT); add(Category.MAIN); add(Category.STARTER); add(Category.DRINKS);
+        }};
+
+        menuItems1 = new TreeSet<MenuItem>() {{
+            add(menuItem4); add(menuItem5);
+        }};
+
+        menuItems2 = new TreeSet<MenuItem>() {{
+            add(menuItem2);
+        }};
+
+        mapValues = new TreeMap<>();
+        mapValues.put("Roast Beef", 8.8);
+        mapValues.put("Ricard", 10.0);
+        mapValues.put("Coca-Cola", 0.80);
+
+        stringMenu = "\n" + Manager.MENU + "\n" + Manager.underlineString(Manager.MENU) + "\n\n" + "STARTER\n\nMAIN\n" +
+                "\nDESSERT\n\nDRINKS\n" + menuItem5.toString() + menuItem4.toString();
     }
 
     @After
@@ -36,10 +63,74 @@ public class MenuTest {
     }
 
     @Test
-    public void testAddValue() {
+    public void testConstructor() {
+//        Map<Category, ? super Set<MenuItem>> enumMap = new EnumMap<>(Category.class);
+//        enumMap.put(Category.STARTER, new TreeSet<MenuItem>());
+//        enumMap.put(Category.MAIN, new TreeSet<MenuItem>());
+//        enumMap.put(Category.DESSERT, new TreeSet<MenuItem>());
+//        enumMap.put(Category.DRINKS, new TreeSet<MenuItem>());
+//
+//        assertEquals("Test on constructor() failed", menu, enumMap);
+    }
+
+    @Test
+    public void testGetKeys() {
+        assertEquals("Test on getKeys() failed", setKeys, menu.getKeys());
+    }
+
+    @Test
+    public void testGetValue() {
+        try {
+            menu.addValues(Category.DRINKS, new TreeSet<MenuItem>() {{add(menuItem4); add(menuItem5);}});
+        } catch (WrongCategoryException e) {
+            System.out.println(e.getMessage());
+        }
+        assertEquals("Test on getValue() failed", menuItems1, menu.getValue(Category.DRINKS));
+    }
+
+    @Test
+    public void testAddValues() throws WrongCategoryException {
+        menu.addValues(Category.MAIN, menuItems2);
+        assertEquals("Test on addValues() failed", menuItems2, menu.getValue(Category.MAIN));
+    }
+
+    @Test(expected = WrongCategoryException.class)
+    public void testAddValues2() throws WrongCategoryException {
+        menuItems2.add(menuItem3);
+        menu.addValues(Category.MAIN, menuItems2);
+    }
+
+    @Test
+    public void testGetValues() {
+        try {
+            menu.addValues(Category.DRINKS, menuItems1);
+            menu.addValues(Category.MAIN, menuItems2);
+        } catch (WrongCategoryException e) {
+            System.out.println(e.getMessage());
+        }
+
+        assertEquals("Test on getValues() failed", mapValues, menu.getValues());
+    }
+
+    @Test
+    public void testAddValue() throws WrongCategoryException {
         menu.addValue(Category.STARTER, menuItem1);
         assertTrue("Test on addValue() failed", menu.getValue(Category.STARTER).contains(menuItem1));
+    }
 
+    @Test(expected = WrongCategoryException.class)
+    public void testAddValue2() throws WrongCategoryException {
+        menu.addValue(Category.MAIN, menuItem3);
+    }
+
+    @Test
+    public void testToString() {
+        try {
+            menu.addValues(Category.DRINKS, menuItems1);
+        } catch (WrongCategoryException e) {
+            System.out.println(e.getMessage());
+        }
+        assertEquals(stringMenu, menu.toString());
     }
 
 }

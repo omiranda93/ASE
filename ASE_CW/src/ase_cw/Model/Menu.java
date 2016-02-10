@@ -55,7 +55,7 @@ public class Menu {
      * @return a set of all the menu items available
      */
     public Map<String, Double> getValues() {  
-        Map<String, Double> map = new TreeMap<String, Double>();
+        Map<String, Double> map = new TreeMap<>();
         
         for (Map.Entry<Category, ? super Set<MenuItem>> entry : menu.entrySet()){
             for (MenuItem m : (TreeSet<MenuItem>) entry.getValue()){
@@ -70,9 +70,22 @@ public class Menu {
      * @param key Category of the set of menu items to add
      * @param values Set of menu items of the same category to add
      */
-    public void addValues(Category key, Set<MenuItem> values) {
+    public void addValues(Category key, Set<MenuItem> values) throws WrongCategoryException {
+        Iterator<MenuItem> iterator = values.iterator();
+        boolean accurateValues = true;
 
-        menu.put(key, values); //reminder : check that key = value.category !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        while(iterator.hasNext() && accurateValues) {
+
+            if(iterator.next().getCategory() != key) {
+                accurateValues = false;
+                throw new WrongCategoryException(key, iterator.next().getCategory());
+            }
+        }
+
+        //If no problem were encountered with the key category and the values when checking the values set
+        if (accurateValues) {
+            menu.put(key, values);
+        }
     }
 
     /**
@@ -80,9 +93,14 @@ public class Menu {
      * @param key Category of the menu item to add
      * @param value Menu item to add
      */
-    public void addValue(Category key, MenuItem value) {
+    public void addValue(Category key, MenuItem value) throws WrongCategoryException {
 
-        this.getValue(key).add(value);
+        if (!value.getCategory().equals(key)) {
+            throw new WrongCategoryException(key, value.getCategory());
+
+        } else {
+            this.getValue(key).add(value);
+        }
     }
 
     /**
