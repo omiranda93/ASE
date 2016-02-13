@@ -78,6 +78,7 @@ public class ASE_CW {
         System.out.println(orders.toString());
         System.out.println(orders.showDishCounter());
         System.out.println(orders.showUnorderedDishes());
+        System.out.println(orders.showOrdersProfit());
         //orders.showTableBill();
         //################################################# END TEST TestIO ##############################################
         
