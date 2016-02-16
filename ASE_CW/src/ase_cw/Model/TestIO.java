@@ -21,8 +21,8 @@ import java.util.TreeSet;
 public class TestIO {
     //Global variables
     //Depending on the OS you may need to change the paths
-    private static String inputFileMenu = "ASE_CW/src/ase_cw/menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";
-    private static String inputFileOrder = "ASE_CW/src/ase_cw/orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt ";
+    private static String inputFileMenu = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";ASE_CW/src/ase_cw/menu.txt
+    private static String inputFileOrder = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt ";ASE_CW/src/ase_cw/orders.txt
     
     public void readMenu(Menu menu){
         BufferedReader readBuffer;
@@ -36,7 +36,7 @@ public class TestIO {
             readBuffer = new BufferedReader(new FileReader(inputFileMenu));
 
             while ((strRead = readBuffer.readLine()) != null) {
-                splitArray = strRead.split(", ");
+                splitArray = strRead.split("/ ");
                 switch(splitArray[2]){
                     case "Starter": starters.add(new MenuItem(STARTER, splitArray[0], Double.parseDouble(splitArray[1])));
                         break;
@@ -72,11 +72,24 @@ public class TestIO {
         TreeSet <FoodOrder> table1 = new TreeSet<FoodOrder>();
         TreeSet <FoodOrder> table2 = new TreeSet<FoodOrder>();
         TreeSet <FoodOrder> table3 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table4 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table5 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table6 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table7 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table8 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table9 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table10 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table11 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table12 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table13 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table14 = new TreeSet<FoodOrder>();
+        TreeSet <FoodOrder> table15 = new TreeSet<FoodOrder>();
+
         try {
             readbuffer = new BufferedReader(new FileReader(inputFileOrder));
             int i = 0;
             while ((strRead = readbuffer.readLine()) != null) {
-                splitarray = strRead.split(", ");
+                splitarray = strRead.split("/ ");
                 switch(splitarray[0]){
                     case "1": table1.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
                         break;
@@ -84,12 +97,48 @@ public class TestIO {
                         break;
                     case "3": table3.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
                         break;      
+                    case "4": table4.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                    case "5": table5.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                    case "6": table6.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                    case "7": table7.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                    case "8": table8.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                    case "9": table9.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                    case "10": table10.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                    case "11": table11.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                    case "12": table12.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                    case "13": table13.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                    case "14": table14.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
+                    case "15": table15.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
+                        break;      
                 }
             }
             readbuffer.close();
             orders.addValues(1, table1);
             orders.addValues(2, table2);
             orders.addValues(3, table3);
+            orders.addValues(4, table4);
+            orders.addValues(5, table5);
+            orders.addValues(6, table6);
+            orders.addValues(7, table7);
+            orders.addValues(8, table8);
+            orders.addValues(9, table9);
+            orders.addValues(10, table10);
+            orders.addValues(11, table11);
+            orders.addValues(12, table12);
+            orders.addValues(13, table13);
+            orders.addValues(14, table14);
+            orders.addValues(15, table15);
         }catch (Exception e){
             System.out.println("There was an error loading the orders from file.");
         }

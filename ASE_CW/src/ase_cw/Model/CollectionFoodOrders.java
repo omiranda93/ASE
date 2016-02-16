@@ -222,6 +222,46 @@ public class CollectionFoodOrders {
         return result +"\n";
         
     }
+    
+    /**
+     * Creates a report showing the dishes in orther of profit
+     * @return a list formated string representation of the dishes ordered by profit.
+     */
+    public String showOrdersProfit(){
+        String result = String.format("%-20s %-3s", "Dish name", "Profit") + "\n";
+        result += Manager.underlineString(result) + "\n";
+        Map<String, Double> quantityOrders = new TreeMap<String, Double>();
+        TreeMap<Double, String> orderedOrders = new TreeMap<Double, String>();
+        //First build a Map of all distinct food names and set the counter of profit to 0
+        for (Map.Entry<Integer, ? super Set<FoodOrder>> entry : orderCol.entrySet()){
+            for (FoodOrder o : (TreeSet<FoodOrder>) entry.getValue()){
+                quantityOrders.put(o.getDishName(), 0.0);    
+            }
+        }
+        
+        //Then for each of these foods, search the order collection again and for everytime found, add its quantity multiplied by the price to the pricecounter (as a value of the map) 
+        for (Map.Entry<String, Double> foodList : quantityOrders.entrySet()){
+            for (Map.Entry<Integer, ? super Set<FoodOrder>> entry : orderCol.entrySet()){
+                for (FoodOrder o : (TreeSet<FoodOrder>) entry.getValue()){
+                    if (o.getDishName().equals(foodList.getKey())){
+                        foodList.setValue(foodList.getValue() + (o.getQuantity()*NamePricePair.get(o.getDishName())));
+                    }   
+                }
+            }
+        }
+        //Now I am going to order the dishes by profit
+        for (Map.Entry<String, Double> foodList : quantityOrders.entrySet()){
+            orderedOrders.put(foodList.getValue(), foodList.getKey());
+        }
+        
+        //Iterate through the produced Map to build the table for output.
+        for (Map.Entry<Double, String> foodList : orderedOrders.entrySet()){
+            result += String.format("%-20s %-3s %-3s", foodList.getValue(), foodList.getKey(), Manager.CURRENCY) + "\n"; 
+        }
+        
+        return result;
+        
+    }
 }
 
 //class CustomComparator implements Comparator<Integer>{Ενημερωσε αυριο η οποτε μαθεις!
