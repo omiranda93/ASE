@@ -108,6 +108,7 @@ public class CollectionFoodOrders {
     public String getBill(int tableId){
         double bill=0;
         double dishTotal=0;
+        int discountPerc=0;
         String result="Table " + tableId + " Summary\n";
         
         //Create the string formater to be applied to String.format
@@ -125,14 +126,15 @@ public class CollectionFoodOrders {
                result += String.format(formater,"",order.getDishName(), order.getQuantity(),"*",NamePricePair.get(order.getDishName()) ,"=" ,dishTotal, Manager.CURRENCY) +"\n";
                bill += dishTotal;
             }
-        discount = (Manager.DISCOUNT * bill)/100;
+            discountPerc = Manager.calculateDiscount(bill);
+        discount = (discountPerc * bill)/100;
         
         result += "\n";
         
         //Also print the summed total of the table, included the discounted price (if applicable - configured in the manager class)
-        discount = (Manager.DISCOUNT * bill)/100;
+        //discount = (Manager.DISCOUNT * bill)/100;
         result += String.format(formater,"","Total for this table:","","","","",bill, Manager.CURRENCY) +"\n";
-        result += String.format(formater,"","Discount:","","","","",discount, Manager.CURRENCY) +"\n";
+        result += String.format(formater,"","Discount: " + discountPerc + "%","","","","",discount, Manager.CURRENCY) +"\n";
         result += String.format(formater,"","Discounted total:","","","","",bill - discount, Manager.CURRENCY) +"\n\n";
         
         //Update the tables bill with the discount (if any)
@@ -165,7 +167,7 @@ public class CollectionFoodOrders {
      * @return A String table showing how many times each dish has been ordered.
      */
     public String showDishCounter(){
-        String result = String.format("%-20s %-3s", "Dish name", "Times ordered") + "\n";
+        String result = String.format("%-60s %-3s", "Dish name", "Times ordered") + "\n";
         result += Manager.underlineString(result) + "\n";
         Map<String, Integer> quantityOrders = new TreeMap<String, Integer>();
         
@@ -189,7 +191,7 @@ public class CollectionFoodOrders {
         
         //Iterate through the produced Map to build the table for output.
         for (Map.Entry<String, Integer> foodList : quantityOrders.entrySet()){
-            result += String.format("%-20s %-3s", foodList.getKey(), foodList.getValue()) + "\n"; 
+            result += String.format("%-60s %-3s", foodList.getKey(), foodList.getValue()) + "\n"; 
         }
         
         return result;
@@ -228,7 +230,7 @@ public class CollectionFoodOrders {
      * @return a list formated string representation of the dishes ordered by profit.
      */
     public String showOrdersProfit(){
-        String result = String.format("%-20s %-3s", "Dish name", "Profit") + "\n";
+        String result = String.format("%-60s %-6s", "Dish name", "Profit") + "\n";
         result += Manager.underlineString(result) + "\n";
         Map<String, Double> quantityOrders = new TreeMap<String, Double>();
         TreeMap<Double, String> orderedOrders = new TreeMap<Double, String>();
@@ -256,7 +258,7 @@ public class CollectionFoodOrders {
         
         //Iterate through the produced Map to build the table for output.
         for (Map.Entry<Double, String> foodList : orderedOrders.entrySet()){
-            result += String.format("%-20s %-3s %-3s", foodList.getValue(), foodList.getKey(), Manager.CURRENCY) + "\n"; 
+            result += String.format("%-60s %-6s %-3s", foodList.getValue(), foodList.getKey(), Manager.CURRENCY) + "\n"; 
         }
         
         return result;

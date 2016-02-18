@@ -38,7 +38,7 @@ public class Manager {
     public static final int MAX_TOTAL = 6;
     public static final String MENU = "MENU";
     public static final String TABLE_SUMMARY = "TABLES SUMMARY";
-    public static final int DISCOUNT = 10;
+    //public static int DISCOUNT = 10;
 
     /**
      * "Underline" with the "=" symbol a string
@@ -48,6 +48,25 @@ public class Manager {
     public static String underlineString(String s) {
 
         return (new String(new char[s.length()]).replace("\0", "="));
+    }
+    
+    /**
+     * Calculate the percentage of the discount according to the bill amount
+     * @param bill The bill on which the discount is to be applied
+     * @return the discount as a percentage
+     */
+    public static int calculateDiscount(double bill){
+        int discount=0;
+        
+        if (bill >= 20 && bill < 50){
+            discount = 5;
+        }else if(bill >= 51 && bill < 70){
+            discount = 10;
+        }else if(bill >=71){
+            discount = 20;
+        }
+        
+        return discount;
     }
 
     /**
