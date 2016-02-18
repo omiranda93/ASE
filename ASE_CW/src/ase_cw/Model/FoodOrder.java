@@ -24,10 +24,15 @@ public class FoodOrder implements Comparable<FoodOrder>{
      * @param tableId the ID of the table the order was made
      * @param dish The dish name it was ordered
      * @param quantity How many times the dish was ordered
+     * @throws ase_cw.Model.InvalidQuantityException
      */
-    public FoodOrder(int tableId, String dish, int quantity){
+    public FoodOrder(int tableId, String dish, int quantity) throws InvalidQuantityException{
         this.dish=dish;
+        if (quantity >= 0){
         this.quantity=quantity;
+        }else{
+            throw new InvalidQuantityException(dish);
+        }
         this.tableId=tableId;
     }
     

@@ -65,7 +65,7 @@ public class MenuItemTest {
 
     @After
     public void tearDown() {
-        System.out.println(" ############# The end ###########");
+        System.out.println(" ############# End MenuItem Testing ###########");
     }
 
     @Test

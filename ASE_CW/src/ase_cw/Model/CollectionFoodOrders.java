@@ -19,10 +19,10 @@ import javax.swing.JOptionPane;
 public class CollectionFoodOrders {
     private Map<Integer, ? super Set<FoodOrder>> orderCol;
     private Menu menu;
-    private double discount;
+    private double discount = 0;
     
     //statistic variables
-    
+     
     
     //Get all the prices of all the dishes in pairs from the Menu class. As we are using a map, traversing the Map to get the price is O(1) complexity so its optimal.
     private Map<String, Double> NamePricePair = new TreeMap<String, Double>();
@@ -80,7 +80,7 @@ public class CollectionFoodOrders {
     }
     
     /**
-     * Overridden method to print the bill.
+     * Overridden method to print the bill. Only tables with placed orders will be printed.
      * @return All the orders of the collection as a String, in tabular format.
      */
     @Override
@@ -91,10 +91,12 @@ public class CollectionFoodOrders {
         
         //Put all the tables in an (ordered) set
         Set<Integer> tables = this.getKeys();
+        Set<FoodOrder> orders;
         
         //For each table available
-        for (Integer t : tables){    
-            result += getBill(t) + "\n";
+        for (Integer t : tables){   
+            orders = getValue(t);
+            if (!orders.isEmpty()) {result += getBill(t) + "\n";}
         }
         
         return result;
@@ -107,8 +109,8 @@ public class CollectionFoodOrders {
      */
     public String getBill(int tableId){
         double bill=0;
-        double dishTotal=0;
-        int discountPerc=0;
+        double dishTotal;
+        int discountPerc;
         String result="Table " + tableId + " Summary\n";
         
         //Create the string formater to be applied to String.format
@@ -126,13 +128,12 @@ public class CollectionFoodOrders {
                result += String.format(formater,"",order.getDishName(), order.getQuantity(),"*",NamePricePair.get(order.getDishName()) ,"=" ,dishTotal, Manager.CURRENCY) +"\n";
                bill += dishTotal;
             }
-            discountPerc = Manager.calculateDiscount(bill);
+        discountPerc = Manager.calculateDiscount(bill);
         discount = (discountPerc * bill)/100;
         
         result += "\n";
         
         //Also print the summed total of the table, included the discounted price (if applicable - configured in the manager class)
-        //discount = (Manager.DISCOUNT * bill)/100;
         result += String.format(formater,"","Total for this table:","","","","",bill, Manager.CURRENCY) +"\n";
         result += String.format(formater,"","Discount: " + discountPerc + "%","","","","",discount, Manager.CURRENCY) +"\n";
         result += String.format(formater,"","Discounted total:","","","","",bill - discount, Manager.CURRENCY) +"\n\n";
@@ -203,8 +204,7 @@ public class CollectionFoodOrders {
      */
     public String showUnorderedDishes(){
         String result="List of unoredered dishes:\n" + Manager.underlineString("List of unoredered dishes:")+"\n";
-        Map<String, Integer> orders = new TreeMap<String, Integer>();
-        Set<String> orderList = new TreeSet<>(), unordered = new TreeSet<>();
+        Set<String> orderList = new TreeSet<>();
         
         //First build a Map of all distinct food names and set the counter to 0
         for (Map.Entry<Integer, ? super Set<FoodOrder>> entry : orderCol.entrySet()){
@@ -216,7 +216,6 @@ public class CollectionFoodOrders {
         //Then add all dishes that do not exist in the orders
         for (Map.Entry<String, Double> entry : NamePricePair.entrySet()){
             if (!orderList.contains(entry.getKey())){
-                //unordered.add(entry.getKey());
                 result += entry.getKey() +"\n";
             }
         }
@@ -226,7 +225,7 @@ public class CollectionFoodOrders {
     }
     
     /**
-     * Creates a report showing the dishes in orther of profit
+     * Creates a report showing the dishes in order of profit
      * @return a list formated string representation of the dishes ordered by profit.
      */
     public String showOrdersProfit(){
@@ -234,6 +233,7 @@ public class CollectionFoodOrders {
         result += Manager.underlineString(result) + "\n";
         Map<String, Double> quantityOrders = new TreeMap<String, Double>();
         TreeMap<Double, String> orderedOrders = new TreeMap<Double, String>();
+        
         //First build a Map of all distinct food names and set the counter of profit to 0
         for (Map.Entry<Integer, ? super Set<FoodOrder>> entry : orderCol.entrySet()){
             for (FoodOrder o : (TreeSet<FoodOrder>) entry.getValue()){
@@ -241,7 +241,8 @@ public class CollectionFoodOrders {
             }
         }
         
-        //Then for each of these foods, search the order collection again and for everytime found, add its quantity multiplied by the price to the pricecounter (as a value of the map) 
+        //Then for each of these foods, search the order collection again and for everytime found, 
+        //add its quantity multiplied by the price to the pricecounter (as a value of the map) 
         for (Map.Entry<String, Double> foodList : quantityOrders.entrySet()){
             for (Map.Entry<Integer, ? super Set<FoodOrder>> entry : orderCol.entrySet()){
                 for (FoodOrder o : (TreeSet<FoodOrder>) entry.getValue()){
@@ -251,7 +252,7 @@ public class CollectionFoodOrders {
                 }
             }
         }
-        //Now I am going to order the dishes by profit
+        //Order the dishes by profit
         for (Map.Entry<String, Double> foodList : quantityOrders.entrySet()){
             orderedOrders.put(foodList.getValue(), foodList.getKey());
         }
@@ -265,12 +266,4 @@ public class CollectionFoodOrders {
         
     }
 }
-
-//class CustomComparator implements Comparator<Integer>{Ενημερωσε αυριο η οποτε μαθεις!
-// 
-//    @Override
-//    public int compare(Integer e1, Integer e2) {
-//        return Integer.compare(e1, e2);
-//    }
-//}
     
