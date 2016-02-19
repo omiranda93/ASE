@@ -29,7 +29,7 @@ public class FoodOrder implements Comparable<FoodOrder>{
     public FoodOrder(int tableId, String dish, int quantity) throws InvalidQuantityException{
         this.dish=dish;
         if (quantity >= 0){
-        this.quantity=quantity;
+            this.quantity=quantity;
         }else{
             throw new InvalidQuantityException(dish);
         }

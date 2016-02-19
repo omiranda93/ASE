@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
 /**
  * The collection that holds all the Order objects.
@@ -28,14 +27,14 @@ public class CollectionFoodOrders {
      
     
     //Get all the prices of all the dishes in pairs from the Menu class. As we are using a map, traversing the Map to get the price is O(1) complexity so its optimal.
-    private Map<String, Double> NamePricePair = new TreeMap<String, Double>();
+    private Map<String, Double> NamePricePair = new TreeMap<>();
 
     /**
      * Creates a new collection of orders
      * @param menu The Menu collection is passed in order to gain access to the prices later on
      */
     public CollectionFoodOrders(Menu menu){
-        orderCol = new TreeMap<Integer, Set<FoodOrder>>();
+        orderCol = new TreeMap<>();
         this.menu = menu;
         NamePricePair = menu.getValues();
     }
@@ -76,7 +75,7 @@ public class CollectionFoodOrders {
         if (orderCol.containsKey(tableId)){
             this.getValue(tableId).add(oi);
         }else{
-            TreeSet<FoodOrder> ts = new TreeSet<FoodOrder>();
+            TreeSet<FoodOrder> ts = new TreeSet<>();
             ts.add(oi);
             orderCol.put(tableId, ts);
         }
@@ -157,14 +156,17 @@ public class CollectionFoodOrders {
     /**
      * Shows a dialog, prompting the user to enter a table ID and show a window with the 
      * bill for the provided table
-     * @throws ase_cw.NoMatchingIDException
+     * @throws NoMatchingIDException
      */
     public void showTableBill() throws NoMatchingIDException {
         String id = JOptionPane.showInputDialog(null, "Enter table id");
 
-        if (id != null){
-            if (!Manager.isInteger(id)) {throw new NoMatchingIDException(id);}
-        }else{
+        if (!id.equals(null)){
+            if (!Manager.isInteger(id)) {
+                throw new NoMatchingIDException(id);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Wrong table ID", "Attention", JOptionPane.ERROR_MESSAGE);
             throw new NumberFormatException();
         }
   
@@ -186,7 +188,7 @@ public class CollectionFoodOrders {
     public String showDishCounter(){
         String result = String.format("%-60s %-3s", "Dish name", "Times ordered") + "\n";
         result += Manager.underlineString(result) + "\n";
-        Map<String, Integer> quantityOrders = new TreeMap<String, Integer>();
+        Map<String, Integer> quantityOrders = new TreeMap<>();
         
         //First build a Map of all distinct food names and set the counter to 0
         for (Map.Entry<Integer, ? super Set<FoodOrder>> entry : orderCol.entrySet()){
@@ -247,9 +249,9 @@ public class CollectionFoodOrders {
     public String showOrdersProfit(){
         String result = String.format("%-60s %-6s", "Dish name", "Profit") + "\n";
         result += Manager.underlineString(result) + "\n";
-        Map<String, Double> quantityOrders = new TreeMap<String, Double>();
-        ArrayList <String> names = new ArrayList <String>();
-        ArrayList <Double> prices = new ArrayList <Double>();
+        Map<String, Double> quantityOrders = new TreeMap<>();
+        ArrayList <String> names = new ArrayList <>();
+        ArrayList <Double> prices = new ArrayList <>();
         
         //First build a Map of all distinct food names and set the counter of profit to 0
         for (Map.Entry<Integer, ? super Set<FoodOrder>> entry : orderCol.entrySet()){

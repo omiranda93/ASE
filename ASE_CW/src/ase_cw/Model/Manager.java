@@ -28,7 +28,6 @@ public class Manager {
      * MAX_TOTAL : Width of the maximum size of totals (final or not)
      * MENU: Title of the menu
      * TABLE_SUMMARY : Title of the order summary
-     * DISCOUNT : Discount (why not set a rule for this ???????????????????????????????????????????????????????????????)
      */
     public static final int WIDTH_BILL = 120;
     public static final int ALINEA_DISHNAME = 2;
@@ -41,8 +40,7 @@ public class Manager {
     public static final int MAX_TOTAL = 6;
     public static final String MENU = "MENU";
     public static final String TABLE_SUMMARY = "TABLES SUMMARY";
-    //public static int DISCOUNT = 10;
-    
+
      /**
      * Tuneable
      * reader: allows the input output operations
@@ -189,11 +187,24 @@ public class Manager {
      * @return void
      */
     public static void guiTable(){
-        try {
-            orders.showTableBill();
-        } catch (NoMatchingIDException ex) {
-            System.out.println(ex.getMessage());
+
+        boolean billShowed = false;
+
+        while (!billShowed) {
+            try {
+                orders.showTableBill();
+                billShowed = true;
+
+            } catch (NumberFormatException e1) {
+               System.out.println(e1.getMessage());
+                break;
+
+            } catch (NoMatchingIDException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
+
+
     }
     
 }
