@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import ase_cw.Model.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -98,7 +100,11 @@ public class TestIOTest {
     public void testReadOrders() {
         System.out.println("readOrders");
         TestIO instance = new TestIO();
-        instance.readOrders(orders);
+        try {
+            instance.readOrders(orders);
+        } catch (NoMatchingIDException ex) {
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Test on readOrders() failed", orders);
     }
     

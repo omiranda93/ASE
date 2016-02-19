@@ -60,12 +60,14 @@ public class TestIO {
 
         } catch (WrongCategoryException e2) {
             System.out.println(e2.getMessage());
+        } catch (NumberFormatException e3){
+            System.out.println("One or more prices in the text file are not a price or are wrongly introduced.");
         }
     }
     
     
     
-    public void readOrders(CollectionFoodOrders orders){
+    public void readOrders(CollectionFoodOrders orders) throws NoMatchingIDException{
         BufferedReader readbuffer = null;
         String strRead;
         String splitarray[];
@@ -120,7 +122,8 @@ public class TestIO {
                     case "14": table14.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
                         break;      
                     case "15": table15.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));
-                        break;      
+                        break;   
+                    default: throw new NoMatchingIDException(splitarray[0]);
                 }
             }
             readbuffer.close();
@@ -139,8 +142,12 @@ public class TestIO {
             orders.addValues(13, table13);
             orders.addValues(14, table14);
             orders.addValues(15, table15);
-        }catch (Exception e){
+        }catch (InvalidQuantityException e1){
+            System.out.println(e1.getMessage());
+        }catch (IOException e2){
             System.out.println("There was an error loading the orders from file.");
+        } catch (NumberFormatException e3){
+            System.out.println("One of the quantitys introduced is not a number. The file could not be loaded.");
         }
     }
 }

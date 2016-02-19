@@ -1,4 +1,4 @@
-package ase_cw;
+package ase_cw.Model;
 
 /**
  * Represents a menu composed of food items proposed by the restaurant

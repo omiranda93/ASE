@@ -123,7 +123,7 @@ public class ASE_CW {
             Manager manager = new Manager();
             manager.printAll();
         } catch (WrongDimensionsBillException ex) {
-            Logger.getLogger(ASE_CW.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
     

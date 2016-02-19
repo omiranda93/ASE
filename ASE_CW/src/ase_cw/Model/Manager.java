@@ -1,6 +1,5 @@
 package ase_cw.Model;
 
-import ase_cw.NoMatchingIDException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -118,11 +117,15 @@ public class Manager {
      */
     public Manager() throws WrongDimensionsBillException{
         
-        reader.readMenu(menu);
-        orders = new CollectionFoodOrders(menu);
-        reader.readOrders(orders);
-        if (!checkDimensionsBill()){
-            throw (new WrongDimensionsBillException());
+        try {
+            reader.readMenu(menu);
+            orders = new CollectionFoodOrders(menu);
+            reader.readOrders(orders);
+            if (!checkDimensionsBill()){
+                throw (new WrongDimensionsBillException());
+            }
+        } catch (NoMatchingIDException ex) {
+            System.out.println(ex.getMessage());
         }
         
     }
