@@ -6,6 +6,7 @@
 package ase_cw.Model;
 
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -246,7 +247,8 @@ public class CollectionFoodOrders {
         String result = String.format("%-60s %-6s", "Dish name", "Profit") + "\n";
         result += Manager.underlineString(result) + "\n";
         Map<String, Double> quantityOrders = new TreeMap<String, Double>();
-        TreeMap<Double, String> orderedOrders = new TreeMap<Double, String>();
+        ArrayList <String> names = new ArrayList <String>();
+        ArrayList <Double> prices = new ArrayList <Double>();
         
         //First build a Map of all distinct food names and set the counter of profit to 0
         for (Map.Entry<Integer, ? super Set<FoodOrder>> entry : orderCol.entrySet()){
@@ -268,16 +270,43 @@ public class CollectionFoodOrders {
         }
         //Order the dishes by profit
         for (Map.Entry<String, Double> foodList : quantityOrders.entrySet()){
-            orderedOrders.put(foodList.getValue(), foodList.getKey());
+            names.add(foodList.getKey());
+            prices.add(foodList.getValue());
+            
         }
-        
+        bubble_srt(names, prices);
         //Iterate through the produced Map to build the table for output.
-        for (Map.Entry<Double, String> foodList : orderedOrders.entrySet()){
-            result += String.format("%-60s %-6s %-3s", foodList.getValue(), foodList.getKey(), Manager.CURRENCY) + "\n"; 
-        }
-        
+        for (int i = 0; i < prices.size(); i++) {
+            result += String.format("%-60s %-6s %-3s", names.get(i), prices.get(i), Manager.CURRENCY) + "\n"; 
+        }        
         return result;
         
+    }
+    
+     /**
+     * Sorts.
+     * @return
+     */
+    public static void bubble_srt(ArrayList<String> names, ArrayList<Double> prices) {
+        int n = prices.size();
+        int k;
+        for (int m = n; m >= 0; m--) {
+            for (int i = 0; i < n - 1; i++) {
+                k = i + 1;
+                if (prices.get(i) > prices.get(k)) {
+                    swap(i, k, prices);
+                    swap(i, k, names);
+                }
+            }
+        }
+    }
+  
+    private static void swap(int i, int j, ArrayList price) {
+  
+        Object temp;
+        temp = price.get(i);
+        price.set(i, price.get(j));
+        price.set(j, temp);
     }
 }
     

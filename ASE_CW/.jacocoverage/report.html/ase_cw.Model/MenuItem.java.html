@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MenuItem.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ASE_CW&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">ase_cw.Model</a> &gt; <span class="el_source">MenuItem.java</span></div><h1>MenuItem.java</h1><pre class="source lang-java linenums">/*
+
+*Cecile's part
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ase_cw.Model;
+
+/**
+ * Represents a food item figuring on the menu of the restaurant
+ *
+ * Date: 31/01/2016
+ * Time: 1:54 PM
+ *
+ * @author Cécile Riquart
+ * @version 1.0
+ */
+public class MenuItem implements Comparable&lt;MenuItem&gt; {
+
+    /**
+     * A menu item is characterised by:
+     * - a category (starter, main, dessert, drinks),
+     * - a name: the name of the dish
+     * - a price (in pound sterling, £)
+     */
+    private Category category;
+    private String dishName;
+    private double price;
+
+    /**
+     * Constructor of a menu item
+     * @param category Category of the menu item
+     * @param dishName Name of the menu item
+     * @param price Price of the menu item (expressed in pound sterling £)
+     */
+<span class="fc" id="L37">    public MenuItem(Category category, String dishName, double price) {</span>
+<span class="fc" id="L38">        this.category = category;</span>
+<span class="fc" id="L39">        this.dishName = dishName;</span>
+<span class="fc" id="L40">        this.price = price;</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * Gets the category of this menu item
+     * @return this menu item's category
+     */
+    public Category getCategory() {
+<span class="fc" id="L48">        return category;</span>
+    }
+
+    /**
+     * Gets the dish name of this menu item
+     * @return this menu item's dish name
+     */
+    public String getName() {
+<span class="fc" id="L56">        return dishName;</span>
+    }
+
+    /**
+     * Gets the price of this menu item
+     * @return this menu item's price
+     */
+    public double getPrice() {
+<span class="fc" id="L64">        return price;</span>
+    }
+    
+    /**
+     *  Sets the category of this menu item
+     * @param category New category of this menu item
+     */
+    public void setCategory(Category category) {
+<span class="nc" id="L72">        this.category = category;</span>
+<span class="nc" id="L73">    }</span>
+
+    /**
+     * Sets the name of this menu ite
+     * @param dishName New name of this menu item
+     */
+    public void setName(String dishName) {
+<span class="nc" id="L80">        this.dishName = dishName;</span>
+<span class="nc" id="L81">    }</span>
+
+    /**
+     * Sets the price of this menu item
+     * @param price New price of this menu item
+     */
+    public void setPrice(double price) {
+<span class="nc" id="L88">        this.price = price;</span>
+<span class="nc" id="L89">    }</span>
+
+    /**
+     * Compares this menu item with another one.
+     * The comparison is based on the alphabetical order of the dish names
+     * @param o The other menu item with which this menu item is compared to
+     * @return a value less than 0 if the dish name's argument is after this menu item's dish name according to the
+     *         alphabet order
+     *         0 if the dish name's argument equals to this menu item's dish name,
+     *         a value greater than 0 if the dish name's argument is before this menu item's dish name according to the
+     *         alphabet order
+     */
+    @Override
+    public int compareTo(MenuItem o) {
+<span class="fc" id="L103">        return dishName.compareTo(o.getName());</span>
+    }
+
+    /**
+     * Represents this menu item as a String
+     * NB: Continues printing the menu item's name on another line if too long, with respect to the bill format
+     * @return the string that represents this menu item
+     */
+    @Override
+    public String toString() {
+        String temp;
+        int nb_new_lines, i;
+<span class="fc" id="L115">        String result = &quot;&quot;;</span>
+
+<span class="fc" id="L117">        String res = &quot;%-&quot; + Manager.ALINEA_DISHNAME + &quot;s %-&quot; +</span>
+                Manager.DISHNAME_TEXT + &quot;s %-&quot;   +
+                Manager.PRICE + &quot;s %-&quot;           +
+                Manager.CURRENCY_SIZE +&quot;s&quot;;
+
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (getName().length() &gt; Manager.DISHNAME_TEXT) {</span>
+
+            //Number of lines necessary to write the dish's name
+<span class="fc" id="L125">            nb_new_lines = dishName.length() / Manager.DISHNAME_TEXT;</span>
+
+            //For each line
+<span class="fc bfc" id="L128" title="All 2 branches covered.">            for (i = 0; i&lt; nb_new_lines; i++) {</span>
+
+                //If it is not the line finishing printing the dish's name: format the line without the price
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">                if (i &lt; nb_new_lines-1) {</span>
+<span class="nc" id="L132">                    temp = dishName.substring(i*(Manager.DISHNAME_TEXT-1), (i+1)*(Manager.DISHNAME_TEXT-1));</span>
+<span class="nc" id="L133">                    result += String.format(res, &quot;&quot;, temp.toUpperCase(), &quot;&quot;, &quot;&quot;) + &quot;\n&quot;;</span>
+
+                //If it is the line finishing printing the dish's name: format the line with the price
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">                } else if (i == nb_new_lines-1) {</span>
+<span class="fc" id="L137">                    temp = dishName.substring(i*(Manager.DISHNAME_TEXT-1), (i+1)*(Manager.DISHNAME_TEXT-1));</span>
+<span class="fc" id="L138">                    result += String.format(res, &quot;&quot;, temp.toUpperCase(), &quot;&quot;, &quot;&quot;) + &quot;\n&quot;;</span>
+                }
+            }
+
+<span class="fc" id="L142">            temp = dishName.substring((nb_new_lines)*(Manager.DISHNAME_TEXT-1), dishName.length());</span>
+<span class="fc" id="L143">            result += String.format(res, &quot;&quot;, temp.toUpperCase(), price, Manager.CURRENCY) + &quot;\n&quot;;</span>
+
+        } else {
+<span class="fc" id="L146">            result += String.format(res, &quot;&quot;, dishName.toUpperCase(), price, Manager.CURRENCY) + &quot;\n&quot;;</span>
+        }
+
+<span class="fc" id="L149">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
