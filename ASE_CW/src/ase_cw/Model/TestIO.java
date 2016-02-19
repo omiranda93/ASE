@@ -21,8 +21,8 @@ import java.util.TreeSet;
 public class TestIO {
     //Global variables
     //Depending on the OS you may need to change the paths
-    private static String inputFileMenu = "ASE_CW/src/ase_cw/menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";ASE_CW/src/ase_cw/menu.txt
-    private static String inputFileOrder = "ASE_CW/src/ase_cw/orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt";ASE_CW/src/ase_cw/orders.txt
+    private static String inputFileMenu = "src/ase_cw/menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";ASE_CW/src/ase_cw/menu.txt
+    private static String inputFileOrder = "src/ase_cw/orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt";ASE_CW/src/ase_cw/orders.txt
     
     public void readMenu(Menu menu){
         BufferedReader readBuffer;

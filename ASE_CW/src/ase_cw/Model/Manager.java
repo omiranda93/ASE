@@ -1,9 +1,5 @@
 package ase_cw.Model;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
 /**
  * Represents the manager of the system
  *
@@ -196,7 +192,7 @@ public class Manager {
                 billShowed = true;
 
             } catch (NumberFormatException e1) {
-               System.out.println(e1.getMessage());
+                //System.out.println(e1.getMessage());
                 break;
 
             } catch (NoMatchingIDException ex) {

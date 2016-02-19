@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 /**
  * The collection that holds all the Order objects.
@@ -113,6 +114,9 @@ public class CollectionFoodOrders {
         double bill=0;
         double dishTotal;
         int discountPerc;    
+        String temp;
+        int nb_new_lines, i;
+        
         String result="Table " + tableId + " Summary\n";
         
         //Create the string formater to be applied to String.format
@@ -127,7 +131,36 @@ public class CollectionFoodOrders {
         Set<FoodOrder> orders = getValue(tableId);
             for (FoodOrder order : orders){
                dishTotal = NamePricePair.get(order.getDishName()) * order.getQuantity();
-               result += String.format(formater,"",order.getDishName(), order.getQuantity(),"*",NamePricePair.get(order.getDishName()) ,"=" ,dishTotal, Manager.CURRENCY) +"\n";
+               
+               
+                 
+               if (order.getDishName().length() > Manager.DISHNAME_TEXT) {
+
+                    //Number of lines necessary to write the dish's name
+                    nb_new_lines = order.getDishName().length() / Manager.DISHNAME_TEXT;
+
+                    //For each line
+                    for (i = 0; i< nb_new_lines; i++) {
+
+                        //If it is not the line finishing printing the dish's name: format the line without the price
+                        //If it is the line finishing printing the dish's name: format the line with the price
+                        if (i < nb_new_lines-1 | i == nb_new_lines-1) {
+                            temp = order.getDishName().substring(i*(Manager.DISHNAME_TEXT-1), (i+1)*(Manager.DISHNAME_TEXT-1));
+                            result += String.format(formater, "", temp, "", "","","","","") + "\n";
+                        }
+                    }
+
+                    temp = order.getDishName().substring((nb_new_lines)*(Manager.DISHNAME_TEXT-1), order.getDishName().length());
+                    result += String.format(formater, "", temp, order.getQuantity(), "*", NamePricePair.get(order.getDishName()),"=" ,dishTotal, Manager.CURRENCY) + "\n";
+
+                } else {
+                    result += String.format(formater, "", order.getDishName(), order.getQuantity(),"*", NamePricePair.get(order.getDishName()),"=" ,dishTotal, Manager.CURRENCY) + "\n";
+                }
+               
+               
+               
+               
+               //result += String.format(formater,"",order.getDishName(), order.getQuantity(),"*",NamePricePair.get(order.getDishName()) ,"=" ,dishTotal, Manager.CURRENCY) +"\n";
                bill += dishTotal;
             }
         discountPerc = Manager.calculateDiscount(bill);
@@ -146,13 +179,6 @@ public class CollectionFoodOrders {
         return result;
     }
     
-    public String[] jtGetBill(int tableId){
-        String[] s = new String[10];
-        
-        
-        return s;
-    }
-    
     /**
      * Shows a dialog, prompting the user to enter a table ID and show a window with the 
      * bill for the provided table
@@ -160,13 +186,14 @@ public class CollectionFoodOrders {
      */
     public void showTableBill() throws NoMatchingIDException {
         String id = JOptionPane.showInputDialog(null, "Enter table id");
+        JTextArea textArea = new JTextArea(getBill(Integer.valueOf(id)),5, 50);
 
-        if (!id.equals(null)){
+        if (id != null){
             if (!Manager.isInteger(id)) {
+                JOptionPane.showMessageDialog(null, "Wrong table ID", "Attention", JOptionPane.ERROR_MESSAGE);
                 throw new NoMatchingIDException(id);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Wrong table ID", "Attention", JOptionPane.ERROR_MESSAGE);
             throw new NumberFormatException();
         }
   
@@ -175,8 +202,7 @@ public class CollectionFoodOrders {
             throw new NoMatchingIDException(id);
 
         } else{
-            System.out.println(getBill(Integer.valueOf(id)));
-            JOptionPane.showMessageDialog(null, getBill(Integer.valueOf(id)));
+            JOptionPane.showMessageDialog(null, textArea, "Table Summary", JOptionPane.PLAIN_MESSAGE);
         }
     }
     

@@ -128,12 +128,8 @@ public class MenuItem implements Comparable<MenuItem> {
             for (i = 0; i< nb_new_lines; i++) {
 
                 //If it is not the line finishing printing the dish's name: format the line without the price
-                if (i < nb_new_lines-1) {
-                    temp = dishName.substring(i*(Manager.DISHNAME_TEXT-1), (i+1)*(Manager.DISHNAME_TEXT-1));
-                    result += String.format(res, "", temp.toUpperCase(), "", "") + "\n";
-
                 //If it is the line finishing printing the dish's name: format the line with the price
-                } else if (i == nb_new_lines-1) {
+                if (i < nb_new_lines-1 | i == nb_new_lines-1) {
                     temp = dishName.substring(i*(Manager.DISHNAME_TEXT-1), (i+1)*(Manager.DISHNAME_TEXT-1));
                     result += String.format(res, "", temp.toUpperCase(), "", "") + "\n";
                 }
