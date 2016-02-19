@@ -1,5 +1,9 @@
 package ase_cw.Model;
 
+import ase_cw.NoMatchingIDException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  * Represents the manager of the system
@@ -39,6 +43,16 @@ public class Manager {
     public static final String MENU = "MENU";
     public static final String TABLE_SUMMARY = "TABLES SUMMARY";
     //public static int DISCOUNT = 10;
+    
+     /**
+     * Tuneable
+     * reader: allows the input output operations
+     * menu: contains the menu
+     * orders: contains the orders
+     */
+    public static TestIO reader =new TestIO();
+    private static Menu menu = new Menu();
+    private static CollectionFoodOrders orders = new CollectionFoodOrders(menu);
 
     /**
      * "Underline" with the "=" symbol a string
@@ -74,15 +88,97 @@ public class Manager {
      * May lead to an exception if not
      * @return true if the layout of the bill is correct, false otherwise
      */
-//    public boolean checkDimensionsBill() {
-//
-//        int menu_format = (ALINEA_DISHNAME + DISHNAME_TEXT + PRICE + CURRENCY_SIZE + 3);
-//
-//        int orders_format = DISHNAME_TEXT + QUANTITY + ALINEA_PRICE + PRICE + MAX_TOTAL + 7;
-//
-//        /* NB : No need to check the frequency report and the total summary format because they are "sub objects" of
-//        menu or table summary layout */
-//
-//        return ((menu_format <= WIDTH_BILL) || (orders_format <= WIDTH_BILL));
-//    }
+    public boolean checkDimensionsBill() {
+
+        int menu_format = (ALINEA_DISHNAME + DISHNAME_TEXT + PRICE + CURRENCY_SIZE + 3);
+
+        int orders_format = DISHNAME_TEXT + QUANTITY + ALINEA_PRICE + PRICE + MAX_TOTAL + 7;
+
+        /* NB : No need to check the frequency report and the total summary format because they are "sub objects" of
+        menu or table summary layout */
+
+        return ((menu_format <= WIDTH_BILL) || (orders_format <= WIDTH_BILL));
+    }
+    
+    /**
+     * Builds a manager
+     * @param 
+     * @return
+     */
+    public Manager() throws WrongDimensionsBillException{
+        
+        reader.readMenu(menu);
+        reader.readOrders(orders);
+        if (!checkDimensionsBill()){
+            throw (new WrongDimensionsBillException());
+        }
+        
+    }
+    
+    /**
+     * Prints the menu, bills and statistics for the restaurant.
+     * May lead to an exception if not
+     * @return void
+     */
+    public static void printAll() {
+        System.out.println(menu.toString());
+        System.out.println(orders.toString());
+        System.out.println(orders.showDishCounter());
+        System.out.println(orders.showUnorderedDishes());
+        System.out.println(orders.showOrdersProfit());
+    }
+    
+    /**
+     * Prints the menu.
+     * May lead to an exception if not
+     * @return void
+     */
+    public static void printMenu(){
+        System.out.println(menu.toString());
+    }
+    /**
+     * Prints the bills.
+     * May lead to an exception if not
+     * @return void
+     */
+    public static void printBills(){
+        System.out.println(orders.toString());
+    }
+    /**
+     * Prints the number of times each dish has been ordered.
+     * May lead to an exception if not
+     * @return void
+     */
+    public static void printDishCounter(){
+        System.out.println(orders.showDishCounter());
+    }
+    /**
+     * Prints the unordered dishes.
+     * May lead to an exception if not
+     * @return void
+     */
+    public static void printUnorderedDishes(){
+        System.out.println(orders.showUnorderedDishes());
+    }
+    /**
+     * Prints the dishes ordered by the profit to the restaurant.
+     * May lead to an exception if not
+     * @return void
+     */
+    public static void printProfitDishes(){
+        System.out.println(orders.showOrdersProfit());
+    }
+    /**
+     * Gui that allows to insert a table number and see the bill.
+     * May lead to an exception if not
+     * @return void
+     */
+    public static void guiTable(){
+        try {
+            orders.showTableBill();
+        } catch (NoMatchingIDException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
 }

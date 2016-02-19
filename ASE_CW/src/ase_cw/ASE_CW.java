@@ -9,6 +9,9 @@ import ase_cw.Model.CollectionFoodOrders;
 import ase_cw.Model.Manager;
 import ase_cw.Model.Menu;
 import ase_cw.Model.TestIO;
+import ase_cw.Model.WrongDimensionsBillException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,7 +24,8 @@ public class ASE_CW {
      */
     public static void main(String[] args) {
 
-//        //################################################### TEST MENU ################################################
+        try {
+            //        //################################################### TEST MENU ################################################
 //        MenuItem m1 = new MenuItem(Category.MAIN, "Quiche Lorraine", 14);
 //        MenuItem m2 = new MenuItem(Category.DESSERT, "Fondant aux chocolats", 4);
 //        MenuItem m3 = new MenuItem(Category.MAIN, "Pizza", 1.2);
@@ -47,53 +51,53 @@ public class ASE_CW {
 
 //        System.out.println(m1.toString());
 //        System.out.println(m2.toString());
-
-        /* Check must be done when storing the things read in MenuItem
+            
+            /* Check must be done when storing the things read in MenuItem
             - Number format (unit price): ---.--
             - Number size (unit price): 3.2
             - Dish name must not be too long < Manager.MENU_DISHNAME
-           Check must be done before starting reading anything
+            Check must be done before starting reading anything
             - Currency : three-letters ISO 4217 --> propose the user to change it before continuing or quit
             - Currency exists --> propose the user to change it before continuing or quit
             - Check that the global constants in the Manager class won't overtake Manager.WIDTH_BILL
-        */
+            */
 //        System.out.println(m9.toString());
 //        System.out.println(m10.toString());
+            
+            
+            //################################################# END TEST MENU ##############################################
 
-
-        //################################################# END TEST MENU ##############################################
-
-        Manager manager = new Manager();
-
-        //manager.checkDimensionsBill();
-
-        //################################################# BEGIN TEST TestIO ##############################################
-        boolean billShowed = false;
-        TestIO reader =new TestIO();
-        Menu menu = new Menu();
-        reader.readMenu(menu);
-        System.out.println(menu.toString());
-        
-        CollectionFoodOrders orders = new CollectionFoodOrders(menu);
-        reader.readOrders(orders);
-        System.out.println(orders.toString());
-        System.out.println(orders.showDishCounter());
-        System.out.println(orders.showUnorderedDishes());
-        System.out.println(orders.showOrdersProfit());
-
-        while (!billShowed) {
-            try {
-                orders.showTableBill();
-                billShowed = true;
-
-//            } catch (NumberFormatException e1) {
-//                System.out.println(e1.getMessage());
-
-            } catch (NoMatchingIDException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        //################################################# END TEST TestIO ##############################################
+//        Manager manager = new Manager();
+            
+            //manager.checkDimensionsBill();
+            
+            //################################################# BEGIN TEST TestIO ##############################################
+//        boolean billShowed = false;
+//        TestIO reader =new TestIO();
+//        Menu menu = new Menu();
+//        reader.readMenu(menu);
+//        System.out.println(menu.toString());
+//        
+//        CollectionFoodOrders orders = new CollectionFoodOrders(menu);
+//        reader.readOrders(orders);
+//        System.out.println(orders.toString());
+//        System.out.println(orders.showDishCounter());
+//        System.out.println(orders.showUnorderedDishes());
+//        System.out.println(orders.showOrdersProfit());
+//
+//        while (!billShowed) {
+//            try {
+//                orders.showTableBill();
+//                billShowed = true;
+//
+////            } catch (NumberFormatException e1) {
+////                System.out.println(e1.getMessage());
+//
+//            } catch (NoMatchingIDException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+            //################################################# END TEST TestIO ##############################################
         
 //        //################################################### TEST ORDERS ################################################
 //        
@@ -116,6 +120,11 @@ public class ASE_CW {
 //        
 //        System.out.println(ordersCol.toString());
 //        //################################################### END TEST ORDERS ################################################
+            Manager manager = new Manager();
+            manager.printAll();
+        } catch (WrongDimensionsBillException ex) {
+            Logger.getLogger(ASE_CW.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
