@@ -123,4 +123,14 @@ public class FoodOrderTest {
         assertTrue(o1.compareTo(o2) == 0);
     }
     
+    @Test 
+    public void testInvalidQuantityException() throws InvalidQuantityException {
+        try{
+            FoodOrder oNeg = new FoodOrder(1, "negative", -1);
+        }catch (InvalidQuantityException e) {
+            assertTrue(e.getMessage().equals("The quantity in the order negative is invalid.\n"));
+        }
+        
+    }
+    
 }
