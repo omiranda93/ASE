@@ -112,7 +112,7 @@ public class CollectionFoodOrders {
     public String getBill(int tableId){
         double bill=0;
         double dishTotal;
-        int discountPerc;
+        int discountPerc;    
         String result="Table " + tableId + " Summary\n";
         
         //Create the string formater to be applied to String.format
@@ -173,7 +173,7 @@ public class CollectionFoodOrders {
 
         } else{
             System.out.println(getBill(Integer.valueOf(id)));
-            JOptionPane.showMessageDialog(null, "<HTML>" + getBill(Integer.valueOf(id)) + "</HTML>");
+            JOptionPane.showMessageDialog(null, getBill(Integer.valueOf(id)));
         }
     }
     

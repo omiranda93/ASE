@@ -122,6 +122,7 @@ public class ASE_CW {
 //        //################################################### END TEST ORDERS ################################################
             Manager manager = new Manager();
             manager.printAll();
+            manager.guiTable();
         } catch (WrongDimensionsBillException ex) {
             System.out.println(ex.getMessage());
         }
