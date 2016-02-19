@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ase_cw.Model;
+package ase_cw.Test;
 
 import java.util.Set;
 import java.util.TreeSet;
+
+import ase_cw.Model.*;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -56,10 +58,10 @@ public class TestIOTest {
             add(menuItem2);
         }};
         
-        fOrder1 = new FoodOrder(1, "Toast", 2);
-        fOrder2 = new FoodOrder(1, "Roast Beef", 1);
-        fOrder3 = new FoodOrder(3, "Ice cream", 14);
-        fOrder4 = new FoodOrder(5, "Ricard", 3);
+//        fOrder1 = new FoodOrder(1, "Toast", 2);
+//        fOrder2 = new FoodOrder(1, "Roast Beef", 1);
+//        fOrder3 = new FoodOrder(3, "Ice cream", 14);
+//        fOrder4 = new FoodOrder(5, "Ricard", 3);
         
         orders = new CollectionFoodOrders(menu);
         

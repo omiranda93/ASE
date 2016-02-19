@@ -68,6 +68,7 @@ public class ASE_CW {
         //manager.checkDimensionsBill();
 
         //################################################# BEGIN TEST TestIO ##############################################
+        boolean billShowed = false;
         TestIO reader =new TestIO();
         Menu menu = new Menu();
         reader.readMenu(menu);
@@ -79,7 +80,19 @@ public class ASE_CW {
         System.out.println(orders.showDishCounter());
         System.out.println(orders.showUnorderedDishes());
         System.out.println(orders.showOrdersProfit());
-        //orders.showTableBill();
+
+        while (!billShowed) {
+            try {
+                orders.showTableBill();
+                billShowed = true;
+
+//            } catch (NumberFormatException e1) {
+//                System.out.println(e1.getMessage());
+
+            } catch (NoMatchingIDException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         //################################################# END TEST TestIO ##############################################
         
 //        //################################################### TEST ORDERS ################################################

@@ -60,9 +60,9 @@ public class Manager {
         
         if (bill >= 20 && bill < 50){
             discount = 5;
-        }else if(bill >= 51 && bill < 70){
+        }else if(bill >= 50 && bill < 70){
             discount = 10;
-        }else if(bill >=71){
+        }else if(bill >=70){
             discount = 20;
         }
         

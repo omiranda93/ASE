@@ -5,6 +5,8 @@
  */
 package ase_cw.Model;
 
+import ase_cw.NoMatchingIDException;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -140,7 +142,7 @@ public class CollectionFoodOrders {
         
         //Update the tables bill with the discount (if any)
         bill -= discount;
-        
+
         return result;
     }
     
@@ -148,18 +150,17 @@ public class CollectionFoodOrders {
      * Shows a dialog, prompting the user to enter a table ID and show a window with the 
      * bill for the provided table
      */
-    public void showTableBill(){
+    public void showTableBill() throws NoMatchingIDException {
         String id = JOptionPane.showInputDialog(null, "Enter table id");
-                
+
         if (!this.getKeys().contains(Integer.valueOf(id))){
             JOptionPane.showMessageDialog(null, "Table ID not existant.");
-            
+            throw new NoMatchingIDException(id);
+
         } else{
-        
-        System.out.println(getBill(Integer.valueOf(id)));
-        JOptionPane.showMessageDialog(null,getBill(Integer.valueOf(id)));
+            System.out.println(getBill(Integer.valueOf(id)));
+            JOptionPane.showMessageDialog(null,getBill(Integer.valueOf(id)));
         }
-        
     }
     
     /**
@@ -200,7 +201,7 @@ public class CollectionFoodOrders {
     
     /**
      * Creates a report showing the dishes that have not been ordered
-     * @return a list formated string representation of the unordered dishes.
+     * @return a list formatted string representation of the unordered dishes.
      */
     public String showUnorderedDishes(){
         String result="List of unoredered dishes:\n" + Manager.underlineString("List of unoredered dishes:")+"\n";
