@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ASE_CW.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ASE_CW&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">ase_cw</a> &gt; <span class="el_source">ASE_CW.java</span></div><h1>ASE_CW.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ase_cw;
+
+import ase_cw.Model.CollectionFoodOrders;
+import ase_cw.Model.Manager;
+import ase_cw.Model.Menu;
+import ase_cw.Model.TestIO;
+import ase_cw.Model.WrongDimensionsBillException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author omiranda93
+ */
+<span class="nc" id="L20">public class ASE_CW {</span>
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+
+        try {
+            //        //################################################### TEST MENU ################################################
+//        MenuItem m1 = new MenuItem(Category.MAIN, &quot;Quiche Lorraine&quot;, 14);
+//        MenuItem m2 = new MenuItem(Category.DESSERT, &quot;Fondant aux chocolats&quot;, 4);
+//        MenuItem m3 = new MenuItem(Category.MAIN, &quot;Pizza&quot;, 1.2);
+//        MenuItem m4 = new MenuItem(Category.STARTER, &quot;Oysters&quot;, 15.15);
+//        MenuItem m5 = new MenuItem(Category.DRINKS, &quot;Ricard&quot;, 20);
+//        MenuItem m6 = new MenuItem(Category.STARTER, &quot;Sushi&quot;, 12.10);
+//        MenuItem m7 = new MenuItem(Category.DESSERT, &quot;Tropezienne&quot;, 13);
+//        MenuItem m8 = new MenuItem(Category.DRINKS, &quot;Vodka&quot;, 7);
+//
+//        //Bug examples
+//        MenuItem m9 = new MenuItem(Category.MAIN, &quot;Way_Too_Long_Name_That_Wont_Fit_On_The_Bill_Blablablablablablabla&quot;, 13);
+//        MenuItem m10 = new MenuItem(Category.DRINKS, &quot;Thing&quot;, 7777777777.7777777);
+//
+//
+//
+//        MenuItem m11 = new MenuItem(Category.DESSERT, &quot;Fondant aux chocolats&quot;, 111); //Isn't added thanks to the set container !
+//        menu.addValue(Category.DESSERT, m2);
+//
+//        System.out.println(menu.toString());
+
+//        System.out.println(&quot;Res compare = &quot; + m1.compareTo(m2));
+//        System.out.println(&quot;Cat : &quot; + m1.getCategory() + &quot; and its ordinal value (better for comparing/switch) : &quot;+m1.getCategory().ordinal());
+
+//        System.out.println(m1.toString());
+//        System.out.println(m2.toString());
+            
+            /* Check must be done when storing the things read in MenuItem
+            - Number format (unit price): ---.--
+            - Number size (unit price): 3.2
+            - Dish name must not be too long &lt; Manager.MENU_DISHNAME
+            Check must be done before starting reading anything
+            - Currency : three-letters ISO 4217 --&gt; propose the user to change it before continuing or quit
+            - Currency exists --&gt; propose the user to change it before continuing or quit
+            - Check that the global constants in the Manager class won't overtake Manager.WIDTH_BILL
+            */
+//        System.out.println(m9.toString());
+//        System.out.println(m10.toString());
+            
+            
+            //################################################# END TEST MENU ##############################################
+
+//        Manager manager = new Manager();
+            
+            //manager.checkDimensionsBill();
+            
+            //################################################# BEGIN TEST TestIO ##############################################
+//        boolean billShowed = false;
+//        TestIO reader =new TestIO();
+//        Menu menu = new Menu();
+//        reader.readMenu(menu);
+//        System.out.println(menu.toString());
+//        
+//        CollectionFoodOrders orders = new CollectionFoodOrders(menu);
+//        reader.readOrders(orders);
+//        System.out.println(orders.toString());
+//        System.out.println(orders.showDishCounter());
+//        System.out.println(orders.showUnorderedDishes());
+//        System.out.println(orders.showOrdersProfit());
+//
+//        while (!billShowed) {
+//            try {
+//                orders.showTableBill();
+//                billShowed = true;
+//
+////            } catch (NumberFormatException e1) {
+////                System.out.println(e1.getMessage());
+//
+//            } catch (NoMatchingIDException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+            //################################################# END TEST TestIO ##############################################
+        
+//        //################################################### TEST ORDERS ################################################
+//        
+//        FoodOrder o1 = new FoodOrder(3, &quot;Roast Beef&quot;, 1);
+//        FoodOrder o2 = new FoodOrder(1, &quot;Smoked Salmon&quot;, 2);
+//        FoodOrder o3 = new FoodOrder(1, &quot;Carrot Soup&quot;, 1);
+//        FoodOrder o4 = new FoodOrder(1, &quot;Roast Beef&quot;, 2);
+//        FoodOrder o5 = new FoodOrder(3, &quot;Chocolate Cake&quot;, 1);
+//        FoodOrder o6 = new FoodOrder(2, &quot;Carrot Soup&quot;, 1);
+//        FoodOrder o7 = new FoodOrder(2, &quot;Roast Beef&quot;, 1);
+//        
+//        CollectionFoodOrders ordersCol = new CollectionFoodOrders(menu);
+//        ordersCol.addValue(o1.getTableId(), o1);
+//        ordersCol.addValue(o2.getTableId(), o2);
+//        ordersCol.addValue(o3.getTableId(), o3);
+//        ordersCol.addValue(o4.getTableId(), o4);
+//        ordersCol.addValue(o5.getTableId(), o5);
+//        ordersCol.addValue(o6.getTableId(), o6);
+//        ordersCol.addValue(o7.getTableId(), o7);
+//        
+//        System.out.println(ordersCol.toString());
+//        //################################################### END TEST ORDERS ################################################
+<span class="fc" id="L123">            Manager manager = new Manager();</span>
+<span class="fc" id="L124">            manager.printAll();</span>
+<span class="nc" id="L125">        } catch (WrongDimensionsBillException ex) {</span>
+<span class="nc" id="L126">            System.out.println(ex.getMessage());</span>
+<span class="fc" id="L127">        }</span>
+<span class="fc" id="L128">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

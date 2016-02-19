@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MenuItemTest.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ASE_CW&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">ase_cw.Test</a> &gt; <span class="el_source">MenuItemTest.java</span></div><h1>MenuItemTest.java</h1><pre class="source lang-java linenums">package ase_cw.Test;
+
+import ase_cw.Model.Category;
+import ase_cw.Model.Manager;
+import ase_cw.Model.MenuItem;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+
+/**
+ * Tests methods from the class representing a food item figuring on the menu of the restaurant
+ *
+ * Date: 09/02/2016
+ * Time: 8:16 PM
+ *
+ * @author Cécile Riquart
+ * @version 1.0
+ */
+<span class="nc" id="L19">public class MenuItemTest {</span>
+
+    private MenuItem menuItem;
+    private MenuItem otherMenuItem1;
+    private MenuItem otherMenuItem2;
+    private MenuItem otherMenuItem3;
+    private MenuItem menuItemSetter;
+    private String new_dishname;
+    private double new_price;
+    private String dishnameToString1;
+    private MenuItem longMenuItem;
+    private String dishnameToString2;
+    private String res;
+    private MenuItem longMenuItem2;
+    private String dishnameToString3;
+
+    @Before
+    public void setUp() {
+<span class="nc" id="L37">        menuItem = new MenuItem(Category.DESSERT, &quot;Crème Brûlée&quot;, 4.50);</span>
+<span class="nc" id="L38">        otherMenuItem1 = new MenuItem(Category.MAIN, &quot;Crème Brûlée&quot;, 12.7);</span>
+<span class="nc" id="L39">        otherMenuItem2 = new MenuItem(Category.MAIN, &quot;Boeuf bourguignon&quot;, 1.2);</span>
+<span class="nc" id="L40">        otherMenuItem3 = new MenuItem(Category.MAIN, &quot;Quiche lorraine&quot;, 4);</span>
+<span class="nc" id="L41">        menuItemSetter = new MenuItem(Category.MAIN, &quot;Toast&quot;, 1.1);</span>
+<span class="nc" id="L42">        new_dishname = &quot;French tartine&quot;;</span>
+<span class="nc" id="L43">        new_price = 1;</span>
+<span class="nc" id="L44">        res = &quot;%-&quot; + Manager.ALINEA_DISHNAME + &quot;s %-&quot; +</span>
+                Manager.DISHNAME_TEXT + &quot;s %-&quot;   +
+                Manager.PRICE + &quot;s %-&quot;           +
+                Manager.CURRENCY_SIZE +&quot;s&quot;;
+
+<span class="nc" id="L49">        dishnameToString1 = String.format(res, &quot;&quot;, menuItem.getName().toUpperCase(), menuItem.getPrice(), Manager.CURRENCY) + &quot;\n&quot;;</span>
+
+<span class="nc" id="L51">        longMenuItem = new MenuItem(Category.DESSERT, &quot;azertyuiopqsdfghjklmwxcvbnazertyuiopqsdfgazertyuiopqsdfghjklm&quot;, 12);</span>
+
+<span class="nc" id="L53">        dishnameToString2 = String.format(res, &quot;&quot;, longMenuItem.getName().substring(0,</span>
+<span class="nc" id="L54">                Manager.DISHNAME_TEXT-1).toUpperCase(), &quot;&quot;, &quot;&quot;) + &quot;\n&quot;</span>
+<span class="nc" id="L55">            + String.format(res, &quot;&quot;, longMenuItem.getName().substring(Manager.DISHNAME_TEXT-1,</span>
+<span class="nc" id="L56">                longMenuItem.getName().length()).toUpperCase(), longMenuItem.getPrice(), Manager.CURRENCY) + &quot;\n&quot;;</span>
+
+<span class="nc" id="L58">        longMenuItem2 = new MenuItem(Category.DESSERT, &quot;azertyuiopqsdfghjklmwcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopp&quot; +</span>
+                &quot;qsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazert&quot;, 13.7);
+
+<span class="nc" id="L61">        dishnameToString3 = String.format(res, &quot;&quot;, longMenuItem2.getName().substring(0, Manager.DISHNAME_TEXT-1).toUpperCase(), &quot;&quot;, &quot;&quot;) + &quot;\n&quot; +</span>
+<span class="nc" id="L62">            String.format(res, &quot;&quot;, longMenuItem2.getName().substring(Manager.DISHNAME_TEXT-1, 2*(Manager.DISHNAME_TEXT-1)).toUpperCase(), &quot;&quot;, &quot;&quot;) +&quot;\n&quot; +</span>
+<span class="nc" id="L63">            String.format(res, &quot;&quot;, longMenuItem2.getName().substring(2*(Manager.DISHNAME_TEXT-1), longMenuItem2.getName().length()).toUpperCase(), longMenuItem2.getPrice(), Manager.CURRENCY) +&quot;\n&quot;;</span>
+<span class="nc" id="L64">    }</span>
+
+    @After
+    public void tearDown() {
+<span class="nc" id="L68">        System.out.println(&quot; ############# End MenuItem Testing ###########&quot;);</span>
+<span class="nc" id="L69">    }</span>
+
+    @Test
+    public void testConstructor() {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        assertTrue(&quot;Test on constructor() failed&quot;, ((menuItem.getName().equals(&quot;Crème Brûlée&quot;) &amp;&amp;</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">                (menuItem.getPrice() == 4.50)) &amp;&amp; (menuItem.getCategory().equals(Category.DESSERT))));</span>
+<span class="nc" id="L75">    }</span>
+
+    @Test
+    public void testGetCategory() {
+<span class="nc" id="L79">        assertEquals(&quot;Test on getName() failed&quot;, Category.DESSERT, menuItem.getCategory());</span>
+<span class="nc" id="L80">    }</span>
+
+    @Test
+    public void testGetName() {
+<span class="nc" id="L84">        assertEquals(&quot;Test on getCategory() failed&quot;, &quot;Crème Brûlée&quot;, menuItem.getName());</span>
+<span class="nc" id="L85">    }</span>
+
+    @Test
+    public void testGetPrice() {
+<span class="nc" id="L89">        assertEquals(&quot;Test on getPrice() failed&quot;, 4.50, menuItem.getPrice(), 0.0);</span>
+<span class="nc" id="L90">    }</span>
+
+    @Test
+    public void testSetCategory() {
+<span class="nc" id="L94">        menuItemSetter.setCategory(Category.STARTER);</span>
+<span class="nc" id="L95">        assertEquals(&quot;Test on setCategory() failed&quot;, Category.STARTER, menuItemSetter.getCategory());</span>
+<span class="nc" id="L96">    }</span>
+
+    @Test
+    public void testSetName() {
+<span class="nc" id="L100">        menuItemSetter.setName(new_dishname);</span>
+<span class="nc" id="L101">        assertEquals(&quot;Test on setName() failed&quot;, new_dishname, menuItemSetter.getName());</span>
+<span class="nc" id="L102">    }</span>
+
+    @Test
+    public void testSetPrice() {
+<span class="nc" id="L106">        menuItemSetter.setPrice(new_price);</span>
+<span class="nc" id="L107">        assertEquals(&quot;Test on setPrice() failed&quot;, new_price, menuItemSetter.getPrice(), 0.0);</span>
+<span class="nc" id="L108">    }</span>
+
+    @Test
+    public void testEqual() {
+<span class="nc" id="L112">        int result = menuItem.compareTo(otherMenuItem1);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        assertTrue(&quot;Is expected to be equal&quot;, result == 0);</span>
+<span class="nc" id="L114">    }</span>
+
+    @Test
+    public void testGreaterThan() {
+<span class="nc" id="L118">        int result = menuItem.compareTo(otherMenuItem2);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        assertTrue(&quot;Is expected to be greater than&quot;, result &gt;= 1);</span>
+<span class="nc" id="L120">    }</span>
+
+    @Test
+    public void testLessThan() {
+<span class="nc" id="L124">        int result = menuItem.compareTo(otherMenuItem3);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        assertTrue(&quot;Is expected to be less than&quot;, result &lt;= -1);</span>
+<span class="nc" id="L126">    }</span>
+
+    @Test
+    public void testToString1() {
+<span class="nc" id="L130">        assertEquals(&quot;Test on toString() with a short dish name failed&quot;, dishnameToString1, menuItem.toString());</span>
+<span class="nc" id="L131">    }</span>
+
+    @Test
+    public void testToString2() {
+<span class="nc" id="L135">        assertEquals(&quot;Test on toString() with a rather long a dish name failed&quot;, dishnameToString2, longMenuItem.toString());</span>
+<span class="nc" id="L136">    }</span>
+
+    @Test
+    public void testToString3() {
+<span class="nc" id="L140">        assertEquals(&quot;Test on toString() with a long dish name failed&quot;, dishnameToString3, longMenuItem2.toString());</span>
+<span class="nc" id="L141">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
