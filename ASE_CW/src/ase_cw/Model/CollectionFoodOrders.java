@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  * The collection that holds all the Order objects.
@@ -146,20 +147,34 @@ public class CollectionFoodOrders {
         return result;
     }
     
+    public String[] jtGetBill(int tableId){
+        String[] s = new String[10];
+        
+        
+        return s;
+    }
+    
     /**
      * Shows a dialog, prompting the user to enter a table ID and show a window with the 
      * bill for the provided table
+     * @throws ase_cw.NoMatchingIDException
      */
     public void showTableBill() throws NoMatchingIDException {
         String id = JOptionPane.showInputDialog(null, "Enter table id");
 
+        if (id != null){
+            if (!Manager.isInteger(id)) {throw new NoMatchingIDException(id);}
+        }else{
+            throw new NumberFormatException();
+        }
+  
         if (!this.getKeys().contains(Integer.valueOf(id))){
-            JOptionPane.showMessageDialog(null, "Table ID not existant.");
+            JOptionPane.showMessageDialog(null, "Table ID not existant.", "Attention", JOptionPane.ERROR_MESSAGE);
             throw new NoMatchingIDException(id);
 
         } else{
             System.out.println(getBill(Integer.valueOf(id)));
-            JOptionPane.showMessageDialog(null,getBill(Integer.valueOf(id)));
+            JOptionPane.showMessageDialog(null, "<HTML>" + getBill(Integer.valueOf(id)) + "</HTML>");
         }
     }
     

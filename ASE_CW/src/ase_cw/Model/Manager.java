@@ -69,6 +69,17 @@ public class Manager {
         return discount;
     }
 
+    public static boolean isInteger(String s) {
+        try { 
+            Integer.parseInt(s); 
+        } catch(NumberFormatException ex) { 
+            return false; 
+        }
+        // only got here if we didn't return false
+        return true;
+    }
+    
+    
     /**
      * Checks whether the dimensions provided for the layout of the bill are correct.
      * May lead to an exception if not

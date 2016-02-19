@@ -12,6 +12,6 @@ package ase_cw;
 public class NoMatchingIDException extends Exception {
 
     public NoMatchingIDException(String unknownID){
-        super("There is no staff member with the ID: "+unknownID+"\n");
+        super("There is no table with ID: "+unknownID+"\n");
     }
 }

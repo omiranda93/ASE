@@ -86,8 +86,8 @@ public class ASE_CW {
                 orders.showTableBill();
                 billShowed = true;
 
-//            } catch (NumberFormatException e1) {
-//                System.out.println(e1.getMessage());
+            } catch (NumberFormatException e1) {
+                break;
 
             } catch (NoMatchingIDException e) {
                 System.out.println(e.getMessage());
