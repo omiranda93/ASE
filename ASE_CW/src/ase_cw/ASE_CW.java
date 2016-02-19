@@ -5,13 +5,8 @@
  */
 package ase_cw;
 
-import ase_cw.Model.CollectionFoodOrders;
 import ase_cw.Model.Manager;
-import ase_cw.Model.Menu;
-import ase_cw.Model.TestIO;
 import ase_cw.Model.WrongDimensionsBillException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

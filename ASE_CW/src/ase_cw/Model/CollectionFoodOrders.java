@@ -156,11 +156,7 @@ public class CollectionFoodOrders {
                 } else {
                     result += String.format(formater, "", order.getDishName(), order.getQuantity(),"*", NamePricePair.get(order.getDishName()),"=" ,dishTotal, Manager.CURRENCY) + "\n";
                 }
-               
-               
-               
-               
-               //result += String.format(formater,"",order.getDishName(), order.getQuantity(),"*",NamePricePair.get(order.getDishName()) ,"=" ,dishTotal, Manager.CURRENCY) +"\n";
+
                bill += dishTotal;
             }
         discountPerc = Manager.calculateDiscount(bill);
@@ -186,7 +182,7 @@ public class CollectionFoodOrders {
      */
     public void showTableBill() throws NoMatchingIDException {
         String id = JOptionPane.showInputDialog(null, "Enter table id");
-        JTextArea textArea = new JTextArea(getBill(Integer.valueOf(id)),5, 50);
+        //JTextArea textArea = new JTextArea(getBill(Integer.valueOf(id)),5, 50);
 
         if (id != null){
             if (!Manager.isInteger(id)) {
@@ -197,12 +193,17 @@ public class CollectionFoodOrders {
             throw new NumberFormatException();
         }
   
-        if (!this.getKeys().contains(Integer.valueOf(id))){
+        int t_id = Integer.valueOf(id); //convert it to Integer
+        if (t_id < 0){
+            JOptionPane.showMessageDialog(null, "Table ID can not be a negative number", "Attention", JOptionPane.ERROR_MESSAGE);
+            throw new NumberFormatException();
+        }
+        if (!this.getKeys().contains(t_id)){
             JOptionPane.showMessageDialog(null, "Table ID not existant.", "Attention", JOptionPane.ERROR_MESSAGE);
             throw new NoMatchingIDException(id);
 
         } else{
-            JOptionPane.showMessageDialog(null, textArea, "Table Summary", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, getBill(Integer.valueOf(id)));
         }
     }
     
