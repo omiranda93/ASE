@@ -119,6 +119,7 @@ public class Manager {
     public Manager() throws WrongDimensionsBillException{
         
         reader.readMenu(menu);
+        orders = new CollectionFoodOrders(menu);
         reader.readOrders(orders);
         if (!checkDimensionsBill()){
             throw (new WrongDimensionsBillException());
