@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
 /**
  * The collection that holds all the Order objects.
