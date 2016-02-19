@@ -196,7 +196,7 @@ public class CollectionFoodOrders {
         int t_id = Integer.valueOf(id); //convert it to Integer
         if (t_id < 0){
             JOptionPane.showMessageDialog(null, "Table ID can not be a negative number", "Attention", JOptionPane.ERROR_MESSAGE);
-            throw new NumberFormatException();
+            throw new NoMatchingIDException(id);
         }
         if (!this.getKeys().contains(t_id)){
             JOptionPane.showMessageDialog(null, "Table ID not existant.", "Attention", JOptionPane.ERROR_MESSAGE);
