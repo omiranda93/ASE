@@ -17,10 +17,18 @@ import static org.junit.Assert.*;
  */
 public class ManagerTest {
     private String underlinedString;
+    private double bill1, bill2, bill3, bill4;
+    private String string_int, string_int2;
 
     @Before
     public void setUp() {
         underlinedString = "====";
+        bill1 = 10;
+        bill2 = 25.9;
+        bill3 = 57.1;
+        bill4 = 70;
+        string_int = "not_ant_int";
+        string_int2 = "2";
     }
 
     @After
@@ -31,5 +39,35 @@ public class ManagerTest {
     @Test
     public void testUnderlineString() {
         assertEquals("Test on underlineString() failed", underlinedString, Manager.underlineString("MENU"));
+    }
+
+    @Test
+    public void testCalculateDiscount1() {
+        assertEquals("Test on calculateDiscount() failed", 0, Manager.calculateDiscount(bill1));
+    }
+
+    @Test
+    public void testCalculateDiscount2() {
+        assertEquals("Test on calculateDiscount() failed", 5, Manager.calculateDiscount(bill2));
+    }
+
+    @Test
+    public void testCalculateDiscount3() {
+        assertEquals("Test on calculateDiscount() failed", 10, Manager.calculateDiscount(bill3));
+    }
+
+    @Test
+    public void testCalculateDiscount4() {
+        assertEquals("Test on calculateDiscount() failed", 20, Manager.calculateDiscount(bill4));
+    }
+
+    @Test
+    public void testIsInteger1() {
+        assertFalse("Test on isInteger() failed", Manager.isInteger(string_int));
+    }
+
+    @Test
+    public void testIsInteger2() {
+        assertTrue("Test on isInteger() failed", Manager.isInteger(string_int2));
     }
 }
