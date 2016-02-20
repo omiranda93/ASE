@@ -27,7 +27,7 @@ public class TestIOTest {
     private Menu menu,menu2;
     private MenuItem m1, m2, m3, m4,m5, m6, m7,m8, m9, m10,m11, m12, m13,m14, m15,
     m16,m17, m18, m19,m20, m21, m22,m23, m24, m25,m26, m27, m28,m29, m30,
-    m31,m32, m33, m34,m35, m36, m37,m38, m39;
+    m31,m32, m33, m34,m35, m36, m37,m38, m39, m40;
     private CollectionFoodOrders orders,ordersCol;
 
     //Bug examples
@@ -46,7 +46,7 @@ public class TestIOTest {
         m5 = new MenuItem(Category.STARTER, "Carrot Soup", 3.5);
         m6 = new MenuItem(Category.DESSERT, "Pudding", 4.00);
         m7 = new MenuItem(Category.DRINKS, "Coke", 2.00);
-        m8 = new MenuItem(Category.STARTER, "DIY British beef crostinin", 5.00);
+        m8 = new MenuItem(Category.STARTER, "DIY British beef crostini", 5.00);
         m9 = new MenuItem(Category.STARTER, "Cheesy sprout fondue", 5.50);
         m10 = new MenuItem(Category.STARTER, "Lobster, green bean & radicchio salad", 5.50);
         m11 = new MenuItem(Category.STARTER, "Classic potted shrimps", 3.00);
@@ -70,14 +70,15 @@ public class TestIOTest {
         m29 = new MenuItem(Category.MAIN, "Favorite Meatloaf", 8.50);
         m30 = new MenuItem(Category.DESSERT, "Chocolate mousse", 2.5);
         m31 = new MenuItem(Category.DESSERT, "Choc a block", 3.00);
-        m32 = new MenuItem(Category.MAIN, "SGreek Lamb Gyros with Tzatziki Sauce", 13.00);
+        m32 = new MenuItem(Category.MAIN, "Greek Lamb Gyros with Tzatziki Sauce", 13.00);
         m33 = new MenuItem(Category.DRINKS, "Fanta orange", 2.00);
         m34 = new MenuItem(Category.DESSERT, "Chocolate-Mint Bars", 5.00);
         m35 = new MenuItem(Category.DESSERT, "Oatmeal Pecan Pie", 4.00);
         m36 = new MenuItem(Category.DESSERT, "Chocolate banoffee pie", 5.00);
-        m37 = new MenuItem(Category.DESSERT, "SSticky date pudding", 6.00);
+        m37 = new MenuItem(Category.DESSERT, "Sticky date pudding", 6.00);
         m38 = new MenuItem(Category.DRINKS, "Red wine", 3.00);
         m39 = new MenuItem(Category.MAIN, "Crab Cakes with Remoulade Sauce", 9.5);
+        m40 = new MenuItem(Category.DESSERT, "Chocolate Cake", 4.50);
 
         instance = new TestIO();
         menu = new Menu();
@@ -125,6 +126,7 @@ public class TestIOTest {
             menu2.addValue(Category.DESSERT, m37);
             menu2.addValue(Category.DRINKS, m38);
             menu2.addValue(Category.MAIN, m39);
+            menu2.addValue(Category.DESSERT, m40);
         } catch (WrongCategoryException ex) {
             Logger.getLogger(TestIOTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -167,7 +169,7 @@ public class TestIOTest {
         System.out.println("readMenu");
         //TestIO instance = new TestIO();
         instance.readMenu(menu);
-        assertEquals(menu2, menu);
+        assertEquals(menu2.toString(), menu.toString());
     }
 
     /**
