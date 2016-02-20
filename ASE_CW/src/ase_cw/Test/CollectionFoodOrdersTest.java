@@ -9,7 +9,7 @@ import ase_cw.Model.Category;
 import ase_cw.Model.CollectionFoodOrders;
 import ase_cw.Model.FoodOrder;
 import ase_cw.Model.InvalidQuantityException;
-import ase_cw.Model.Manager;;
+import ase_cw.Model.Manager;
 import ase_cw.Model.Menu;
 import ase_cw.Model.MenuItem;
 import ase_cw.Model.WrongCategoryException;

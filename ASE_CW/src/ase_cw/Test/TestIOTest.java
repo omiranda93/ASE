@@ -42,7 +42,7 @@ public class TestIOTest {
 
 
 
-    
+
 
     public TestIOTest() {
     }
@@ -57,6 +57,11 @@ public class TestIOTest {
     
     @Before
     public void setUp() {
+        menu = new Menu();
+        menu2 = new Menu();
+        orders = new CollectionFoodOrders(menu);
+        ordersCol = new CollectionFoodOrders(menu2);
+
         try {
             menu2.addValue(Category.MAIN, m1);
             menu2.addValue(Category.DESSERT, m2);
