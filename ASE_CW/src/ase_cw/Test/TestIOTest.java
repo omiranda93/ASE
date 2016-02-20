@@ -79,6 +79,7 @@ public class TestIOTest {
         m37 = new MenuItem(Category.DESSERT, "Sticky date pudding", 6.00);
         m38 = new MenuItem(Category.DRINKS, "Red wine", 3.00);
         m39 = new MenuItem(Category.MAIN, "Crab Cakes with Remoulade Sauce", 9.5);
+        m40 = new MenuItem(Category.DESSERT, "Chocolate Cake", 4.50);
 
         instance = new TestIO();
         menu = new Menu();
