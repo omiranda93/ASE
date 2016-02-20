@@ -1,5 +1,7 @@
 package ase_cw.Model;
 
+import java.io.IOException;
+
 /**
  * Represents the manager of the system
  *

@@ -24,9 +24,10 @@ import java.util.logging.Logger;
  */
 public class TestIO {
     //Global variables
-    //Depending on the OS you may need to change the paths
-    private static String inputFileMenu = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";ASE_CW/src/ase_cw/menu.txt
-    private static String inputFileOrder = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt";ASE_CW/src/ase_cw/orders.txt
+    //Depending on the OS the paths might need to change
+    private static final String inputFileMenu = "src/ase_cw/menu.txt";
+    private static final String inputFileOrder = "src/ase_cw/orders.txt";
+    private static final String outputFile = "src/ase_cw/output.txt";
     
     public void readMenu(Menu menu){
         BufferedReader readBuffer;
@@ -61,7 +62,7 @@ public class TestIO {
             
         }catch (IOException e1){
             System.out.println("There was an error loading the menu from file.");
-
+            System.exit(1);
         } catch (WrongCategoryException e2) {
             System.out.println(e2.getMessage());
         } catch (NumberFormatException e3){
@@ -150,6 +151,7 @@ public class TestIO {
             System.out.println(e1.getMessage());
         }catch (IOException e2){
             System.out.println("There was an error loading the orders from file.");
+            System.exit(1);
         } catch (NumberFormatException e3){
             System.out.println("One of the quantities introduced is not a number. The file could not be loaded.");
         }
@@ -158,7 +160,7 @@ public class TestIO {
     public void writeToFile (String menu, String orders, String numberDish, String unorderedDishes, String profits){
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter("/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/output.txt"));
+            writer = new BufferedWriter(new FileWriter(outputFile));
             writer.write(menu);
             writer.write("-----------------------------------------------------------------------------------\n");
             writer.write(orders);
@@ -172,6 +174,7 @@ public class TestIO {
             writer.close();
         } catch (IOException ex) {
             Logger.getLogger(TestIO.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(0);
         }
     }
 }
