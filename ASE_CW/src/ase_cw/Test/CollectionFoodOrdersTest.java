@@ -240,6 +240,7 @@ public class CollectionFoodOrdersTest {
         String result = instance.showOrdersProfit();
         System.out.println(result);
         assertEquals(expResult, result);
+        
     }
     
 }
