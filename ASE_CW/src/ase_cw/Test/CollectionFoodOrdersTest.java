@@ -32,7 +32,7 @@ public class CollectionFoodOrdersTest {
     private Menu menu;
     private MenuItem menuItem1, menuItem2, menuItem3, menuItem4, menuItem5;
     private FoodOrder o1, o2, o3, o4, o5;
-    private String sampleBill;
+    private String sampleBill, stats;
     
     String formater = "%-" 
         + Manager.ALINEA_DISHNAME + "s %-" 
@@ -86,6 +86,11 @@ public class CollectionFoodOrdersTest {
        sampleBill += String.format(formater,"","Total for this table:","","","","",11.6, "GBP") +"\n";
        sampleBill += String.format(formater,"","Discount: " + 0 + "%","","","","","0.0", "GBP") +"\n";
        sampleBill += String.format(formater,"","Discounted total:","","","","",11.6, "GBP") +"\n\n";
+       
+       stats = "Dish name                                                    Profit\n====================================================================\n";
+       stats += String.format("%-60s %-6s %-3s", "Coca-Cola","1.6","GBP") +"\n";
+       stats += String.format("%-60s %-6s %-3s", "Chocolate mousse","10.0","GBP") +"\n";
+       stats += String.format("%-60s %-6s %-3s", "Ricard","10.0","GBP") +"\n";
        
     }
     
@@ -190,18 +195,6 @@ public class CollectionFoodOrdersTest {
     }
 
     /**
-     * Test of showTableBill method, of class CollectionFoodOrders.
-     */
-//    @Test
-//    public void testShowTableBill() {
-//        System.out.println("showTableBill");
-//        CollectionFoodOrders instance = null;
-//        instance.showTableBill();
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-
-    /**
      * Test of showDishCounter method, of class CollectionFoodOrders.
      */
     @Test
@@ -243,7 +236,7 @@ public class CollectionFoodOrdersTest {
         instance.addValue(o4.getTableId(), o4);
         instance.addValue(o5.getTableId(), o5);
         instance.addValue(o3.getTableId(), o3);
-        String expResult = "* u *";
+        String expResult = stats;
         String result = instance.showOrdersProfit();
         System.out.println(result);
         assertEquals(expResult, result);
