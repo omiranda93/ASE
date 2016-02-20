@@ -29,7 +29,7 @@ public class FoodOrder implements Comparable&lt;FoodOrder&gt;{
 <span class="fc" id="L29">    public FoodOrder(int tableId, String dish, int quantity) throws InvalidQuantityException{</span>
 <span class="fc" id="L30">        this.dish=dish;</span>
 <span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (quantity &gt;= 0){</span>
-<span class="fc" id="L32">        this.quantity=quantity;</span>
+<span class="fc" id="L32">            this.quantity=quantity;</span>
         }else{
 <span class="nc" id="L34">            throw new InvalidQuantityException(dish);</span>
         }

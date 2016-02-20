@@ -43,7 +43,7 @@ public class Manager {
      * menu: contains the menu
      * orders: contains the orders
      */
-    public static TestIO reader =new TestIO();
+    public static TestIO readerWriter =new TestIO();
     private static Menu menu = new Menu();
     private static CollectionFoodOrders orders = new CollectionFoodOrders(menu);
 
@@ -112,9 +112,9 @@ public class Manager {
     public Manager() throws WrongDimensionsBillException{
         
         try {
-            reader.readMenu(menu);
+            readerWriter.readMenu(menu);
             orders = new CollectionFoodOrders(menu);
-            reader.readOrders(orders);
+            readerWriter.readOrders(orders);
             if (!checkDimensionsBill()){
                 throw (new WrongDimensionsBillException());
             }
@@ -201,6 +201,10 @@ public class Manager {
         }
 
 
+    }
+    
+    public static void writeInFile(){
+        readerWriter.writeToFile(menu.toString(), orders.toString(), orders.showDishCounter(), orders.showUnorderedDishes(), orders.showOrdersProfit());
     }
     
 }

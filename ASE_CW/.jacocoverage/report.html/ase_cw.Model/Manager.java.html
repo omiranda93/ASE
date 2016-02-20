@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Manager.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ASE_CW&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">ase_cw.Model</a> &gt; <span class="el_source">Manager.java</span></div><h1>Manager.java</h1><pre class="source lang-java linenums">package ase_cw.Model;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
 /**
  * Represents the manager of the system
  *
@@ -28,7 +24,6 @@ public class Manager {
      * MAX_TOTAL : Width of the maximum size of totals (final or not)
      * MENU: Title of the menu
      * TABLE_SUMMARY : Title of the order summary
-     * DISCOUNT : Discount (why not set a rule for this ???????????????????????????????????????????????????????????????)
      */
     public static final int WIDTH_BILL = 120;
     public static final int ALINEA_DISHNAME = 2;
@@ -41,17 +36,16 @@ public class Manager {
     public static final int MAX_TOTAL = 6;
     public static final String MENU = &quot;MENU&quot;;
     public static final String TABLE_SUMMARY = &quot;TABLES SUMMARY&quot;;
-    //public static int DISCOUNT = 10;
-    
+
      /**
      * Tuneable
      * reader: allows the input output operations
      * menu: contains the menu
      * orders: contains the orders
      */
-<span class="fc" id="L52">    public static TestIO reader =new TestIO();</span>
-<span class="fc" id="L53">    private static Menu menu = new Menu();</span>
-<span class="fc" id="L54">    private static CollectionFoodOrders orders = new CollectionFoodOrders(menu);</span>
+<span class="fc" id="L46">    public static TestIO reader =new TestIO();</span>
+<span class="fc" id="L47">    private static Menu menu = new Menu();</span>
+<span class="fc" id="L48">    private static CollectionFoodOrders orders = new CollectionFoodOrders(menu);</span>
 
     /**
      * &quot;Underline&quot; with the &quot;=&quot; symbol a string
@@ -60,7 +54,7 @@ public class Manager {
      */
     public static String underlineString(String s) {
 
-<span class="fc" id="L63">        return (new String(new char[s.length()]).replace(&quot;\0&quot;, &quot;=&quot;));</span>
+<span class="fc" id="L57">        return (new String(new char[s.length()]).replace(&quot;\0&quot;, &quot;=&quot;));</span>
     }
     
     /**
@@ -69,27 +63,27 @@ public class Manager {
      * @return the discount as a percentage
      */
     public static int calculateDiscount(double bill){
-<span class="fc" id="L72">        int discount=0;</span>
+<span class="fc" id="L66">        int discount=0;</span>
         
-<span class="pc bpc" id="L74" title="1 of 4 branches missed.">        if (bill &gt;= 20 &amp;&amp; bill &lt; 50){</span>
-<span class="fc" id="L75">            discount = 5;</span>
-<span class="pc bpc" id="L76" title="2 of 4 branches missed.">        }else if(bill &gt;= 50 &amp;&amp; bill &lt; 70){</span>
-<span class="fc" id="L77">            discount = 10;</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        }else if(bill &gt;=70){</span>
-<span class="nc" id="L79">            discount = 20;</span>
+<span class="pc bpc" id="L68" title="1 of 4 branches missed.">        if (bill &gt;= 20 &amp;&amp; bill &lt; 50){</span>
+<span class="fc" id="L69">            discount = 5;</span>
+<span class="pc bpc" id="L70" title="2 of 4 branches missed.">        }else if(bill &gt;= 50 &amp;&amp; bill &lt; 70){</span>
+<span class="fc" id="L71">            discount = 10;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        }else if(bill &gt;=70){</span>
+<span class="nc" id="L73">            discount = 20;</span>
         }
         
-<span class="fc" id="L82">        return discount;</span>
+<span class="fc" id="L76">        return discount;</span>
     }
 
     public static boolean isInteger(String s) {
         try { 
-<span class="nc" id="L87">            Integer.parseInt(s); </span>
-<span class="nc" id="L88">        } catch(NumberFormatException ex) { </span>
-<span class="nc" id="L89">            return false; </span>
-<span class="nc" id="L90">        }</span>
+<span class="fc" id="L81">            Integer.parseInt(s); </span>
+<span class="nc" id="L82">        } catch(NumberFormatException ex) { </span>
+<span class="nc" id="L83">            return false; </span>
+<span class="fc" id="L84">        }</span>
         // only got here if we didn't return false
-<span class="nc" id="L92">        return true;</span>
+<span class="fc" id="L86">        return true;</span>
     }
     
     
@@ -100,14 +94,14 @@ public class Manager {
      */
     public boolean checkDimensionsBill() {
 
-<span class="fc" id="L103">        int menu_format = (ALINEA_DISHNAME + DISHNAME_TEXT + PRICE + CURRENCY_SIZE + 3);</span>
+<span class="fc" id="L97">        int menu_format = (ALINEA_DISHNAME + DISHNAME_TEXT + PRICE + CURRENCY_SIZE + 3);</span>
 
-<span class="fc" id="L105">        int orders_format = DISHNAME_TEXT + QUANTITY + ALINEA_PRICE + PRICE + MAX_TOTAL + 7;</span>
+<span class="fc" id="L99">        int orders_format = DISHNAME_TEXT + QUANTITY + ALINEA_PRICE + PRICE + MAX_TOTAL + 7;</span>
 
         /* NB : No need to check the frequency report and the total summary format because they are &quot;sub objects&quot; of
         menu or table summary layout */
 
-<span class="pc bpc" id="L110" title="3 of 4 branches missed.">        return ((menu_format &lt;= WIDTH_BILL) || (orders_format &lt;= WIDTH_BILL));</span>
+<span class="pc bpc" id="L104" title="3 of 4 branches missed.">        return ((menu_format &lt;= WIDTH_BILL) || (orders_format &lt;= WIDTH_BILL));</span>
     }
     
     /**
@@ -115,20 +109,20 @@ public class Manager {
      * @param 
      * @return
      */
-<span class="fc" id="L118">    public Manager() throws WrongDimensionsBillException{</span>
+<span class="fc" id="L112">    public Manager() throws WrongDimensionsBillException{</span>
         
         try {
-<span class="fc" id="L121">            reader.readMenu(menu);</span>
-<span class="fc" id="L122">            orders = new CollectionFoodOrders(menu);</span>
-<span class="fc" id="L123">            reader.readOrders(orders);</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">            if (!checkDimensionsBill()){</span>
-<span class="nc" id="L125">                throw (new WrongDimensionsBillException());</span>
+<span class="fc" id="L115">            reader.readMenu(menu);</span>
+<span class="fc" id="L116">            orders = new CollectionFoodOrders(menu);</span>
+<span class="fc" id="L117">            reader.readOrders(orders);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">            if (!checkDimensionsBill()){</span>
+<span class="nc" id="L119">                throw (new WrongDimensionsBillException());</span>
             }
-<span class="nc" id="L127">        } catch (NoMatchingIDException ex) {</span>
-<span class="nc" id="L128">            System.out.println(ex.getMessage());</span>
-<span class="fc" id="L129">        }</span>
+<span class="nc" id="L121">        } catch (NoMatchingIDException ex) {</span>
+<span class="nc" id="L122">            System.out.println(ex.getMessage());</span>
+<span class="fc" id="L123">        }</span>
         
-<span class="fc" id="L131">    }</span>
+<span class="fc" id="L125">    }</span>
     
     /**
      * Prints the menu, bills and statistics for the restaurant.
@@ -136,12 +130,12 @@ public class Manager {
      * @return void
      */
     public static void printAll() {
-<span class="fc" id="L139">        System.out.println(menu.toString());</span>
-<span class="fc" id="L140">        System.out.println(orders.toString());</span>
-<span class="fc" id="L141">        System.out.println(orders.showDishCounter());</span>
-<span class="fc" id="L142">        System.out.println(orders.showUnorderedDishes());</span>
-<span class="fc" id="L143">        System.out.println(orders.showOrdersProfit());</span>
-<span class="fc" id="L144">    }</span>
+<span class="fc" id="L133">        System.out.println(menu.toString());</span>
+<span class="fc" id="L134">        System.out.println(orders.toString());</span>
+<span class="fc" id="L135">        System.out.println(orders.showDishCounter());</span>
+<span class="fc" id="L136">        System.out.println(orders.showUnorderedDishes());</span>
+<span class="fc" id="L137">        System.out.println(orders.showOrdersProfit());</span>
+<span class="fc" id="L138">    }</span>
     
     /**
      * Prints the menu.
@@ -149,52 +143,65 @@ public class Manager {
      * @return void
      */
     public static void printMenu(){
-<span class="nc" id="L152">        System.out.println(menu.toString());</span>
-<span class="nc" id="L153">    }</span>
+<span class="nc" id="L146">        System.out.println(menu.toString());</span>
+<span class="nc" id="L147">    }</span>
     /**
      * Prints the bills.
      * May lead to an exception if not
      * @return void
      */
     public static void printBills(){
-<span class="nc" id="L160">        System.out.println(orders.toString());</span>
-<span class="nc" id="L161">    }</span>
+<span class="nc" id="L154">        System.out.println(orders.toString());</span>
+<span class="nc" id="L155">    }</span>
     /**
      * Prints the number of times each dish has been ordered.
      * May lead to an exception if not
      * @return void
      */
     public static void printDishCounter(){
-<span class="nc" id="L168">        System.out.println(orders.showDishCounter());</span>
-<span class="nc" id="L169">    }</span>
+<span class="nc" id="L162">        System.out.println(orders.showDishCounter());</span>
+<span class="nc" id="L163">    }</span>
     /**
      * Prints the unordered dishes.
      * May lead to an exception if not
      * @return void
      */
     public static void printUnorderedDishes(){
-<span class="nc" id="L176">        System.out.println(orders.showUnorderedDishes());</span>
-<span class="nc" id="L177">    }</span>
+<span class="nc" id="L170">        System.out.println(orders.showUnorderedDishes());</span>
+<span class="nc" id="L171">    }</span>
     /**
      * Prints the dishes ordered by the profit to the restaurant.
      * May lead to an exception if not
      * @return void
      */
     public static void printProfitDishes(){
-<span class="nc" id="L184">        System.out.println(orders.showOrdersProfit());</span>
-<span class="nc" id="L185">    }</span>
+<span class="nc" id="L178">        System.out.println(orders.showOrdersProfit());</span>
+<span class="nc" id="L179">    }</span>
     /**
      * Gui that allows to insert a table number and see the bill.
      * May lead to an exception if not
      * @return void
      */
     public static void guiTable(){
-        try {
-<span class="nc" id="L193">            orders.showTableBill();</span>
-<span class="nc" id="L194">        } catch (NoMatchingIDException ex) {</span>
-<span class="nc" id="L195">            System.out.println(ex.getMessage());</span>
-<span class="nc" id="L196">        }</span>
-<span class="nc" id="L197">    }</span>
+
+<span class="fc" id="L187">        boolean billShowed = false;</span>
+
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        while (!billShowed) {</span>
+            try {
+<span class="fc" id="L191">                orders.showTableBill();</span>
+<span class="fc" id="L192">                billShowed = true;</span>
+
+<span class="nc" id="L194">            } catch (NumberFormatException e1) {</span>
+                //System.out.println(e1.getMessage());
+<span class="nc" id="L196">                break;</span>
+
+<span class="nc" id="L198">            } catch (NoMatchingIDException ex) {</span>
+<span class="nc" id="L199">                System.out.println(ex.getMessage());</span>
+<span class="pc" id="L200">            }</span>
+        }
+
+
+<span class="fc" id="L204">    }</span>
     
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
