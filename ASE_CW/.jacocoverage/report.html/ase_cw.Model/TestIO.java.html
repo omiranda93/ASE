@@ -10,145 +10,172 @@ import static ase_cw.Model.Category.DRINKS;
 import static ase_cw.Model.Category.MAIN;
 import static ase_cw.Model.Category.STARTER;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author omiranda93
  */
-<span class="fc" id="L21">public class TestIO {</span>
+<span class="fc" id="L25">public class TestIO {</span>
     //Global variables
-    //Depending on the OS you may need to change the paths
-<span class="fc" id="L24">    private static String inputFileMenu = &quot;/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt&quot;; //&quot;/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt&quot;;ASE_CW/src/ase_cw/menu.txt</span>
-<span class="fc" id="L25">    private static String inputFileOrder = &quot;/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt&quot;; //&quot;/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt&quot;;ASE_CW/src/ase_cw/orders.txt</span>
+    //Depending on the OS the paths might need to change
+    private static final String inputFileMenu = &quot;src/ase_cw/menu.txt&quot;;
+    private static final String inputFileOrder = &quot;src/ase_cw/orders.txt&quot;;
+    private static final String outputFile = &quot;src/ase_cw/output.txt&quot;;
     
     public void readMenu(Menu menu){
         BufferedReader readBuffer;
         String strRead;
         String splitArray[];
-<span class="fc" id="L31">        TreeSet &lt;MenuItem&gt; starters = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L32">        TreeSet &lt;MenuItem&gt; mains = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L33">        TreeSet &lt;MenuItem&gt; desserts = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L34">        TreeSet &lt;MenuItem&gt; drinks = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L36">        TreeSet &lt;MenuItem&gt; starters = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L37">        TreeSet &lt;MenuItem&gt; mains = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L38">        TreeSet &lt;MenuItem&gt; desserts = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L39">        TreeSet &lt;MenuItem&gt; drinks = new TreeSet&lt;&gt;();</span>
         try {
-<span class="fc" id="L36">            readBuffer = new BufferedReader(new FileReader(inputFileMenu));</span>
+<span class="fc" id="L41">            readBuffer = new BufferedReader(new FileReader(inputFileMenu));</span>
 
-<span class="fc bfc" id="L38" title="All 2 branches covered.">            while ((strRead = readBuffer.readLine()) != null) {</span>
-<span class="fc" id="L39">                splitArray = strRead.split(&quot;/ &quot;);</span>
-<span class="pc bpc" id="L40" title="6 of 18 branches missed.">                switch(splitArray[2]){</span>
-<span class="fc" id="L41">                    case &quot;Starter&quot;: starters.add(new MenuItem(STARTER, splitArray[0], Double.parseDouble(splitArray[1])));</span>
-<span class="fc" id="L42">                        break;</span>
-<span class="fc" id="L43">                    case &quot;Main&quot;: mains.add(new MenuItem(MAIN, splitArray[0], Double.parseDouble(splitArray[1])));</span>
-<span class="fc" id="L44">                        break;</span>
-<span class="fc" id="L45">                    case &quot;Dessert&quot;: desserts.add(new MenuItem(DESSERT, splitArray[0], Double.parseDouble(splitArray[1])));</span>
-<span class="fc" id="L46">                        break;</span>
-<span class="fc" id="L47">                    case &quot;Drinks&quot;: drinks.add(new MenuItem(DRINKS, splitArray[0], Double.parseDouble(splitArray[1])));</span>
-<span class="fc" id="L48">                        break;      </span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">            while ((strRead = readBuffer.readLine()) != null) {</span>
+<span class="fc" id="L44">                splitArray = strRead.split(&quot;/ &quot;);</span>
+<span class="pc bpc" id="L45" title="6 of 18 branches missed.">                switch(splitArray[2]){</span>
+<span class="fc" id="L46">                    case &quot;Starter&quot;: starters.add(new MenuItem(STARTER, splitArray[0], Double.parseDouble(splitArray[1])));</span>
+<span class="fc" id="L47">                        break;</span>
+<span class="fc" id="L48">                    case &quot;Main&quot;: mains.add(new MenuItem(MAIN, splitArray[0], Double.parseDouble(splitArray[1])));</span>
+<span class="fc" id="L49">                        break;</span>
+<span class="fc" id="L50">                    case &quot;Dessert&quot;: desserts.add(new MenuItem(DESSERT, splitArray[0], Double.parseDouble(splitArray[1])));</span>
+<span class="fc" id="L51">                        break;</span>
+<span class="fc" id="L52">                    case &quot;Drinks&quot;: drinks.add(new MenuItem(DRINKS, splitArray[0], Double.parseDouble(splitArray[1])));</span>
+<span class="fc" id="L53">                        break;      </span>
                 }
             }
-<span class="fc" id="L51">            readBuffer.close();</span>
-<span class="fc" id="L52">            menu.addValues(STARTER, starters);</span>
-<span class="fc" id="L53">            menu.addValues(MAIN, mains);</span>
-<span class="fc" id="L54">            menu.addValues(DESSERT, desserts);</span>
-<span class="fc" id="L55">            menu.addValues(DRINKS, drinks);</span>
-<span class="fc" id="L56">            System.out.println(menu.getValues().size()+&quot; #############&quot;);</span>
+<span class="fc" id="L56">            readBuffer.close();</span>
+<span class="fc" id="L57">            menu.addValues(STARTER, starters);</span>
+<span class="fc" id="L58">            menu.addValues(MAIN, mains);</span>
+<span class="fc" id="L59">            menu.addValues(DESSERT, desserts);</span>
+<span class="fc" id="L60">            menu.addValues(DRINKS, drinks);</span>
+<span class="fc" id="L61">            System.out.println(menu.getValues().size()+&quot; #############&quot;);</span>
             
-<span class="nc" id="L58">        }catch (IOException e1){</span>
-<span class="nc" id="L59">            System.out.println(&quot;There was an error loading the menu from file.&quot;);</span>
-
-<span class="nc" id="L61">        } catch (WrongCategoryException e2) {</span>
-<span class="nc" id="L62">            System.out.println(e2.getMessage());</span>
-<span class="nc" id="L63">        } catch (NumberFormatException e3){</span>
-<span class="nc" id="L64">            System.out.println(&quot;One or more prices in the text file are not a price or are wrongly introduced.&quot;);</span>
-<span class="pc" id="L65">        }</span>
-<span class="fc" id="L66">    }</span>
+<span class="nc" id="L63">        }catch (IOException e1){</span>
+<span class="nc" id="L64">            System.out.println(&quot;There was an error loading the menu from file.&quot;);</span>
+<span class="nc" id="L65">            System.exit(1);</span>
+<span class="nc" id="L66">        } catch (WrongCategoryException e2) {</span>
+<span class="nc" id="L67">            System.out.println(e2.getMessage());</span>
+<span class="nc" id="L68">        } catch (NumberFormatException e3){</span>
+<span class="nc" id="L69">            System.out.println(&quot;One or more prices in the text file are not a price or are wrongly introduced.&quot;);</span>
+<span class="pc" id="L70">        }</span>
+<span class="fc" id="L71">    }</span>
     
     
     
     public void readOrders(CollectionFoodOrders orders) throws NoMatchingIDException{
-<span class="fc" id="L71">        BufferedReader readbuffer = null;</span>
+<span class="fc" id="L76">        BufferedReader readbuffer = null;</span>
         String strRead;
         String splitarray[];
-<span class="fc" id="L74">        TreeSet &lt;FoodOrder&gt; table1 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L75">        TreeSet &lt;FoodOrder&gt; table2 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L76">        TreeSet &lt;FoodOrder&gt; table3 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L77">        TreeSet &lt;FoodOrder&gt; table4 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L78">        TreeSet &lt;FoodOrder&gt; table5 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L79">        TreeSet &lt;FoodOrder&gt; table6 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L80">        TreeSet &lt;FoodOrder&gt; table7 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L81">        TreeSet &lt;FoodOrder&gt; table8 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L82">        TreeSet &lt;FoodOrder&gt; table9 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L83">        TreeSet &lt;FoodOrder&gt; table10 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L84">        TreeSet &lt;FoodOrder&gt; table11 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L85">        TreeSet &lt;FoodOrder&gt; table12 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L86">        TreeSet &lt;FoodOrder&gt; table13 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L87">        TreeSet &lt;FoodOrder&gt; table14 = new TreeSet&lt;FoodOrder&gt;();</span>
-<span class="fc" id="L88">        TreeSet &lt;FoodOrder&gt; table15 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L79">        TreeSet &lt;FoodOrder&gt; table1 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L80">        TreeSet &lt;FoodOrder&gt; table2 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L81">        TreeSet &lt;FoodOrder&gt; table3 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L82">        TreeSet &lt;FoodOrder&gt; table4 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L83">        TreeSet &lt;FoodOrder&gt; table5 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L84">        TreeSet &lt;FoodOrder&gt; table6 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L85">        TreeSet &lt;FoodOrder&gt; table7 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L86">        TreeSet &lt;FoodOrder&gt; table8 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L87">        TreeSet &lt;FoodOrder&gt; table9 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L88">        TreeSet &lt;FoodOrder&gt; table10 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L89">        TreeSet &lt;FoodOrder&gt; table11 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L90">        TreeSet &lt;FoodOrder&gt; table12 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L91">        TreeSet &lt;FoodOrder&gt; table13 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L92">        TreeSet &lt;FoodOrder&gt; table14 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="fc" id="L93">        TreeSet &lt;FoodOrder&gt; table15 = new TreeSet&lt;FoodOrder&gt;();</span>
 
         try {
-<span class="fc" id="L91">            readbuffer = new BufferedReader(new FileReader(inputFileOrder));</span>
-<span class="fc" id="L92">            int i = 0;</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">            while ((strRead = readbuffer.readLine()) != null) {</span>
-<span class="fc" id="L94">                splitarray = strRead.split(&quot;/ &quot;);</span>
-<span class="pc bpc" id="L95" title="29 of 62 branches missed.">                switch(splitarray[0]){</span>
-<span class="fc" id="L96">                    case &quot;1&quot;: table1.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="fc" id="L97">                        break;</span>
-<span class="fc" id="L98">                    case &quot;2&quot;: table2.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="fc" id="L99">                        break;</span>
-<span class="fc" id="L100">                    case &quot;3&quot;: table3.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="fc" id="L101">                        break;      </span>
-<span class="fc" id="L102">                    case &quot;4&quot;: table4.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="fc" id="L103">                        break;      </span>
-<span class="fc" id="L104">                    case &quot;5&quot;: table5.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="fc" id="L105">                        break;      </span>
-<span class="fc" id="L106">                    case &quot;6&quot;: table6.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="fc" id="L107">                        break;      </span>
-<span class="fc" id="L108">                    case &quot;7&quot;: table7.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="fc" id="L109">                        break;      </span>
-<span class="fc" id="L110">                    case &quot;8&quot;: table8.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="fc" id="L111">                        break;      </span>
-<span class="fc" id="L112">                    case &quot;9&quot;: table9.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="fc" id="L113">                        break;      </span>
-<span class="fc" id="L114">                    case &quot;10&quot;: table10.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="fc" id="L115">                        break;      </span>
-<span class="fc" id="L116">                    case &quot;11&quot;: table11.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="fc" id="L117">                        break;      </span>
-<span class="nc" id="L118">                    case &quot;12&quot;: table12.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="nc" id="L119">                        break;      </span>
-<span class="nc" id="L120">                    case &quot;13&quot;: table13.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="nc" id="L121">                        break;      </span>
-<span class="nc" id="L122">                    case &quot;14&quot;: table14.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="nc" id="L123">                        break;      </span>
-<span class="nc" id="L124">                    case &quot;15&quot;: table15.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
-<span class="nc" id="L125">                        break;   </span>
-<span class="pc" id="L126">                    default: throw new NoMatchingIDException(splitarray[0]);</span>
+<span class="fc" id="L96">            readbuffer = new BufferedReader(new FileReader(inputFileOrder));</span>
+<span class="fc" id="L97">            int i = 0;</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            while ((strRead = readbuffer.readLine()) != null) {</span>
+<span class="fc" id="L99">                splitarray = strRead.split(&quot;/ &quot;);</span>
+<span class="pc bpc" id="L100" title="29 of 62 branches missed.">                switch(splitarray[0]){</span>
+<span class="fc" id="L101">                    case &quot;1&quot;: table1.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="fc" id="L102">                        break;</span>
+<span class="fc" id="L103">                    case &quot;2&quot;: table2.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="fc" id="L104">                        break;</span>
+<span class="fc" id="L105">                    case &quot;3&quot;: table3.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="fc" id="L106">                        break;      </span>
+<span class="fc" id="L107">                    case &quot;4&quot;: table4.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="fc" id="L108">                        break;      </span>
+<span class="fc" id="L109">                    case &quot;5&quot;: table5.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="fc" id="L110">                        break;      </span>
+<span class="fc" id="L111">                    case &quot;6&quot;: table6.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="fc" id="L112">                        break;      </span>
+<span class="fc" id="L113">                    case &quot;7&quot;: table7.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="fc" id="L114">                        break;      </span>
+<span class="fc" id="L115">                    case &quot;8&quot;: table8.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="fc" id="L116">                        break;      </span>
+<span class="fc" id="L117">                    case &quot;9&quot;: table9.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="fc" id="L118">                        break;      </span>
+<span class="fc" id="L119">                    case &quot;10&quot;: table10.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="fc" id="L120">                        break;      </span>
+<span class="fc" id="L121">                    case &quot;11&quot;: table11.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="fc" id="L122">                        break;      </span>
+<span class="nc" id="L123">                    case &quot;12&quot;: table12.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="nc" id="L124">                        break;      </span>
+<span class="nc" id="L125">                    case &quot;13&quot;: table13.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="nc" id="L126">                        break;      </span>
+<span class="nc" id="L127">                    case &quot;14&quot;: table14.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="nc" id="L128">                        break;      </span>
+<span class="nc" id="L129">                    case &quot;15&quot;: table15.add(new FoodOrder(Integer.parseInt(splitarray[0]), splitarray[1], Integer.parseInt(splitarray[2])));</span>
+<span class="nc" id="L130">                        break;   </span>
+<span class="pc" id="L131">                    default: throw new NoMatchingIDException(splitarray[0]);</span>
                 }
             }
-<span class="fc" id="L129">            readbuffer.close();</span>
-<span class="fc" id="L130">            orders.addValues(1, table1);</span>
-<span class="fc" id="L131">            orders.addValues(2, table2);</span>
-<span class="fc" id="L132">            orders.addValues(3, table3);</span>
-<span class="fc" id="L133">            orders.addValues(4, table4);</span>
-<span class="fc" id="L134">            orders.addValues(5, table5);</span>
-<span class="fc" id="L135">            orders.addValues(6, table6);</span>
-<span class="fc" id="L136">            orders.addValues(7, table7);</span>
-<span class="fc" id="L137">            orders.addValues(8, table8);</span>
-<span class="fc" id="L138">            orders.addValues(9, table9);</span>
-<span class="fc" id="L139">            orders.addValues(10, table10);</span>
-<span class="fc" id="L140">            orders.addValues(11, table11);</span>
-<span class="fc" id="L141">            orders.addValues(12, table12);</span>
-<span class="fc" id="L142">            orders.addValues(13, table13);</span>
-<span class="fc" id="L143">            orders.addValues(14, table14);</span>
-<span class="fc" id="L144">            orders.addValues(15, table15);</span>
-<span class="nc" id="L145">        }catch (InvalidQuantityException e1){</span>
-<span class="nc" id="L146">            System.out.println(e1.getMessage());</span>
-<span class="nc" id="L147">        }catch (IOException e2){</span>
-<span class="nc" id="L148">            System.out.println(&quot;There was an error loading the orders from file.&quot;);</span>
-<span class="nc" id="L149">        } catch (NumberFormatException e3){</span>
-<span class="nc" id="L150">            System.out.println(&quot;One of the quantities introduced is not a number. The file could not be loaded.&quot;);</span>
-<span class="pc" id="L151">        }</span>
-<span class="fc" id="L152">    }</span>
+<span class="fc" id="L134">            readbuffer.close();</span>
+<span class="fc" id="L135">            orders.addValues(1, table1);</span>
+<span class="fc" id="L136">            orders.addValues(2, table2);</span>
+<span class="fc" id="L137">            orders.addValues(3, table3);</span>
+<span class="fc" id="L138">            orders.addValues(4, table4);</span>
+<span class="fc" id="L139">            orders.addValues(5, table5);</span>
+<span class="fc" id="L140">            orders.addValues(6, table6);</span>
+<span class="fc" id="L141">            orders.addValues(7, table7);</span>
+<span class="fc" id="L142">            orders.addValues(8, table8);</span>
+<span class="fc" id="L143">            orders.addValues(9, table9);</span>
+<span class="fc" id="L144">            orders.addValues(10, table10);</span>
+<span class="fc" id="L145">            orders.addValues(11, table11);</span>
+<span class="fc" id="L146">            orders.addValues(12, table12);</span>
+<span class="fc" id="L147">            orders.addValues(13, table13);</span>
+<span class="fc" id="L148">            orders.addValues(14, table14);</span>
+<span class="fc" id="L149">            orders.addValues(15, table15);</span>
+<span class="nc" id="L150">        }catch (InvalidQuantityException e1){</span>
+<span class="nc" id="L151">            System.out.println(e1.getMessage());</span>
+<span class="nc" id="L152">        }catch (IOException e2){</span>
+<span class="nc" id="L153">            System.out.println(&quot;There was an error loading the orders from file.&quot;);</span>
+<span class="nc" id="L154">            System.exit(1);</span>
+<span class="nc" id="L155">        } catch (NumberFormatException e3){</span>
+<span class="nc" id="L156">            System.out.println(&quot;One of the quantities introduced is not a number. The file could not be loaded.&quot;);</span>
+<span class="pc" id="L157">        }</span>
+<span class="fc" id="L158">    }</span>
+    
+    public void writeToFile (String menu, String orders, String numberDish, String unorderedDishes, String profits){
+<span class="fc" id="L161">        BufferedWriter writer = null;</span>
+        try {
+<span class="fc" id="L163">            writer = new BufferedWriter(new FileWriter(outputFile));</span>
+<span class="fc" id="L164">            writer.write(menu);</span>
+<span class="fc" id="L165">            writer.write(&quot;-----------------------------------------------------------------------------------\n&quot;);</span>
+<span class="fc" id="L166">            writer.write(orders);</span>
+<span class="fc" id="L167">            writer.write(&quot;-----------------------------------------------------------------------------------\n&quot;);</span>
+<span class="fc" id="L168">            writer.write(numberDish);</span>
+<span class="fc" id="L169">            writer.write(&quot;-----------------------------------------------------------------------------------\n&quot;);</span>
+<span class="fc" id="L170">            writer.write(unorderedDishes);</span>
+<span class="fc" id="L171">            writer.write(&quot;-----------------------------------------------------------------------------------\n&quot;);            </span>
+<span class="fc" id="L172">            writer.write(profits);</span>
+<span class="fc" id="L173">            writer.write(&quot;-----------------------------------------------------------------------------------\n&quot;);            </span>
+<span class="fc" id="L174">            writer.close();</span>
+<span class="nc" id="L175">        } catch (IOException ex) {</span>
+<span class="nc" id="L176">            Logger.getLogger(TestIO.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L177">            System.exit(0);</span>
+<span class="fc" id="L178">        }</span>
+<span class="fc" id="L179">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

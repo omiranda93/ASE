@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ase_cw.Test;
 
+
+import ase_cw.Test.*;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -250,4 +251,3 @@ public class TestIOTest {
     }
     
 }
-
