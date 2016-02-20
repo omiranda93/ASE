@@ -25,9 +25,9 @@ import java.util.logging.Logger;
 public class TestIO {
     //Global variables
     //Depending on the OS the paths might need to change
-    private static final String inputFileMenu = "src/ase_cw/menu.txt";
-    private static final String inputFileOrder = "src/ase_cw/orders.txt";
-    private static final String outputFile = "src/ase_cw/output.txt";
+    private static final String inputFileMenu = "ASE_CW/src/ase_cw/menu.txt";
+    private static final String inputFileOrder = "ASE_CW/src/ase_cw/orders.txt";
+    private static final String outputFile = "ASE_CW/src/ase_cw/output.txt";
     
     public void readMenu(Menu menu){
         BufferedReader readBuffer;
