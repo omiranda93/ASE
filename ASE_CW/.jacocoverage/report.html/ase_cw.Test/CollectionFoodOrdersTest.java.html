@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CollectionFoodOrdersTest.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ASE_CW&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">ase_cw.Test</a> &gt; <span class="el_source">CollectionFoodOrdersTest.java</span></div><h1>CollectionFoodOrdersTest.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ase_cw.Test;
+
+import ase_cw.Model.Category;
+import ase_cw.Model.CollectionFoodOrders;
+import ase_cw.Model.FoodOrder;
+import ase_cw.Model.InvalidQuantityException;
+import ase_cw.Model.Manager;;
+import ase_cw.Model.Menu;
+import ase_cw.Model.MenuItem;
+import ase_cw.Model.WrongCategoryException;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ *
+ * @author giannis
+ */
+public class CollectionFoodOrdersTest {
+    private Menu menu;
+    private MenuItem menuItem1, menuItem2, menuItem3, menuItem4, menuItem5;
+    private FoodOrder o1, o2, o3, o4, o5;
+    private String sampleBill;
+    
+<span class="nc" id="L37">    String formater = &quot;%-&quot; </span>
+        + Manager.ALINEA_DISHNAME + &quot;s %-&quot; 
+        + Manager.DISHNAME_TEXT + &quot;s %-&quot; 
+        + Manager.QUANTITY + &quot;s %-1s %-&quot; 
+        + Manager.PRICE + &quot;s %-1s %-&quot; 
+        + Manager.MAX_TOTAL + &quot;s %-&quot; 
+        + Manager.CURRENCY_SIZE + &quot;s&quot;;
+    
+<span class="nc" id="L45">    public CollectionFoodOrdersTest() {</span>
+<span class="nc" id="L46">    }</span>
+    
+    @BeforeClass
+    public static void setUpClass() {
+<span class="nc" id="L50">    }</span>
+    
+    @AfterClass
+    public static void tearDownClass() {
+<span class="nc" id="L54">    }</span>
+    
+    @Before
+    public void setUp() {
+<span class="nc" id="L58">       menu = new Menu();</span>
+<span class="nc" id="L59">       menuItem1 = new MenuItem(Category.STARTER, &quot;Toast&quot;, 1.8);</span>
+<span class="nc" id="L60">       menuItem2 = new MenuItem(Category.MAIN, &quot;Roast Beef&quot;, 8.8);</span>
+<span class="nc" id="L61">       menuItem3 = new MenuItem(Category.DESSERT, &quot;Chocolate mousse&quot;, 2.50);</span>
+<span class="nc" id="L62">       menuItem4 = new MenuItem(Category.DRINKS, &quot;Ricard&quot;, 10);</span>
+<span class="nc" id="L63">       menuItem5 = new MenuItem(Category.DRINKS, &quot;Coca-Cola&quot;, 0.8);</span>
+       
+        try {
+<span class="nc" id="L66">            menu.addValues(Category.DRINKS, new TreeSet&lt;MenuItem&gt;() {{add(menuItem4); add(menuItem5);}});</span>
+<span class="nc" id="L67">            menu.addValues(Category.DESSERT, new TreeSet&lt;MenuItem&gt;() {{add(menuItem3);}});</span>
+<span class="nc" id="L68">        } catch (WrongCategoryException ex) {</span>
+<span class="nc" id="L69">            Logger.getLogger(CollectionFoodOrdersTest.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L70">        }</span>
+       
+        try {
+<span class="nc" id="L73">            o1 = new FoodOrder(3, &quot;Beef Enchiladas&quot;, 2);</span>
+<span class="nc" id="L74">            o2 = new FoodOrder(1, &quot;Beef Enchiladas&quot;, 1);</span>
+<span class="nc" id="L75">            o3 = new FoodOrder(1, &quot;Chocolate mousse&quot;, 4);</span>
+<span class="nc" id="L76">            o4 = new FoodOrder(2, &quot;Ricard&quot;, 1);</span>
+<span class="nc" id="L77">            o5 = new FoodOrder(2, &quot;Coca-Cola&quot;, 2);</span>
+<span class="nc" id="L78">        } catch (InvalidQuantityException ex) {</span>
+<span class="nc" id="L79">            Logger.getLogger(CollectionFoodOrdersTest.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L80">        }</span>
+       
+       
+<span class="nc" id="L83">       sampleBill=&quot;Table 2 Summary\n&quot;;</span>
+<span class="nc" id="L84">       sampleBill += String.format(formater,&quot;&quot;,&quot;Coca-Cola&quot;, &quot;2&quot;,&quot;*&quot;,0.8 ,&quot;=&quot; ,1.6, &quot;GBP&quot;) +&quot;\n&quot;;</span>
+<span class="nc" id="L85">       sampleBill += String.format(formater,&quot;&quot;,&quot;Ricard&quot;, &quot;1&quot;,&quot;*&quot;,10.0 ,&quot;=&quot; ,10.0, &quot;GBP&quot;) +&quot;\n\n&quot;;</span>
+<span class="nc" id="L86">       sampleBill += String.format(formater,&quot;&quot;,&quot;Total for this table:&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,11.6, &quot;GBP&quot;) +&quot;\n&quot;;</span>
+<span class="nc" id="L87">       sampleBill += String.format(formater,&quot;&quot;,&quot;Discount: &quot; + 0 + &quot;%&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;0.0&quot;, &quot;GBP&quot;) +&quot;\n&quot;;</span>
+<span class="nc" id="L88">       sampleBill += String.format(formater,&quot;&quot;,&quot;Discounted total:&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,11.6, &quot;GBP&quot;) +&quot;\n\n&quot;;</span>
+       
+<span class="nc" id="L90">    }</span>
+    
+    @After
+    public void tearDown() {
+<span class="nc" id="L94">    }</span>
+
+    /**
+     * Test of getValue method, of class CollectionFoodOrders.
+     */
+    @Test
+    public void testGetValue() {
+<span class="nc" id="L101">        System.out.println(&quot;getValue&quot;);</span>
+<span class="nc" id="L102">        Integer tableId = 1;</span>
+<span class="nc" id="L103">        CollectionFoodOrders instance = new CollectionFoodOrders(menu);</span>
+<span class="nc" id="L104">        instance.addValue(o2.getTableId(), o2);</span>
+<span class="nc" id="L105">        instance.addValue(o3.getTableId(), o3);</span>
+<span class="nc" id="L106">        TreeSet&lt;FoodOrder&gt; expResult = new TreeSet&lt;FoodOrder&gt;(){{add(o2); add(o3);}};</span>
+<span class="nc" id="L107">        TreeSet&lt;FoodOrder&gt; result = instance.getValue(tableId);;</span>
+<span class="nc" id="L108">        assertEquals(&quot;getValue failed&quot;, expResult, result);</span>
+<span class="nc" id="L109">    }</span>
+
+    /**
+     * Test of getKeys method, of class CollectionFoodOrders.
+     */
+    @Test
+    public void testGetKeys() {
+<span class="nc" id="L116">        System.out.println(&quot;getKeys&quot;);</span>
+<span class="nc" id="L117">        CollectionFoodOrders instance = new CollectionFoodOrders(menu);</span>
+<span class="nc" id="L118">        instance.addValue(o1.getTableId(), o1);</span>
+<span class="nc" id="L119">        instance.addValue(o2.getTableId(), o2);</span>
+<span class="nc" id="L120">        instance.addValue(o3.getTableId(), o3);</span>
+<span class="nc" id="L121">        Set&lt;Integer&gt; expResult = new TreeSet&lt;Integer&gt;(){{add(1); add(3);}};</span>
+<span class="nc" id="L122">        Set&lt;Integer&gt; result = instance.getKeys();</span>
+<span class="nc" id="L123">        assertEquals(expResult, result);</span>
+<span class="nc" id="L124">    }</span>
+
+    /**
+     * Test of addValues method, of class CollectionFoodOrders.
+     */
+    @Test
+    public void testAddValues() {
+<span class="nc" id="L131">        System.out.println(&quot;addValues&quot;);</span>
+<span class="nc" id="L132">        Integer tableId = 1;</span>
+<span class="nc" id="L133">        TreeSet&lt;FoodOrder&gt; oi = new TreeSet&lt;FoodOrder&gt;(){{add(o2); add(o3);}};</span>
+<span class="nc" id="L134">        CollectionFoodOrders instance = new CollectionFoodOrders(menu);</span>
+<span class="nc" id="L135">        instance.addValues(tableId, oi);</span>
+<span class="nc" id="L136">        assertEquals(oi, instance.getValue(tableId));</span>
+<span class="nc" id="L137">    }</span>
+
+    /**
+     * Test of addValue method, of class CollectionFoodOrders.
+     */
+    @Test
+    public void testAddValueNonExistant() {
+<span class="nc" id="L144">        System.out.println(&quot;addValue&quot;);</span>
+<span class="nc" id="L145">        Integer tableId = 3;</span>
+<span class="nc" id="L146">        CollectionFoodOrders instance = new CollectionFoodOrders(menu);</span>
+<span class="nc" id="L147">        instance.addValue(1, o2);</span>
+<span class="nc" id="L148">        instance.addValue(1, o3);</span>
+<span class="nc" id="L149">        instance.addValue(tableId, o1);</span>
+<span class="nc" id="L150">        assertTrue(instance.getValue(tableId).contains(o1));</span>
+<span class="nc" id="L151">    }</span>
+    
+    @Test
+    public void testAddValueExistant() {
+<span class="nc" id="L155">        System.out.println(&quot;addValue&quot;);</span>
+<span class="nc" id="L156">        Integer tableId = 1;</span>
+<span class="nc" id="L157">        CollectionFoodOrders instance = new CollectionFoodOrders(menu);</span>
+<span class="nc" id="L158">        instance.addValue(1, o2);</span>
+<span class="nc" id="L159">        instance.addValue(tableId, o3);</span>
+<span class="nc" id="L160">        assertTrue(instance.getValue(tableId).contains(o3));</span>
+<span class="nc" id="L161">    }</span>
+
+    /**
+     * Test of toString method, of class CollectionFoodOrders.
+     */
+    @Test
+    public void testToString() {
+<span class="nc" id="L168">        System.out.println(&quot;toString&quot;);</span>
+<span class="nc" id="L169">        CollectionFoodOrders instance = new CollectionFoodOrders(menu);</span>
+<span class="nc" id="L170">        instance.addValue(o4.getTableId(), o4);</span>
+<span class="nc" id="L171">        instance.addValue(o5.getTableId(), o5);</span>
+<span class="nc" id="L172">        String expResult = &quot;TABLES SUMMARY\n&quot; + sampleBill+ &quot;\n&quot;;</span>
+<span class="nc" id="L173">        String result = instance.toString();</span>
+<span class="nc" id="L174">        assertEquals(expResult, result);</span>
+<span class="nc" id="L175">    }</span>
+
+    /**
+     * Test of getBill method, of class CollectionFoodOrders.
+     */
+    @Test
+    public void testGetBill() {
+<span class="nc" id="L182">        System.out.println(&quot;getBill&quot;);</span>
+
+<span class="nc" id="L184">        int tableId = 2;</span>
+<span class="nc" id="L185">        CollectionFoodOrders instance = new CollectionFoodOrders(menu);</span>
+<span class="nc" id="L186">        instance.addValue(o4.getTableId(), o4);</span>
+<span class="nc" id="L187">        instance.addValue(o5.getTableId(), o5);</span>
+<span class="nc" id="L188">        String result = instance.getBill(tableId);</span>
+<span class="nc" id="L189">        assertEquals(sampleBill, result);</span>
+<span class="nc" id="L190">    }</span>
+
+    /**
+     * Test of showTableBill method, of class CollectionFoodOrders.
+     */
+//    @Test
+//    public void testShowTableBill() {
+//        System.out.println(&quot;showTableBill&quot;);
+//        CollectionFoodOrders instance = null;
+//        instance.showTableBill();
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail(&quot;The test case is a prototype.&quot;);
+//    }
+
+    /**
+     * Test of showDishCounter method, of class CollectionFoodOrders.
+     */
+    @Test
+    public void testShowDishCounter() {
+<span class="nc" id="L209">        System.out.println(&quot;showDishCounter&quot;);</span>
+<span class="nc" id="L210">        CollectionFoodOrders instance = new CollectionFoodOrders(menu);</span>
+<span class="nc" id="L211">        instance.addValue(o4.getTableId(), o4);</span>
+<span class="nc" id="L212">        instance.addValue(o5.getTableId(), o5);</span>
+<span class="nc" id="L213">        String expResult = String.format(&quot;%-60s %-3s&quot;, &quot;Dish name&quot;, &quot;Times ordered&quot;) + &quot;\n&quot;;</span>
+<span class="nc" id="L214">        expResult += Manager.underlineString(expResult) + &quot;\n&quot;;</span>
+<span class="nc" id="L215">        expResult += String.format(&quot;%-60s %-3s&quot;, &quot;Coca-Cola&quot;, 2) + &quot;\n&quot;;</span>
+<span class="nc" id="L216">        expResult += String.format(&quot;%-60s %-3s&quot;, &quot;Ricard&quot;, 1) + &quot;\n&quot;;</span>
+<span class="nc" id="L217">        String result = instance.showDishCounter();</span>
+<span class="nc" id="L218">        assertEquals(expResult, result);</span>
+<span class="nc" id="L219">    }</span>
+
+    /**
+     * Test of showUnorderedDishes method, of class CollectionFoodOrders.
+     */
+    @Test
+    public void testShowUnorderedDishes() {
+<span class="nc" id="L226">        System.out.println(&quot;showUnorderedDishes&quot;);</span>
+<span class="nc" id="L227">        CollectionFoodOrders instance = new CollectionFoodOrders(menu);</span>
+<span class="nc" id="L228">        instance.addValue(o4.getTableId(), o4);</span>
+<span class="nc" id="L229">        instance.addValue(o5.getTableId(), o5);</span>
+<span class="nc" id="L230">        String expResult = &quot;List of unoredered dishes:\n&quot; + Manager.underlineString(&quot;List of unoredered dishes:&quot;)+&quot;\n&quot;;</span>
+<span class="nc" id="L231">        expResult += &quot;Chocolate mousse\n\n&quot;;</span>
+<span class="nc" id="L232">        String result = instance.showUnorderedDishes();</span>
+<span class="nc" id="L233">        assertEquals(expResult, result);</span>
+<span class="nc" id="L234">    }</span>
+
+    /**
+     * Test of showOrdersProfit method, of class CollectionFoodOrders.
+     */
+    @Test
+    public void testShowOrdersProfit() {
+<span class="nc" id="L241">        System.out.println(&quot;showOrdersProfit&quot;);</span>
+<span class="nc" id="L242">        CollectionFoodOrders instance = new CollectionFoodOrders(menu);</span>
+<span class="nc" id="L243">        instance.addValue(o4.getTableId(), o4);</span>
+<span class="nc" id="L244">        instance.addValue(o5.getTableId(), o5);</span>
+<span class="nc" id="L245">        instance.addValue(o3.getTableId(), o3);</span>
+<span class="nc" id="L246">        String expResult = &quot;* u *&quot;;</span>
+<span class="nc" id="L247">        String result = instance.showOrdersProfit();</span>
+<span class="nc" id="L248">        System.out.println(result);</span>
+<span class="nc" id="L249">        assertEquals(expResult, result);</span>
+<span class="nc" id="L250">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

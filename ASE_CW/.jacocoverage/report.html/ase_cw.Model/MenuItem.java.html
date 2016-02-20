@@ -128,25 +128,21 @@ public class MenuItem implements Comparable&lt;MenuItem&gt; {
 <span class="fc bfc" id="L128" title="All 2 branches covered.">            for (i = 0; i&lt; nb_new_lines; i++) {</span>
 
                 //If it is not the line finishing printing the dish's name: format the line without the price
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">                if (i &lt; nb_new_lines-1) {</span>
-<span class="nc" id="L132">                    temp = dishName.substring(i*(Manager.DISHNAME_TEXT-1), (i+1)*(Manager.DISHNAME_TEXT-1));</span>
-<span class="nc" id="L133">                    result += String.format(res, &quot;&quot;, temp.toUpperCase(), &quot;&quot;, &quot;&quot;) + &quot;\n&quot;;</span>
-
                 //If it is the line finishing printing the dish's name: format the line with the price
-<span class="pc bpc" id="L136" title="1 of 2 branches missed.">                } else if (i == nb_new_lines-1) {</span>
-<span class="fc" id="L137">                    temp = dishName.substring(i*(Manager.DISHNAME_TEXT-1), (i+1)*(Manager.DISHNAME_TEXT-1));</span>
-<span class="fc" id="L138">                    result += String.format(res, &quot;&quot;, temp.toUpperCase(), &quot;&quot;, &quot;&quot;) + &quot;\n&quot;;</span>
+<span class="pc bpc" id="L132" title="3 of 6 branches missed.">                if (i &lt; nb_new_lines-1 | i == nb_new_lines-1) {</span>
+<span class="fc" id="L133">                    temp = dishName.substring(i*(Manager.DISHNAME_TEXT-1), (i+1)*(Manager.DISHNAME_TEXT-1));</span>
+<span class="fc" id="L134">                    result += String.format(res, &quot;&quot;, temp.toUpperCase(), &quot;&quot;, &quot;&quot;) + &quot;\n&quot;;</span>
                 }
             }
 
-<span class="fc" id="L142">            temp = dishName.substring((nb_new_lines)*(Manager.DISHNAME_TEXT-1), dishName.length());</span>
-<span class="fc" id="L143">            result += String.format(res, &quot;&quot;, temp.toUpperCase(), price, Manager.CURRENCY) + &quot;\n&quot;;</span>
+<span class="fc" id="L138">            temp = dishName.substring((nb_new_lines)*(Manager.DISHNAME_TEXT-1), dishName.length());</span>
+<span class="fc" id="L139">            result += String.format(res, &quot;&quot;, temp.toUpperCase(), price, Manager.CURRENCY) + &quot;\n&quot;;</span>
 
         } else {
-<span class="fc" id="L146">            result += String.format(res, &quot;&quot;, dishName.toUpperCase(), price, Manager.CURRENCY) + &quot;\n&quot;;</span>
+<span class="fc" id="L142">            result += String.format(res, &quot;&quot;, dishName.toUpperCase(), price, Manager.CURRENCY) + &quot;\n&quot;;</span>
         }
 
-<span class="fc" id="L149">        return result;</span>
+<span class="fc" id="L145">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

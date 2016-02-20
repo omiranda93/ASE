@@ -10,9 +10,13 @@ import static ase_cw.Model.Category.DRINKS;
 import static ase_cw.Model.Category.MAIN;
 import static ase_cw.Model.Category.STARTER;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,8 +25,8 @@ import java.util.TreeSet;
 public class TestIO {
     //Global variables
     //Depending on the OS you may need to change the paths
-    private static String inputFileMenu = "ASE_CW/src/ase_cw/menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";ASE_CW/src/ase_cw/menu.txt
-    private static String inputFileOrder = "ASE_CW/src/ase_cw/orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt";ASE_CW/src/ase_cw/orders.txt
+    private static String inputFileMenu = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/menu.txt";ASE_CW/src/ase_cw/menu.txt
+    private static String inputFileOrder = "/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt"; //"/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/orders.txt";ASE_CW/src/ase_cw/orders.txt
     
     public void readMenu(Menu menu){
         BufferedReader readBuffer;
@@ -148,6 +152,26 @@ public class TestIO {
             System.out.println("There was an error loading the orders from file.");
         } catch (NumberFormatException e3){
             System.out.println("One of the quantities introduced is not a number. The file could not be loaded.");
+        }
+    }
+    
+    public void writeToFile (String menu, String orders, String numberDish, String unorderedDishes, String profits){
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter("/Users/omiranda93/NetBeansProjects/ASE_CW/ASE_CW/src/ase_cw/output.txt"));
+            writer.write(menu);
+            writer.write("-----------------------------------------------------------------------------------\n");
+            writer.write(orders);
+            writer.write("-----------------------------------------------------------------------------------\n");
+            writer.write(numberDish);
+            writer.write("-----------------------------------------------------------------------------------\n");
+            writer.write(unorderedDishes);
+            writer.write("-----------------------------------------------------------------------------------\n");            
+            writer.write(profits);
+            writer.write("-----------------------------------------------------------------------------------\n");            
+            writer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(TestIO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

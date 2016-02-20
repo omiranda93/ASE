@@ -5,19 +5,14 @@
  */
 package ase_cw;
 
-import ase_cw.Model.CollectionFoodOrders;
 import ase_cw.Model.Manager;
-import ase_cw.Model.Menu;
-import ase_cw.Model.TestIO;
 import ase_cw.Model.WrongDimensionsBillException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author omiranda93
  */
-<span class="nc" id="L20">public class ASE_CW {</span>
+<span class="nc" id="L15">public class ASE_CW {</span>
 
     /**
      * @param args the command line arguments
@@ -120,12 +115,13 @@ import java.util.logging.Logger;
 //        
 //        System.out.println(ordersCol.toString());
 //        //################################################### END TEST ORDERS ################################################
-<span class="fc" id="L123">            Manager manager = new Manager();</span>
-<span class="fc" id="L124">            manager.printAll();</span>
-<span class="nc" id="L125">        } catch (WrongDimensionsBillException ex) {</span>
-<span class="nc" id="L126">            System.out.println(ex.getMessage());</span>
-<span class="fc" id="L127">        }</span>
-<span class="fc" id="L128">    }</span>
+<span class="fc" id="L118">            Manager manager = new Manager();</span>
+<span class="fc" id="L119">            manager.printAll();</span>
+<span class="fc" id="L120">            manager.guiTable();</span>
+<span class="nc" id="L121">        } catch (WrongDimensionsBillException ex) {</span>
+<span class="nc" id="L122">            System.out.println(ex.getMessage());</span>
+<span class="fc" id="L123">        }</span>
+<span class="fc" id="L124">    }</span>
     
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

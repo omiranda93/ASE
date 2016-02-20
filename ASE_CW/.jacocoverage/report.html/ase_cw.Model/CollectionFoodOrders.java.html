@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 /**
  * The collection that holds all the Order objects.
@@ -28,14 +28,14 @@ public class CollectionFoodOrders {
      
     
     //Get all the prices of all the dishes in pairs from the Menu class. As we are using a map, traversing the Map to get the price is O(1) complexity so its optimal.
-<span class="fc" id="L31">    private Map&lt;String, Double&gt; NamePricePair = new TreeMap&lt;String, Double&gt;();</span>
+<span class="fc" id="L31">    private Map&lt;String, Double&gt; NamePricePair = new TreeMap&lt;&gt;();</span>
 
     /**
      * Creates a new collection of orders
      * @param menu The Menu collection is passed in order to gain access to the prices later on
      */
 <span class="fc" id="L37">    public CollectionFoodOrders(Menu menu){</span>
-<span class="fc" id="L38">        orderCol = new TreeMap&lt;Integer, Set&lt;FoodOrder&gt;&gt;();</span>
+<span class="fc" id="L38">        orderCol = new TreeMap&lt;&gt;();</span>
 <span class="fc" id="L39">        this.menu = menu;</span>
 <span class="fc" id="L40">        NamePricePair = menu.getValues();</span>
 <span class="fc" id="L41">    }</span>
@@ -76,7 +76,7 @@ public class CollectionFoodOrders {
 <span class="nc bnc" id="L76" title="All 2 branches missed.">        if (orderCol.containsKey(tableId)){</span>
 <span class="nc" id="L77">            this.getValue(tableId).add(oi);</span>
         }else{
-<span class="nc" id="L79">            TreeSet&lt;FoodOrder&gt; ts = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="nc" id="L79">            TreeSet&lt;FoodOrder&gt; ts = new TreeSet&lt;&gt;();</span>
 <span class="nc" id="L80">            ts.add(oi);</span>
 <span class="nc" id="L81">            orderCol.put(tableId, ts);</span>
         }
@@ -113,11 +113,14 @@ public class CollectionFoodOrders {
     public String getBill(int tableId){
 <span class="fc" id="L114">        double bill=0;</span>
         double dishTotal;
-        int discountPerc;
-<span class="fc" id="L117">        String result=&quot;Table &quot; + tableId + &quot; Summary\n&quot;;</span>
+        int discountPerc;    
+        String temp;
+        int nb_new_lines, i;
+        
+<span class="fc" id="L120">        String result=&quot;Table &quot; + tableId + &quot; Summary\n&quot;;</span>
         
         //Create the string formater to be applied to String.format
-<span class="fc" id="L120">        String formater = &quot;%-&quot; </span>
+<span class="fc" id="L123">        String formater = &quot;%-&quot; </span>
                 + Manager.ALINEA_DISHNAME + &quot;s %-&quot; 
                 + Manager.DISHNAME_TEXT + &quot;s %-&quot; 
                 + Manager.QUANTITY + &quot;s %-1s %-&quot; 
@@ -125,58 +128,84 @@ public class CollectionFoodOrders {
                 + Manager.MAX_TOTAL + &quot;s %-&quot; 
                 + Manager.CURRENCY_SIZE + &quot;s&quot;;
         
-<span class="fc" id="L128">        Set&lt;FoodOrder&gt; orders = getValue(tableId);</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">            for (FoodOrder order : orders){</span>
-<span class="fc" id="L130">               dishTotal = NamePricePair.get(order.getDishName()) * order.getQuantity();</span>
-<span class="fc" id="L131">               result += String.format(formater,&quot;&quot;,order.getDishName(), order.getQuantity(),&quot;*&quot;,NamePricePair.get(order.getDishName()) ,&quot;=&quot; ,dishTotal, Manager.CURRENCY) +&quot;\n&quot;;</span>
-<span class="fc" id="L132">               bill += dishTotal;</span>
-<span class="fc" id="L133">            }</span>
-<span class="fc" id="L134">        discountPerc = Manager.calculateDiscount(bill);</span>
-<span class="fc" id="L135">        discount = (discountPerc * bill)/100;</span>
+<span class="fc" id="L131">        Set&lt;FoodOrder&gt; orders = getValue(tableId);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            for (FoodOrder order : orders){</span>
+<span class="fc" id="L133">               dishTotal = NamePricePair.get(order.getDishName()) * order.getQuantity();</span>
+               
+               
+                 
+<span class="fc bfc" id="L137" title="All 2 branches covered.">               if (order.getDishName().length() &gt; Manager.DISHNAME_TEXT) {</span>
+
+                    //Number of lines necessary to write the dish's name
+<span class="fc" id="L140">                    nb_new_lines = order.getDishName().length() / Manager.DISHNAME_TEXT;</span>
+
+                    //For each line
+<span class="fc bfc" id="L143" title="All 2 branches covered.">                    for (i = 0; i&lt; nb_new_lines; i++) {</span>
+
+                        //If it is not the line finishing printing the dish's name: format the line without the price
+                        //If it is the line finishing printing the dish's name: format the line with the price
+<span class="pc bpc" id="L147" title="3 of 6 branches missed.">                        if (i &lt; nb_new_lines-1 | i == nb_new_lines-1) {</span>
+<span class="fc" id="L148">                            temp = order.getDishName().substring(i*(Manager.DISHNAME_TEXT-1), (i+1)*(Manager.DISHNAME_TEXT-1));</span>
+<span class="fc" id="L149">                            result += String.format(formater, &quot;&quot;, temp, &quot;&quot;, &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;) + &quot;\n&quot;;</span>
+                        }
+                    }
+
+<span class="fc" id="L153">                    temp = order.getDishName().substring((nb_new_lines)*(Manager.DISHNAME_TEXT-1), order.getDishName().length());</span>
+<span class="fc" id="L154">                    result += String.format(formater, &quot;&quot;, temp, order.getQuantity(), &quot;*&quot;, NamePricePair.get(order.getDishName()),&quot;=&quot; ,dishTotal, Manager.CURRENCY) + &quot;\n&quot;;</span>
+
+                } else {
+<span class="fc" id="L157">                    result += String.format(formater, &quot;&quot;, order.getDishName(), order.getQuantity(),&quot;*&quot;, NamePricePair.get(order.getDishName()),&quot;=&quot; ,dishTotal, Manager.CURRENCY) + &quot;\n&quot;;</span>
+                }
+
+<span class="fc" id="L160">               bill += dishTotal;</span>
+<span class="fc" id="L161">            }</span>
+<span class="fc" id="L162">        discountPerc = Manager.calculateDiscount(bill);</span>
+<span class="fc" id="L163">        discount = (discountPerc * bill)/100;</span>
         
-<span class="fc" id="L137">        result += &quot;\n&quot;;</span>
+<span class="fc" id="L165">        result += &quot;\n&quot;;</span>
         
         //Also print the summed total of the table, included the discounted price (if applicable - configured in the manager class)
-<span class="fc" id="L140">        result += String.format(formater,&quot;&quot;,&quot;Total for this table:&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,bill, Manager.CURRENCY) +&quot;\n&quot;;</span>
-<span class="fc" id="L141">        result += String.format(formater,&quot;&quot;,&quot;Discount: &quot; + discountPerc + &quot;%&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,discount, Manager.CURRENCY) +&quot;\n&quot;;</span>
-<span class="fc" id="L142">        result += String.format(formater,&quot;&quot;,&quot;Discounted total:&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,bill - discount, Manager.CURRENCY) +&quot;\n\n&quot;;</span>
+<span class="fc" id="L168">        result += String.format(formater,&quot;&quot;,&quot;Total for this table:&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,bill, Manager.CURRENCY) +&quot;\n&quot;;</span>
+<span class="fc" id="L169">        result += String.format(formater,&quot;&quot;,&quot;Discount: &quot; + discountPerc + &quot;%&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,discount, Manager.CURRENCY) +&quot;\n&quot;;</span>
+<span class="fc" id="L170">        result += String.format(formater,&quot;&quot;,&quot;Discounted total:&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,bill - discount, Manager.CURRENCY) +&quot;\n\n&quot;;</span>
         
         //Update the tables bill with the discount (if any)
-<span class="fc" id="L145">        bill -= discount;</span>
+<span class="fc" id="L173">        bill -= discount;</span>
 
-<span class="fc" id="L147">        return result;</span>
-    }
-    
-    public String[] jtGetBill(int tableId){
-<span class="nc" id="L151">        String[] s = new String[10];</span>
-        
-        
-<span class="nc" id="L154">        return s;</span>
+<span class="fc" id="L175">        return result;</span>
     }
     
     /**
      * Shows a dialog, prompting the user to enter a table ID and show a window with the 
      * bill for the provided table
-     * @throws ase_cw.NoMatchingIDException
+     * @throws NoMatchingIDException
      */
     public void showTableBill() throws NoMatchingIDException {
-<span class="nc" id="L163">        String id = JOptionPane.showInputDialog(null, &quot;Enter table id&quot;);</span>
+<span class="fc" id="L184">        String id = JOptionPane.showInputDialog(null, &quot;Enter table id&quot;);</span>
+        //JTextArea textArea = new JTextArea(getBill(Integer.valueOf(id)),5, 50);
 
-<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (id != null){</span>
-<span class="nc bnc" id="L166" title="All 2 branches missed.">            if (!Manager.isInteger(id)) {throw new NoMatchingIDException(id);}</span>
-        }else{
-<span class="nc" id="L168">            throw new NumberFormatException();</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if (id != null){</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">            if (!Manager.isInteger(id)) {</span>
+<span class="nc" id="L189">                JOptionPane.showMessageDialog(null, &quot;Wrong table ID&quot;, &quot;Attention&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L190">                throw new NoMatchingIDException(id);</span>
+            }
+        } else {
+<span class="nc" id="L193">            throw new NumberFormatException();</span>
         }
   
-<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (!this.getKeys().contains(Integer.valueOf(id))){</span>
-<span class="nc" id="L172">            JOptionPane.showMessageDialog(null, &quot;Table ID not existant.&quot;, &quot;Attention&quot;, JOptionPane.ERROR_MESSAGE);</span>
-<span class="nc" id="L173">            throw new NoMatchingIDException(id);</span>
+<span class="fc" id="L196">        int t_id = Integer.valueOf(id); //convert it to Integer</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">        if (t_id &lt; 0){</span>
+<span class="nc" id="L198">            JOptionPane.showMessageDialog(null, &quot;Table ID can not be a negative number&quot;, &quot;Attention&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L199">            throw new NoMatchingIDException(id);</span>
+        }
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">        if (!this.getKeys().contains(t_id)){</span>
+<span class="nc" id="L202">            JOptionPane.showMessageDialog(null, &quot;Table ID not existant.&quot;, &quot;Attention&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L203">            throw new NoMatchingIDException(id);</span>
 
         } else{
-<span class="nc" id="L176">            System.out.println(getBill(Integer.valueOf(id)));</span>
-<span class="nc" id="L177">            JOptionPane.showMessageDialog(null, &quot;&lt;HTML&gt;&quot; + getBill(Integer.valueOf(id)) + &quot;&lt;/HTML&gt;&quot;);</span>
+<span class="fc" id="L206">            JOptionPane.showMessageDialog(null, getBill(Integer.valueOf(id)));</span>
         }
-<span class="nc" id="L179">    }</span>
+<span class="fc" id="L208">    }</span>
     
     /**
      * Creates a frequency report of how many times each dish has been order in total within
@@ -184,34 +213,34 @@ public class CollectionFoodOrders {
      * @return A String table showing how many times each dish has been ordered.
      */
     public String showDishCounter(){
-<span class="fc" id="L187">        String result = String.format(&quot;%-60s %-3s&quot;, &quot;Dish name&quot;, &quot;Times ordered&quot;) + &quot;\n&quot;;</span>
-<span class="fc" id="L188">        result += Manager.underlineString(result) + &quot;\n&quot;;</span>
-<span class="fc" id="L189">        Map&lt;String, Integer&gt; quantityOrders = new TreeMap&lt;String, Integer&gt;();</span>
+<span class="fc" id="L216">        String result = String.format(&quot;%-60s %-3s&quot;, &quot;Dish name&quot;, &quot;Times ordered&quot;) + &quot;\n&quot;;</span>
+<span class="fc" id="L217">        result += Manager.underlineString(result) + &quot;\n&quot;;</span>
+<span class="fc" id="L218">        Map&lt;String, Integer&gt; quantityOrders = new TreeMap&lt;&gt;();</span>
         
         //First build a Map of all distinct food names and set the counter to 0
-<span class="fc bfc" id="L192" title="All 2 branches covered.">        for (Map.Entry&lt;Integer, ? super Set&lt;FoodOrder&gt;&gt; entry : orderCol.entrySet()){</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">            for (FoodOrder o : (TreeSet&lt;FoodOrder&gt;) entry.getValue()){</span>
-<span class="fc" id="L194">                quantityOrders.put(o.getDishName(), 0);    </span>
-<span class="fc" id="L195">            }</span>
-<span class="fc" id="L196">        }</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">        for (Map.Entry&lt;Integer, ? super Set&lt;FoodOrder&gt;&gt; entry : orderCol.entrySet()){</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">            for (FoodOrder o : (TreeSet&lt;FoodOrder&gt;) entry.getValue()){</span>
+<span class="fc" id="L223">                quantityOrders.put(o.getDishName(), 0);    </span>
+<span class="fc" id="L224">            }</span>
+<span class="fc" id="L225">        }</span>
         
         //Then for each of these foods, search the order collection again and for everytime found, add its quantity to the counter (as a value of the map) 
-<span class="fc bfc" id="L199" title="All 2 branches covered.">        for (Map.Entry&lt;String, Integer&gt; foodList : quantityOrders.entrySet()){</span>
-<span class="fc bfc" id="L200" title="All 2 branches covered.">            for (Map.Entry&lt;Integer, ? super Set&lt;FoodOrder&gt;&gt; entry : orderCol.entrySet()){</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">                for (FoodOrder o : (TreeSet&lt;FoodOrder&gt;) entry.getValue()){</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">                    if (o.getDishName().equals(foodList.getKey())){</span>
-<span class="fc" id="L203">                        foodList.setValue(foodList.getValue() + o.getQuantity());</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">        for (Map.Entry&lt;String, Integer&gt; foodList : quantityOrders.entrySet()){</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">            for (Map.Entry&lt;Integer, ? super Set&lt;FoodOrder&gt;&gt; entry : orderCol.entrySet()){</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">                for (FoodOrder o : (TreeSet&lt;FoodOrder&gt;) entry.getValue()){</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">                    if (o.getDishName().equals(foodList.getKey())){</span>
+<span class="fc" id="L232">                        foodList.setValue(foodList.getValue() + o.getQuantity());</span>
                     }   
-<span class="fc" id="L205">                }</span>
-<span class="fc" id="L206">            }</span>
-<span class="fc" id="L207">        }</span>
+<span class="fc" id="L234">                }</span>
+<span class="fc" id="L235">            }</span>
+<span class="fc" id="L236">        }</span>
         
         //Iterate through the produced Map to build the table for output.
-<span class="fc bfc" id="L210" title="All 2 branches covered.">        for (Map.Entry&lt;String, Integer&gt; foodList : quantityOrders.entrySet()){</span>
-<span class="fc" id="L211">            result += String.format(&quot;%-60s %-3s&quot;, foodList.getKey(), foodList.getValue()) + &quot;\n&quot;; </span>
-<span class="fc" id="L212">        }</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">        for (Map.Entry&lt;String, Integer&gt; foodList : quantityOrders.entrySet()){</span>
+<span class="fc" id="L240">            result += String.format(&quot;%-60s %-3s&quot;, foodList.getKey(), foodList.getValue()) + &quot;\n&quot;; </span>
+<span class="fc" id="L241">        }</span>
         
-<span class="fc" id="L214">        return result;</span>
+<span class="fc" id="L243">        return result;</span>
     }
     
     /**
@@ -219,24 +248,24 @@ public class CollectionFoodOrders {
      * @return a list formatted string representation of the unordered dishes.
      */
     public String showUnorderedDishes(){
-<span class="fc" id="L222">        String result=&quot;List of unoredered dishes:\n&quot; + Manager.underlineString(&quot;List of unoredered dishes:&quot;)+&quot;\n&quot;;</span>
-<span class="fc" id="L223">        Set&lt;String&gt; orderList = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L251">        String result=&quot;List of unoredered dishes:\n&quot; + Manager.underlineString(&quot;List of unoredered dishes:&quot;)+&quot;\n&quot;;</span>
+<span class="fc" id="L252">        Set&lt;String&gt; orderList = new TreeSet&lt;&gt;();</span>
         
         //First build a Map of all distinct food names and set the counter to 0
-<span class="fc bfc" id="L226" title="All 2 branches covered.">        for (Map.Entry&lt;Integer, ? super Set&lt;FoodOrder&gt;&gt; entry : orderCol.entrySet()){</span>
-<span class="fc bfc" id="L227" title="All 2 branches covered.">            for (FoodOrder o : (TreeSet&lt;FoodOrder&gt;) entry.getValue()){</span>
-<span class="fc" id="L228">                orderList.add(o.getDishName());    </span>
-<span class="fc" id="L229">            }</span>
-<span class="fc" id="L230">        }</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">        for (Map.Entry&lt;Integer, ? super Set&lt;FoodOrder&gt;&gt; entry : orderCol.entrySet()){</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">            for (FoodOrder o : (TreeSet&lt;FoodOrder&gt;) entry.getValue()){</span>
+<span class="fc" id="L257">                orderList.add(o.getDishName());    </span>
+<span class="fc" id="L258">            }</span>
+<span class="fc" id="L259">        }</span>
       
         //Then add all dishes that do not exist in the orders
-<span class="fc bfc" id="L233" title="All 2 branches covered.">        for (Map.Entry&lt;String, Double&gt; entry : NamePricePair.entrySet()){</span>
-<span class="fc bfc" id="L234" title="All 2 branches covered.">            if (!orderList.contains(entry.getKey())){</span>
-<span class="fc" id="L235">                result += entry.getKey() +&quot;\n&quot;;</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">        for (Map.Entry&lt;String, Double&gt; entry : NamePricePair.entrySet()){</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">            if (!orderList.contains(entry.getKey())){</span>
+<span class="fc" id="L264">                result += entry.getKey() +&quot;\n&quot;;</span>
             }
-<span class="fc" id="L237">        }</span>
+<span class="fc" id="L266">        }</span>
         
-<span class="fc" id="L239">        return result +&quot;\n&quot;;</span>
+<span class="fc" id="L268">        return result +&quot;\n&quot;;</span>
         
     }
     
@@ -245,42 +274,42 @@ public class CollectionFoodOrders {
      * @return a list formated string representation of the dishes ordered by profit.
      */
     public String showOrdersProfit(){
-<span class="fc" id="L248">        String result = String.format(&quot;%-60s %-6s&quot;, &quot;Dish name&quot;, &quot;Profit&quot;) + &quot;\n&quot;;</span>
-<span class="fc" id="L249">        result += Manager.underlineString(result) + &quot;\n&quot;;</span>
-<span class="fc" id="L250">        Map&lt;String, Double&gt; quantityOrders = new TreeMap&lt;String, Double&gt;();</span>
-<span class="fc" id="L251">        ArrayList &lt;String&gt; names = new ArrayList &lt;String&gt;();</span>
-<span class="fc" id="L252">        ArrayList &lt;Double&gt; prices = new ArrayList &lt;Double&gt;();</span>
+<span class="fc" id="L277">        String result = String.format(&quot;%-60s %-6s&quot;, &quot;Dish name&quot;, &quot;Profit&quot;) + &quot;\n&quot;;</span>
+<span class="fc" id="L278">        result += Manager.underlineString(result) + &quot;\n&quot;;</span>
+<span class="fc" id="L279">        Map&lt;String, Double&gt; quantityOrders = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L280">        ArrayList &lt;String&gt; names = new ArrayList &lt;&gt;();</span>
+<span class="fc" id="L281">        ArrayList &lt;Double&gt; prices = new ArrayList &lt;&gt;();</span>
         
         //First build a Map of all distinct food names and set the counter of profit to 0
-<span class="fc bfc" id="L255" title="All 2 branches covered.">        for (Map.Entry&lt;Integer, ? super Set&lt;FoodOrder&gt;&gt; entry : orderCol.entrySet()){</span>
-<span class="fc bfc" id="L256" title="All 2 branches covered.">            for (FoodOrder o : (TreeSet&lt;FoodOrder&gt;) entry.getValue()){</span>
-<span class="fc" id="L257">                quantityOrders.put(o.getDishName(), 0.0);    </span>
-<span class="fc" id="L258">            }</span>
-<span class="fc" id="L259">        }</span>
+<span class="fc bfc" id="L284" title="All 2 branches covered.">        for (Map.Entry&lt;Integer, ? super Set&lt;FoodOrder&gt;&gt; entry : orderCol.entrySet()){</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">            for (FoodOrder o : (TreeSet&lt;FoodOrder&gt;) entry.getValue()){</span>
+<span class="fc" id="L286">                quantityOrders.put(o.getDishName(), 0.0);    </span>
+<span class="fc" id="L287">            }</span>
+<span class="fc" id="L288">        }</span>
         
         //Then for each of these foods, search the order collection again and for everytime found, 
         //add its quantity multiplied by the price to the pricecounter (as a value of the map) 
-<span class="fc bfc" id="L263" title="All 2 branches covered.">        for (Map.Entry&lt;String, Double&gt; foodList : quantityOrders.entrySet()){</span>
-<span class="fc bfc" id="L264" title="All 2 branches covered.">            for (Map.Entry&lt;Integer, ? super Set&lt;FoodOrder&gt;&gt; entry : orderCol.entrySet()){</span>
-<span class="fc bfc" id="L265" title="All 2 branches covered.">                for (FoodOrder o : (TreeSet&lt;FoodOrder&gt;) entry.getValue()){</span>
-<span class="fc bfc" id="L266" title="All 2 branches covered.">                    if (o.getDishName().equals(foodList.getKey())){</span>
-<span class="fc" id="L267">                        foodList.setValue(foodList.getValue() + (o.getQuantity()*NamePricePair.get(o.getDishName())));</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">        for (Map.Entry&lt;String, Double&gt; foodList : quantityOrders.entrySet()){</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">            for (Map.Entry&lt;Integer, ? super Set&lt;FoodOrder&gt;&gt; entry : orderCol.entrySet()){</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">                for (FoodOrder o : (TreeSet&lt;FoodOrder&gt;) entry.getValue()){</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">                    if (o.getDishName().equals(foodList.getKey())){</span>
+<span class="fc" id="L296">                        foodList.setValue(foodList.getValue() + (o.getQuantity()*NamePricePair.get(o.getDishName())));</span>
                     }   
-<span class="fc" id="L269">                }</span>
-<span class="fc" id="L270">            }</span>
-<span class="fc" id="L271">        }</span>
+<span class="fc" id="L298">                }</span>
+<span class="fc" id="L299">            }</span>
+<span class="fc" id="L300">        }</span>
         //Order the dishes by profit
-<span class="fc bfc" id="L273" title="All 2 branches covered.">        for (Map.Entry&lt;String, Double&gt; foodList : quantityOrders.entrySet()){</span>
-<span class="fc" id="L274">            names.add(foodList.getKey());</span>
-<span class="fc" id="L275">            prices.add(foodList.getValue());</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">        for (Map.Entry&lt;String, Double&gt; foodList : quantityOrders.entrySet()){</span>
+<span class="fc" id="L303">            names.add(foodList.getKey());</span>
+<span class="fc" id="L304">            prices.add(foodList.getValue());</span>
             
-<span class="fc" id="L277">        }</span>
-<span class="fc" id="L278">        bubble_srt(names, prices);</span>
+<span class="fc" id="L306">        }</span>
+<span class="fc" id="L307">        bubble_srt(names, prices);</span>
         //Iterate through the produced Map to build the table for output.
-<span class="fc bfc" id="L280" title="All 2 branches covered.">        for (int i = 0; i &lt; prices.size(); i++) {</span>
-<span class="fc" id="L281">            result += String.format(&quot;%-60s %-6s %-3s&quot;, names.get(i), prices.get(i), Manager.CURRENCY) + &quot;\n&quot;; </span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">        for (int i = 0; i &lt; prices.size(); i++) {</span>
+<span class="fc" id="L310">            result += String.format(&quot;%-60s %-6s %-3s&quot;, names.get(i), prices.get(i), Manager.CURRENCY) + &quot;\n&quot;; </span>
         }        
-<span class="fc" id="L283">        return result;</span>
+<span class="fc" id="L312">        return result;</span>
         
     }
     
@@ -289,26 +318,26 @@ public class CollectionFoodOrders {
      * @return
      */
     public static void bubble_srt(ArrayList&lt;String&gt; names, ArrayList&lt;Double&gt; prices) {
-<span class="fc" id="L292">        int n = prices.size();</span>
+<span class="fc" id="L321">        int n = prices.size();</span>
         int k;
-<span class="fc bfc" id="L294" title="All 2 branches covered.">        for (int m = n; m &gt;= 0; m--) {</span>
-<span class="fc bfc" id="L295" title="All 2 branches covered.">            for (int i = 0; i &lt; n - 1; i++) {</span>
-<span class="fc" id="L296">                k = i + 1;</span>
-<span class="fc bfc" id="L297" title="All 2 branches covered.">                if (prices.get(i) &gt; prices.get(k)) {</span>
-<span class="fc" id="L298">                    swap(i, k, prices);</span>
-<span class="fc" id="L299">                    swap(i, k, names);</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">        for (int m = n; m &gt;= 0; m--) {</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">            for (int i = 0; i &lt; n - 1; i++) {</span>
+<span class="fc" id="L325">                k = i + 1;</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">                if (prices.get(i) &gt; prices.get(k)) {</span>
+<span class="fc" id="L327">                    swap(i, k, prices);</span>
+<span class="fc" id="L328">                    swap(i, k, names);</span>
                 }
             }
         }
-<span class="fc" id="L303">    }</span>
+<span class="fc" id="L332">    }</span>
   
     private static void swap(int i, int j, ArrayList price) {
   
         Object temp;
-<span class="fc" id="L308">        temp = price.get(i);</span>
-<span class="fc" id="L309">        price.set(i, price.get(j));</span>
-<span class="fc" id="L310">        price.set(j, temp);</span>
-<span class="fc" id="L311">    }</span>
+<span class="fc" id="L337">        temp = price.get(i);</span>
+<span class="fc" id="L338">        price.set(i, price.get(j));</span>
+<span class="fc" id="L339">        price.set(j, temp);</span>
+<span class="fc" id="L340">    }</span>
 }
     
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -118,6 +118,7 @@ public class ASE_CW {
             Manager manager = new Manager();
             manager.printAll();
             manager.guiTable();
+            manager.writeInFile();
         } catch (WrongDimensionsBillException ex) {
             System.out.println(ex.getMessage());
         }

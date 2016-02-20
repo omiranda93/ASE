@@ -52,12 +52,12 @@ public class TestIOTest {
 <span class="nc" id="L52">    }</span>
     
     @AfterClass
-<span class="nc" id="L55">    public static void tearDownClass() {</span>
+    public static void tearDownClass() {
 <span class="nc" id="L56">    }</span>
-<span class="nc" id="L57">    </span>
+    
     @Before
-<span class="nc" id="L59">    public void setUp() {</span>
-<span class="nc" id="L60">        try {</span>
+    public void setUp() {
+        try {
 <span class="nc" id="L61">            menu2.addValue(Category.MAIN, m1);</span>
 <span class="nc" id="L62">            menu2.addValue(Category.DESSERT, m2);</span>
 <span class="nc" id="L63">            menu2.addValue(Category.MAIN, m3);</span>
@@ -71,8 +71,8 @@ public class TestIOTest {
 <span class="nc" id="L71">        } catch (WrongCategoryException ex) {</span>
 <span class="nc" id="L72">            Logger.getLogger(TestIOTest.class.getName()).log(Level.SEVERE, null, ex);</span>
 <span class="nc" id="L73">        }</span>
-<span class="nc" id="L74">        </span>
-<span class="nc" id="L75">        try {</span>
+        
+        try {
 <span class="nc" id="L76">            FoodOrder o1 = new FoodOrder(3, &quot;Roast Beef&quot;, 1);</span>
 <span class="nc" id="L77">            FoodOrder o2 = new FoodOrder(1, &quot;Smoked Salmon&quot;, 2);</span>
 <span class="nc" id="L78">            FoodOrder o3 = new FoodOrder(1, &quot;Carrot Soup&quot;, 1);</span>
