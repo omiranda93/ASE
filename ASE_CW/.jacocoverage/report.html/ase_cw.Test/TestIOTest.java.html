@@ -22,111 +22,234 @@ import static org.junit.Assert.*;
  *
  * @author omiranda93
  */
-public class TestIOTest {
+<span class="nc" id="L25">public class TestIOTest {</span>
     
     private Menu menu,menu2;
+    private MenuItem m1, m2, m3, m4,m5, m6, m7,m8, m9, m10,m11, m12, m13,m14, m15,
+    m16,m17, m18, m19,m20, m21, m22,m23, m24, m25,m26, m27, m28,m29, m30,
+    m31,m32, m33, m34,m35, m36, m37,m38, m39, m40;
     private CollectionFoodOrders orders,ordersCol;
 
-<span class="nc" id="L30">    MenuItem m1 = new MenuItem(Category.MAIN, &quot;Quiche Lorraine&quot;, 14);</span>
-<span class="nc" id="L31">    MenuItem m2 = new MenuItem(Category.DESSERT, &quot;Fondant aux chocolats&quot;, 4);</span>
-<span class="nc" id="L32">    MenuItem m3 = new MenuItem(Category.MAIN, &quot;Pizza&quot;, 1.2);</span>
-<span class="nc" id="L33">    MenuItem m4 = new MenuItem(Category.STARTER, &quot;Oysters&quot;, 15.15);</span>
-<span class="nc" id="L34">    MenuItem m5 = new MenuItem(Category.DRINKS, &quot;Ricard&quot;, 20);</span>
-<span class="nc" id="L35">    MenuItem m6 = new MenuItem(Category.STARTER, &quot;Sushi&quot;, 12.10);</span>
-<span class="nc" id="L36">    MenuItem m7 = new MenuItem(Category.DESSERT, &quot;Tropezienne&quot;, 13);</span>
-<span class="nc" id="L37">    MenuItem m8 = new MenuItem(Category.DRINKS, &quot;Vodka&quot;, 7);</span>
-
     //Bug examples
-<span class="nc" id="L40">    MenuItem m9 = new MenuItem(Category.MAIN, &quot;Way_Too_Long_Name_That_Wont_Fit_On_The_Bill_Blablablablablablabla&quot;, 13);</span>
-<span class="nc" id="L41">    MenuItem m10 = new MenuItem(Category.DRINKS, &quot;Thing&quot;, 7777777777.7777777);</span>
+<span class="nc" id="L34">    MenuItem mi9 = new MenuItem(Category.MAIN, &quot;Way_Too_Long_Name_That_Wont_Fit_On_The_Bill_Blablablablablablabla&quot;, 13);</span>
+<span class="nc" id="L35">    MenuItem mi10 = new MenuItem(Category.DRINKS, &quot;Thing&quot;, 7777777777.7777777);</span>
 
-
-
-    
-
-<span class="nc" id="L47">    public TestIOTest() {</span>
-<span class="nc" id="L48">    }</span>
-    
-    @BeforeClass
-    public static void setUpClass() {
-<span class="nc" id="L52">    }</span>
-    
-    @AfterClass
-    public static void tearDownClass() {
-<span class="nc" id="L56">    }</span>
+    private TestIO instance;
     
     @Before
     public void setUp() {
-        try {
-<span class="nc" id="L61">            menu2.addValue(Category.MAIN, m1);</span>
-<span class="nc" id="L62">            menu2.addValue(Category.DESSERT, m2);</span>
-<span class="nc" id="L63">            menu2.addValue(Category.MAIN, m3);</span>
-<span class="nc" id="L64">            menu2.addValue(Category.STARTER, m4);</span>
-<span class="nc" id="L65">            menu2.addValue(Category.DRINKS, m5);</span>
-<span class="nc" id="L66">            menu2.addValue(Category.STARTER, m6);</span>
-<span class="nc" id="L67">            menu2.addValue(Category.DESSERT, m7);</span>
-<span class="nc" id="L68">            menu2.addValue(Category.DRINKS, m8);</span>
-<span class="nc" id="L69">            menu2.addValue(Category.MAIN, m9);</span>
-<span class="nc" id="L70">            menu2.addValue(Category.DRINKS, m10);</span>
-<span class="nc" id="L71">        } catch (WrongCategoryException ex) {</span>
-<span class="nc" id="L72">            Logger.getLogger(TestIOTest.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L73">        }</span>
+
+<span class="nc" id="L42">        m1 = new MenuItem(Category.STARTER, &quot;Smoked Salmon&quot;, 6.00);</span>
+<span class="nc" id="L43">        m2 = new MenuItem(Category.MAIN, &quot;Chicken Balerno&quot;, 8.00);</span>
+<span class="nc" id="L44">        m3 = new MenuItem(Category.MAIN, &quot;Roast Beef&quot;, 10.00);</span>
+<span class="nc" id="L45">        m40 = new MenuItem(Category.DESSERT, &quot;Chocolate Cake&quot;, 4.50);</span>
+<span class="nc" id="L46">        m4 = new MenuItem(Category.DRINKS, &quot;Coffee and Mints&quot;, 2.5);</span>
+<span class="nc" id="L47">        m5 = new MenuItem(Category.STARTER, &quot;Carrot Soup&quot;, 3.5);</span>
+<span class="nc" id="L48">        m6 = new MenuItem(Category.DESSERT, &quot;Pudding&quot;, 4.00);</span>
+<span class="nc" id="L49">        m7 = new MenuItem(Category.DRINKS, &quot;Coke&quot;, 2.00);</span>
+<span class="nc" id="L50">        m8 = new MenuItem(Category.STARTER, &quot;DIY British beef crostini&quot;, 5.00);</span>
+<span class="nc" id="L51">        m9 = new MenuItem(Category.STARTER, &quot;Cheesy sprout fondue&quot;, 5.50);</span>
+<span class="nc" id="L52">        m10 = new MenuItem(Category.STARTER, &quot;Lobster, green bean &amp; radicchio salad&quot;, 5.50);</span>
+<span class="nc" id="L53">        m11 = new MenuItem(Category.STARTER, &quot;Classic potted shrimps&quot;, 3.00);</span>
+<span class="nc" id="L54">        m12 = new MenuItem(Category.STARTER, &quot;Watercress &amp; celeriac soup with goat's cheese croutons&quot;, 6.00);</span>
+<span class="nc" id="L55">        m13 = new MenuItem(Category.STARTER, &quot;Creamy cucumber with gravadlax&quot;, 3.50);</span>
+<span class="nc" id="L56">        m14 = new MenuItem(Category.STARTER, &quot;Chicken liver &amp; pineau pate&quot;, 7.00);</span>
+<span class="nc" id="L57">        m15 = new MenuItem(Category.STARTER, &quot;Seared scallops with leeks &amp; lemon chilli butter&quot;, 5.00);</span>
+<span class="nc" id="L58">        m16 = new MenuItem(Category.MAIN, &quot;Beef Enchiladas&quot;, 9.00);</span>
+<span class="nc" id="L59">        m17 = new MenuItem(Category.MAIN, &quot;Beer and Brown Sugar Kielbasa &amp; Sauerkraut&quot;, 8.50);</span>
+<span class="nc" id="L60">        m18 = new MenuItem(Category.DRINKS, &quot;Cider&quot;, 3.00);</span>
+<span class="nc" id="L61">        m19 = new MenuItem(Category.DRINKS, &quot;Guinness&quot;, 4.00);</span>
+<span class="nc" id="L62">        m20 = new MenuItem(Category.DESSERT, &quot;Dairy-free avocado chocolate mousse&quot;, 4.00);</span>
+<span class="nc" id="L63">        m21 = new MenuItem(Category.MAIN, &quot;Coconut Shrimp with Mango Dipping Sauce&quot;, 7.00);</span>
+<span class="nc" id="L64">        m22 = new MenuItem(Category.MAIN, &quot;General Tso’s Chicken&quot;, 11.00);</span>
+<span class="nc" id="L65">        m23 = new MenuItem(Category.DRINKS, &quot;Dr Pepper&quot;, 2.00);</span>
+<span class="nc" id="L66">        m24 = new MenuItem(Category.DRINKS, &quot;Beer&quot;, 2.50);</span>
+<span class="nc" id="L67">        m25 = new MenuItem(Category.DESSERT, &quot;Chocolate &amp; mint cheesecake&quot;, 3.50);</span>
+<span class="nc" id="L68">        m26 = new MenuItem(Category.MAIN, &quot;Crab Cakes with Remoulade Sauce&quot;, 9.50);</span>
+<span class="nc" id="L69">        m27 = new MenuItem(Category.MAIN, &quot;Frito Pie&quot;, 9.00);</span>
+<span class="nc" id="L70">        m28 = new MenuItem(Category.DRINKS, &quot;Fanta lemon&quot;, 2.00);</span>
+<span class="nc" id="L71">        m29 = new MenuItem(Category.MAIN, &quot;Favorite Meatloaf&quot;, 8.50);</span>
+<span class="nc" id="L72">        m30 = new MenuItem(Category.DESSERT, &quot;Chocolate mousse&quot;, 2.5);</span>
+<span class="nc" id="L73">        m31 = new MenuItem(Category.DESSERT, &quot;Choc a block&quot;, 3.00);</span>
+<span class="nc" id="L74">        m32 = new MenuItem(Category.MAIN, &quot;Greek Lamb Gyros with Tzatziki Sauce&quot;, 13.00);</span>
+<span class="nc" id="L75">        m33 = new MenuItem(Category.DRINKS, &quot;Fanta orange&quot;, 2.00);</span>
+<span class="nc" id="L76">        m34 = new MenuItem(Category.DESSERT, &quot;Chocolate-Mint Bars&quot;, 5.00);</span>
+<span class="nc" id="L77">        m35 = new MenuItem(Category.DESSERT, &quot;Oatmeal Pecan Pie&quot;, 4.00);</span>
+<span class="nc" id="L78">        m36 = new MenuItem(Category.DESSERT, &quot;Chocolate banoffee pie&quot;, 5.00);</span>
+<span class="nc" id="L79">        m37 = new MenuItem(Category.DESSERT, &quot;Sticky date pudding&quot;, 6.00);</span>
+<span class="nc" id="L80">        m38 = new MenuItem(Category.DRINKS, &quot;Red wine&quot;, 3.00);</span>
+<span class="nc" id="L81">        m39 = new MenuItem(Category.MAIN, &quot;Crab Cakes with Remoulade Sauce&quot;, 9.5);</span>
+<span class="nc" id="L82">        m40 = new MenuItem(Category.DESSERT, &quot;Chocolate Cake&quot;, 4.50);</span>
+
+<span class="nc" id="L84">        instance = new TestIO();</span>
+<span class="nc" id="L85">        menu = new Menu();</span>
+<span class="nc" id="L86">        menu2 = new Menu();</span>
         
+
         try {
-<span class="nc" id="L76">            FoodOrder o1 = new FoodOrder(3, &quot;Roast Beef&quot;, 1);</span>
-<span class="nc" id="L77">            FoodOrder o2 = new FoodOrder(1, &quot;Smoked Salmon&quot;, 2);</span>
-<span class="nc" id="L78">            FoodOrder o3 = new FoodOrder(1, &quot;Carrot Soup&quot;, 1);</span>
-<span class="nc" id="L79">            FoodOrder o4 = new FoodOrder(1, &quot;Roast Beef&quot;, 2);</span>
-<span class="nc" id="L80">            FoodOrder o5 = new FoodOrder(3, &quot;Chocolate Cake&quot;, 1);</span>
-<span class="nc" id="L81">            FoodOrder o6 = new FoodOrder(2, &quot;Carrot Soup&quot;, 1);</span>
-<span class="nc" id="L82">            FoodOrder o7 = new FoodOrder(2, &quot;Roast Beef&quot;, 1);</span>
-<span class="nc" id="L83">            ordersCol.addValue(o1.getTableId(), o1);</span>
-<span class="nc" id="L84">            ordersCol.addValue(o2.getTableId(), o2);</span>
-<span class="nc" id="L85">            ordersCol.addValue(o3.getTableId(), o3);</span>
-<span class="nc" id="L86">            ordersCol.addValue(o4.getTableId(), o4);</span>
-<span class="nc" id="L87">            ordersCol.addValue(o5.getTableId(), o5);</span>
-<span class="nc" id="L88">            ordersCol.addValue(o6.getTableId(), o6);</span>
-<span class="nc" id="L89">            ordersCol.addValue(o7.getTableId(), o7);</span>
+<span class="nc" id="L90">            menu2.addValue(Category.STARTER, m1);</span>
+<span class="nc" id="L91">            menu2.addValue(Category.MAIN, m2);</span>
+<span class="nc" id="L92">            menu2.addValue(Category.MAIN, m3);</span>
+<span class="nc" id="L93">            menu2.addValue(Category.DRINKS, m4);</span>
+<span class="nc" id="L94">            menu2.addValue(Category.STARTER, m5);</span>
+<span class="nc" id="L95">            menu2.addValue(Category.DESSERT, m6);</span>
+<span class="nc" id="L96">            menu2.addValue(Category.DRINKS, m7);</span>
+<span class="nc" id="L97">            menu2.addValue(Category.STARTER, m8);</span>
+<span class="nc" id="L98">            menu2.addValue(Category.STARTER, m9);</span>
+<span class="nc" id="L99">            menu2.addValue(Category.STARTER, m10);</span>
+<span class="nc" id="L100">            menu2.addValue(Category.STARTER, m11);</span>
+<span class="nc" id="L101">            menu2.addValue(Category.STARTER, m12);</span>
+<span class="nc" id="L102">            menu2.addValue(Category.STARTER, m13);</span>
+<span class="nc" id="L103">            menu2.addValue(Category.STARTER, m14);</span>
+<span class="nc" id="L104">            menu2.addValue(Category.STARTER, m15);</span>
+<span class="nc" id="L105">            menu2.addValue(Category.MAIN, m16);</span>
+<span class="nc" id="L106">            menu2.addValue(Category.MAIN, m17);</span>
+<span class="nc" id="L107">            menu2.addValue(Category.DRINKS, m18);</span>
+<span class="nc" id="L108">            menu2.addValue(Category.DRINKS, m19);</span>
+<span class="nc" id="L109">            menu2.addValue(Category.DESSERT, m20);</span>
+<span class="nc" id="L110">            menu2.addValue(Category.MAIN, m21);</span>
+<span class="nc" id="L111">            menu2.addValue(Category.MAIN, m22);</span>
+<span class="nc" id="L112">            menu2.addValue(Category.DRINKS, m23);</span>
+<span class="nc" id="L113">            menu2.addValue(Category.DRINKS, m24);</span>
+<span class="nc" id="L114">            menu2.addValue(Category.DESSERT, m25);</span>
+<span class="nc" id="L115">            menu2.addValue(Category.MAIN, m26);</span>
+<span class="nc" id="L116">            menu2.addValue(Category.MAIN, m27);</span>
+<span class="nc" id="L117">            menu2.addValue(Category.DRINKS, m28);</span>
+<span class="nc" id="L118">            menu2.addValue(Category.MAIN, m29);</span>
+<span class="nc" id="L119">            menu2.addValue(Category.DESSERT, m30);</span>
+<span class="nc" id="L120">            menu2.addValue(Category.DESSERT, m31);</span>
+<span class="nc" id="L121">            menu2.addValue(Category.MAIN, m32);</span>
+<span class="nc" id="L122">            menu2.addValue(Category.DRINKS, m33);</span>
+<span class="nc" id="L123">            menu2.addValue(Category.DESSERT, m34);</span>
+<span class="nc" id="L124">            menu2.addValue(Category.DESSERT, m35);</span>
+<span class="nc" id="L125">            menu2.addValue(Category.DESSERT, m36);</span>
+<span class="nc" id="L126">            menu2.addValue(Category.DESSERT, m37);</span>
+<span class="nc" id="L127">            menu2.addValue(Category.DRINKS, m38);</span>
+<span class="nc" id="L128">            menu2.addValue(Category.MAIN, m39);</span>
+<span class="nc" id="L129">            menu2.addValue(Category.DESSERT, m40);</span>
+<span class="nc" id="L130">        } catch (WrongCategoryException ex) {</span>
+<span class="nc" id="L131">            Logger.getLogger(TestIOTest.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L132">        }</span>
+<span class="nc" id="L133">        orders = new CollectionFoodOrders(menu2);</span>
+<span class="nc" id="L134">        ordersCol = new CollectionFoodOrders(menu2);</span>
+        try {
+<span class="nc" id="L136">            FoodOrder o1 = new FoodOrder(3, &quot;Roast Beef&quot;, 2);</span>
+<span class="nc" id="L137">            FoodOrder o2 = new FoodOrder(1, &quot;Smoked Salmon&quot;, 1);</span>
+<span class="nc" id="L138">            FoodOrder o3 = new FoodOrder(1, &quot;Carrot Soup&quot;, 1);</span>
+<span class="nc" id="L139">            FoodOrder o4 = new FoodOrder(1, &quot;Roast Beef&quot;, 2);</span>
+<span class="nc" id="L140">            FoodOrder o5 = new FoodOrder(3, &quot;Chocolate Cake&quot;, 2);</span>
+<span class="nc" id="L141">            FoodOrder o6 = new FoodOrder(2, &quot;Carrot Soup&quot;, 2);</span>
+<span class="nc" id="L142">            FoodOrder o7 = new FoodOrder(2, &quot;Roast Beef&quot;, 2);</span>
+<span class="nc" id="L143">            FoodOrder o8 = new FoodOrder(3, &quot;Coffee and Mints&quot;, 2);</span>
+<span class="nc" id="L144">            FoodOrder o9 = new FoodOrder(4, &quot;Coconut Shrimp with Mango Dipping Sauce&quot;, 1);</span>
+<span class="nc" id="L145">            FoodOrder o10 = new FoodOrder(4, &quot;Frito Pie&quot;, 2);</span>
+<span class="nc" id="L146">            FoodOrder o11 = new FoodOrder(5, &quot;DIY British beef crostini&quot;, 3);</span>
+<span class="nc" id="L147">            FoodOrder o12 = new FoodOrder(5, &quot;Guinness&quot;, 3);</span>
+<span class="nc" id="L148">            FoodOrder o13 = new FoodOrder(5, &quot;Greek Lamb Gyros with Tzatziki Sauce&quot;, 1);</span>
+<span class="nc" id="L149">            FoodOrder o14 = new FoodOrder(6, &quot;Chocolate &amp; mint cheesecake&quot;, 2);</span>
+<span class="nc" id="L150">            FoodOrder o15 = new FoodOrder(6, &quot;Coconut Shrimp with Mango Dipping Sauce&quot;, 1);</span>
+<span class="nc" id="L151">            FoodOrder o16 = new FoodOrder(6, &quot;Beef Enchiladas&quot;, 1);</span>
+<span class="nc" id="L152">            FoodOrder o17 = new FoodOrder(7, &quot;Dr Pepper&quot;, 4);</span>
+<span class="nc" id="L153">            FoodOrder o18 = new FoodOrder(7, &quot;Beer and Brown Sugar Kielbasa &amp; Sauerkraut&quot;, 4);</span>
+<span class="nc" id="L154">            FoodOrder o19 = new FoodOrder(8, &quot;Coconut Shrimp with Mango Dipping Sauce&quot;, 2);</span>
+<span class="nc" id="L155">            FoodOrder o20 = new FoodOrder(8, &quot;Guinness&quot;, 2);</span>
+<span class="nc" id="L156">            FoodOrder o21 = new FoodOrder(8, &quot;Roast Beef&quot;, 2);</span>
+<span class="nc" id="L157">            FoodOrder o22 = new FoodOrder(9, &quot;DIY British beef crostini&quot;, 1);</span>
+<span class="nc" id="L158">            FoodOrder o23 = new FoodOrder(9, &quot;Crab Cakes with Remoulade Sauce&quot;, 1);</span>
+<span class="nc" id="L159">            FoodOrder o24 = new FoodOrder(9, &quot;Chocolate mousse&quot;, 1);</span>
+<span class="nc" id="L160">            FoodOrder o25 = new FoodOrder(9, &quot;Red wine&quot;, 1);</span>
+<span class="nc" id="L161">            FoodOrder o26 = new FoodOrder(10, &quot;Beef Enchiladas&quot;, 5);</span>
+<span class="nc" id="L162">            FoodOrder o27 = new FoodOrder(10, &quot;Fanta lemon&quot;, 1);</span>
+<span class="nc" id="L163">            FoodOrder o28 = new FoodOrder(10, &quot;Dr Pepper&quot;, 1);</span>
+<span class="nc" id="L164">            FoodOrder o29 = new FoodOrder(10, &quot;Beer&quot;, 3);</span>
+<span class="nc" id="L165">            FoodOrder o30 = new FoodOrder(11, &quot;Dairy-free avocado chocolate mousse&quot;, 2);</span>
+<span class="nc" id="L166">            FoodOrder o31 = new FoodOrder(11, &quot;Creamy cucumber with gravadlax&quot;, 1);</span>
+<span class="nc" id="L167">            FoodOrder o32 = new FoodOrder(11, &quot;Watercress &amp; celeriac soup with goat's cheese croutons&quot;, 1);</span>
+<span class="nc" id="L168">            FoodOrder o33 = new FoodOrder(11, &quot;Guinness&quot;, 2);</span>
+<span class="nc" id="L169">            TreeSet &lt;FoodOrder&gt; table12 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="nc" id="L170">            TreeSet &lt;FoodOrder&gt; table13 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="nc" id="L171">            TreeSet &lt;FoodOrder&gt; table14 = new TreeSet&lt;FoodOrder&gt;();</span>
+<span class="nc" id="L172">            TreeSet &lt;FoodOrder&gt; table15 = new TreeSet&lt;FoodOrder&gt;();</span>
+            
+            
+<span class="nc" id="L175">            ordersCol.addValue(o1.getTableId(), o1);</span>
+<span class="nc" id="L176">            ordersCol.addValue(o2.getTableId(), o2);</span>
+<span class="nc" id="L177">            ordersCol.addValue(o3.getTableId(), o3);</span>
+<span class="nc" id="L178">            ordersCol.addValue(o4.getTableId(), o4);</span>
+<span class="nc" id="L179">            ordersCol.addValue(o5.getTableId(), o5);</span>
+<span class="nc" id="L180">            ordersCol.addValue(o6.getTableId(), o6);</span>
+<span class="nc" id="L181">            ordersCol.addValue(o7.getTableId(), o7);</span>
+<span class="nc" id="L182">            ordersCol.addValue(o8.getTableId(), o8);</span>
+<span class="nc" id="L183">            ordersCol.addValue(o9.getTableId(), o9);</span>
+<span class="nc" id="L184">            ordersCol.addValue(o10.getTableId(), o10);</span>
+<span class="nc" id="L185">            ordersCol.addValue(o11.getTableId(), o11);</span>
+<span class="nc" id="L186">            ordersCol.addValue(o12.getTableId(), o12);</span>
+<span class="nc" id="L187">            ordersCol.addValue(o13.getTableId(), o13);</span>
+<span class="nc" id="L188">            ordersCol.addValue(o14.getTableId(), o14);</span>
+<span class="nc" id="L189">            ordersCol.addValue(o15.getTableId(), o15);</span>
+<span class="nc" id="L190">            ordersCol.addValue(o16.getTableId(), o16);</span>
+<span class="nc" id="L191">            ordersCol.addValue(o17.getTableId(), o17);</span>
+<span class="nc" id="L192">            ordersCol.addValue(o18.getTableId(), o18);</span>
+<span class="nc" id="L193">            ordersCol.addValue(o19.getTableId(), o19);</span>
+<span class="nc" id="L194">            ordersCol.addValue(o20.getTableId(), o20);</span>
+<span class="nc" id="L195">            ordersCol.addValue(o21.getTableId(), o21);</span>
+<span class="nc" id="L196">            ordersCol.addValue(o22.getTableId(), o22);</span>
+<span class="nc" id="L197">            ordersCol.addValue(o23.getTableId(), o23);</span>
+<span class="nc" id="L198">            ordersCol.addValue(o24.getTableId(), o24);</span>
+<span class="nc" id="L199">            ordersCol.addValue(o25.getTableId(), o25);</span>
+<span class="nc" id="L200">            ordersCol.addValue(o26.getTableId(), o26);</span>
+<span class="nc" id="L201">            ordersCol.addValue(o27.getTableId(), o27);</span>
+<span class="nc" id="L202">            ordersCol.addValue(o28.getTableId(), o28);</span>
+<span class="nc" id="L203">            ordersCol.addValue(o29.getTableId(), o29);</span>
+<span class="nc" id="L204">            ordersCol.addValue(o30.getTableId(), o30);</span>
+<span class="nc" id="L205">            ordersCol.addValue(o31.getTableId(), o31);</span>
+<span class="nc" id="L206">            ordersCol.addValue(o32.getTableId(), o32);</span>
+<span class="nc" id="L207">            ordersCol.addValue(o33.getTableId(), o33);</span>
+<span class="nc" id="L208">            ordersCol.addValues(15, table15);</span>
+<span class="nc" id="L209">            ordersCol.addValues(14, table14);</span>
+<span class="nc" id="L210">            ordersCol.addValues(13, table13);</span>
+<span class="nc" id="L211">            ordersCol.addValues(12, table12);</span>
         
-<span class="nc" id="L91">        } catch (InvalidQuantityException ex) {</span>
-<span class="nc" id="L92">            Logger.getLogger(TestIOTest.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L93">        }</span>
+<span class="nc" id="L213">        } catch (InvalidQuantityException ex) {</span>
+<span class="nc" id="L214">            Logger.getLogger(TestIOTest.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L215">        }</span>
         
         
         
 
-<span class="nc" id="L98">    }</span>
+<span class="nc" id="L220">    }</span>
     
     @After
     public void tearDown() {
-<span class="nc" id="L102">        System.out.println(&quot; ############# The end ###########&quot;);</span>
-<span class="nc" id="L103">    }</span>
+<span class="nc" id="L224">        System.out.println(&quot; ############# The end ###########&quot;);</span>
+<span class="nc" id="L225">    }</span>
 
     /**
      * Test of readMenu method, of class TestIO.
      */
     @Test
     public void testReadMenu() {
-<span class="nc" id="L110">        System.out.println(&quot;readMenu&quot;);</span>
-<span class="nc" id="L111">        TestIO instance = new TestIO();</span>
-<span class="nc" id="L112">        instance.readMenu(menu);</span>
-<span class="nc" id="L113">        assertEquals(menu2, menu);</span>
-<span class="nc" id="L114">    }</span>
+<span class="nc" id="L232">        System.out.println(&quot;readMenu&quot;);</span>
+        //TestIO instance = new TestIO();
+<span class="nc" id="L234">        instance.readMenu(menu);</span>
+<span class="nc" id="L235">        assertEquals(menu2.toString(), menu.toString());</span>
+<span class="nc" id="L236">    }</span>
 
     /**
      * Test of readOrders method, of class TestIO.
      */
     @Test
     public void testReadOrders() {
-<span class="nc" id="L121">        System.out.println(&quot;readOrders&quot;);</span>
-<span class="nc" id="L122">        TestIO instance = new TestIO();</span>
+<span class="nc" id="L243">        System.out.println(&quot;readOrders&quot;);</span>
+        //TestIO instance = new TestIO();
         try {
-<span class="nc" id="L124">            instance.readOrders(orders);</span>
-<span class="nc" id="L125">        } catch (NoMatchingIDException ex) {</span>
-<span class="nc" id="L126">            System.out.println(ex.getMessage());</span>
-<span class="nc" id="L127">        }</span>
-<span class="nc" id="L128">        assertEquals(ordersCol, orders);</span>
-<span class="nc" id="L129">    }</span>
+<span class="nc" id="L246">            instance.readOrders(orders);</span>
+<span class="nc" id="L247">        } catch (NoMatchingIDException ex) {</span>
+<span class="nc" id="L248">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L249">        }</span>
+<span class="nc" id="L250">        assertEquals(ordersCol.toString(), orders.toString());</span>
+<span class="nc" id="L251">    }</span>
     
 }
+
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

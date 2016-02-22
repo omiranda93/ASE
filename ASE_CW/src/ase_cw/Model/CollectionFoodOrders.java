@@ -130,11 +130,9 @@ public class CollectionFoodOrders {
         
         Set<FoodOrder> orders = getValue(tableId);
             for (FoodOrder order : orders){
-               dishTotal = NamePricePair.get(order.getDishName()) * order.getQuantity();
-               
-               
-                 
-               if (order.getDishName().length() > Manager.DISHNAME_TEXT) {
+                try{
+                    dishTotal = NamePricePair.get(order.getDishName()) * order.getQuantity();
+                    if (order.getDishName().length() > Manager.DISHNAME_TEXT) {
 
                     //Number of lines necessary to write the dish's name
                     nb_new_lines = order.getDishName().length() / Manager.DISHNAME_TEXT;
@@ -153,11 +151,19 @@ public class CollectionFoodOrders {
                     temp = order.getDishName().substring((nb_new_lines)*(Manager.DISHNAME_TEXT-1), order.getDishName().length());
                     result += String.format(formater, "", temp, order.getQuantity(), "*", NamePricePair.get(order.getDishName()),"=" ,dishTotal, Manager.CURRENCY) + "\n";
 
-                } else {
-                    result += String.format(formater, "", order.getDishName(), order.getQuantity(),"*", NamePricePair.get(order.getDishName()),"=" ,dishTotal, Manager.CURRENCY) + "\n";
-                }
+                    } else {
+                        result += String.format(formater, "", order.getDishName(), order.getQuantity(),"*", NamePricePair.get(order.getDishName()),"=" ,dishTotal, Manager.CURRENCY) + "\n";
+                    }
 
-               bill += dishTotal;
+                    bill += dishTotal;
+                }catch (NullPointerException ex){
+                    System.out.println("The orther: " + order.getDishName() + ", does not match any of the dishes in the menu. Please revise the file.\nEnding program...");
+                    System.exit(1);
+                    
+                }
+               
+                 
+               
             }
         discountPerc = Manager.calculateDiscount(bill);
         discount = (discountPerc * bill)/100;

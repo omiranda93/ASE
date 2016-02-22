@@ -185,27 +185,27 @@ public class CollectionFoodOrders {
         //JTextArea textArea = new JTextArea(getBill(Integer.valueOf(id)),5, 50);
 
 <span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if (id != null){</span>
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">            if (!Manager.isInteger(id)) {</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">            if (!Manager.isInteger(id)) {</span>
 <span class="nc" id="L189">                JOptionPane.showMessageDialog(null, &quot;Wrong table ID&quot;, &quot;Attention&quot;, JOptionPane.ERROR_MESSAGE);</span>
 <span class="nc" id="L190">                throw new NoMatchingIDException(id);</span>
             }
         } else {
-<span class="nc" id="L193">            throw new NumberFormatException();</span>
+<span class="fc" id="L193">            throw new NumberFormatException();</span>
         }
   
-<span class="fc" id="L196">        int t_id = Integer.valueOf(id); //convert it to Integer</span>
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">        if (t_id &lt; 0){</span>
+<span class="nc" id="L196">        int t_id = Integer.valueOf(id); //convert it to Integer</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        if (t_id &lt; 0){</span>
 <span class="nc" id="L198">            JOptionPane.showMessageDialog(null, &quot;Table ID can not be a negative number&quot;, &quot;Attention&quot;, JOptionPane.ERROR_MESSAGE);</span>
 <span class="nc" id="L199">            throw new NoMatchingIDException(id);</span>
         }
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">        if (!this.getKeys().contains(t_id)){</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        if (!this.getKeys().contains(t_id)){</span>
 <span class="nc" id="L202">            JOptionPane.showMessageDialog(null, &quot;Table ID not existant.&quot;, &quot;Attention&quot;, JOptionPane.ERROR_MESSAGE);</span>
 <span class="nc" id="L203">            throw new NoMatchingIDException(id);</span>
 
         } else{
-<span class="fc" id="L206">            JOptionPane.showMessageDialog(null, getBill(Integer.valueOf(id)));</span>
+<span class="nc" id="L206">            JOptionPane.showMessageDialog(null, getBill(Integer.valueOf(id)));</span>
         }
-<span class="fc" id="L208">    }</span>
+<span class="nc" id="L208">    }</span>
     
     /**
      * Creates a frequency report of how many times each dish has been order in total within
