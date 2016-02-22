@@ -61,13 +61,13 @@ public class TestIO {
             System.out.println(menu.getValues().size()+" #############");
             
         }catch (IOException e1){
-            System.out.println("There was an error loading the menu from file.");
+            System.out.println("There was an error loading the menu from file.\nEnding program...");
             System.exit(1);
         } catch (WrongCategoryException e2) {
-            System.out.println(e2.getMessage());
+            System.out.println(e2.getMessage()+"\nEnding program...");
             System.exit(1);
         } catch (NumberFormatException e3){
-            System.out.println("One or more prices in the text file are not a price or are wrongly introduced.");
+            System.out.println("One or more prices in the text file are not a price or are wrongly introduced.\nEnding program...");
             System.exit(1);
         }
     }
@@ -150,13 +150,13 @@ public class TestIO {
             orders.addValues(14, table14);
             orders.addValues(15, table15);
         }catch (InvalidQuantityException e1){
-            System.out.println(e1.getMessage());
+            System.out.println(e1.getMessage()+"\nEnding program...");
             System.exit(1);
         }catch (IOException e2){
-            System.out.println("There was an error loading the orders from file.");
+            System.out.println("There was an error loading the orders from file.\nEnding program...");
             System.exit(1);
         } catch (NumberFormatException e3){
-            System.out.println("One of the quantities introduced is not a number. The file could not be loaded.");
+            System.out.println("One of the quantities introduced is not a number. The file could not be loaded.\nEnding program...");
             System.exit(1);
         }
     }
