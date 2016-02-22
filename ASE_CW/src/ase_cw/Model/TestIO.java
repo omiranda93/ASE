@@ -25,8 +25,8 @@ import java.util.logging.Logger;
 public class TestIO {
     //Global variables
     //Depending on the OS the paths might need to change
-    private static final String inputFileMenu = "src/ase_cw/menu.txt";
-    private static final String inputFileOrder = "src/ase_cw/orders.txt";
+    private static final String inputFileMenu = "src/ase_cw/menuWrong.txt";
+    private static final String inputFileOrder = "src/ase_cw/ordersWrong.txt";
     private static final String outputFile = "src/ase_cw/output.txt";
     
     public void readMenu(Menu menu){
@@ -65,8 +65,10 @@ public class TestIO {
             System.exit(1);
         } catch (WrongCategoryException e2) {
             System.out.println(e2.getMessage());
+            System.exit(1);
         } catch (NumberFormatException e3){
             System.out.println("One or more prices in the text file are not a price or are wrongly introduced.");
+            System.exit(1);
         }
     }
     
