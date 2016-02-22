@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public class TestIO {
     //Global variables
     //Depending on the OS the paths might need to change
-    private static final String inputFileMenu = "src/ase_cw/menuWrong.txt";
+    private static final String inputFileMenu = "src/ase_cw/menu.txt";
     private static final String inputFileOrder = "src/ase_cw/ordersWrong.txt";
     private static final String outputFile = "src/ase_cw/output.txt";
     
@@ -151,11 +151,13 @@ public class TestIO {
             orders.addValues(15, table15);
         }catch (InvalidQuantityException e1){
             System.out.println(e1.getMessage());
+            System.exit(1);
         }catch (IOException e2){
             System.out.println("There was an error loading the orders from file.");
             System.exit(1);
         } catch (NumberFormatException e3){
             System.out.println("One of the quantities introduced is not a number. The file could not be loaded.");
+            System.exit(1);
         }
     }
     
