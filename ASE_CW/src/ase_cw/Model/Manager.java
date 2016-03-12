@@ -208,5 +208,10 @@ public class Manager {
     public static void writeInFile(){
         readerWriter.writeToFile(menu.toString(), orders.toString(), orders.showDishCounter(), orders.showUnorderedDishes(), orders.showOrdersProfit());
     }
+
+    public static CollectionFoodOrders getOrders() {
+        return orders;
+    }
+    
     
 }
