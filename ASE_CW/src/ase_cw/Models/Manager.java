@@ -1,4 +1,4 @@
-package ase_cw.Model;
+package ase_cw.Models;
 
 import java.io.IOException;
 

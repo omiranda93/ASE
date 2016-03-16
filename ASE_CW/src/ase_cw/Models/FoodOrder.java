@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ase_cw.Model;
+package ase_cw.Models;
 
 /**
  * A single Order object
@@ -24,7 +24,7 @@ public class FoodOrder implements Comparable<FoodOrder>{
      * @param tableId the ID of the table the order was made
      * @param dish The dish name it was ordered
      * @param quantity How many times the dish was ordered
-     * @throws ase_cw.Model.InvalidQuantityException
+     * @throws ase_cw.Models.InvalidQuantityException
      */
     public FoodOrder(int tableId, String dish, int quantity) throws InvalidQuantityException{
         this.dish=dish;

@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ase_cw.Model;
+package ase_cw.Models;
 
 /**
  * Represents a food item figuring on the menu of the restaurant

@@ -1,8 +1,7 @@
 package ase_cw.Test;
 
-import ase_cw.Model.Category;
-
-import ase_cw.Model.Manager;
+import ase_cw.Models.Category;
+import ase_cw.Models.Manager;
 import org.junit.*;
 import static org.junit.Assert.*;
 

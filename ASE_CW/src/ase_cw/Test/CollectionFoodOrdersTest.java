@@ -5,14 +5,14 @@
  */
 package ase_cw.Test;
 
-import ase_cw.Model.Category;
-import ase_cw.Model.CollectionFoodOrders;
-import ase_cw.Model.FoodOrder;
-import ase_cw.Model.InvalidQuantityException;
-import ase_cw.Model.Manager;
-import ase_cw.Model.Menu;
-import ase_cw.Model.MenuItem;
-import ase_cw.Model.WrongCategoryException;
+import ase_cw.Models.Category;
+import ase_cw.Models.CollectionFoodOrders;
+import ase_cw.Models.FoodOrder;
+import ase_cw.Models.InvalidQuantityException;
+import ase_cw.Models.Manager;
+import ase_cw.Models.Menu;
+import ase_cw.Models.MenuItem;
+import ase_cw.Models.WrongCategoryException;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;

@@ -1,4 +1,4 @@
-package ase_cw.Model;
+package ase_cw.Models;
 
 /**
  * Exception class. Deals with the manipulation of wrong categories with menus & menu items

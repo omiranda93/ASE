@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ase_cw.Model;
+package ase_cw.Models;
 
-import static ase_cw.Model.Category.DESSERT;
-import static ase_cw.Model.Category.DRINKS;
-import static ase_cw.Model.Category.MAIN;
-import static ase_cw.Model.Category.STARTER;
+import static ase_cw.Models.Category.DESSERT;
+import static ase_cw.Models.Category.DRINKS;
+import static ase_cw.Models.Category.MAIN;
+import static ase_cw.Models.Category.STARTER;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;

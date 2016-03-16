@@ -5,8 +5,8 @@
  */
 package ase_cw;
 
-import ase_cw.Model.Manager;
-import ase_cw.Model.WrongDimensionsBillException;
+import ase_cw.Models.Manager;
+import ase_cw.Models.WrongDimensionsBillException;
 
 /**
  *

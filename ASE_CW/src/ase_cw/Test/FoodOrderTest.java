@@ -7,8 +7,8 @@ package ase_cw.Test;
  */
 
 
-import ase_cw.Model.FoodOrder;
-import ase_cw.Model.InvalidQuantityException;
+import ase_cw.Models.FoodOrder;
+import ase_cw.Models.InvalidQuantityException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
