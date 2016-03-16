@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import static ase_cw.ASE_CW.TIME_STEP;
 /**
  *
  * @author giannis
@@ -34,9 +36,11 @@ public class Controller implements ChangeListener, ActionListener{
     
     @Override
     public void stateChanged(ChangeEvent e) {
-        
+        int speed = view.getSlider().getValue()/5;
         //Change the simulation speed (TODO)
-        System.out.println("SUCCESS!!!!");
+        TIME_STEP = TIME_STEP * speed;
+        System.out.println("Simulation speed set to: x" + speed);
+        view.getSpeedLabel().setText("x" + speed);
     }
 
     @Override

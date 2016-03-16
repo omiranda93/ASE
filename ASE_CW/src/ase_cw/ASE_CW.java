@@ -32,6 +32,8 @@ public class ASE_CW {
 //    private static final int nWaiters = 2;
 //    private static final int nTables = 10;
     
+    public static int TIME_STEP = 100;
+    
     /**
      * @param args the command line arguments
      */

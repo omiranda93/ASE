@@ -41,6 +41,14 @@ public class MainPanel extends javax.swing.JFrame {
     public JButton getButtonStop(){
         return this.btnStop;
     }
+    
+    public JSlider getSlider(){
+        return this.sliderSimSpeed;
+    }
+    
+    public JLabel getSpeedLabel(){
+        return this.lbSimSpeed;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

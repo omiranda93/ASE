@@ -5,6 +5,7 @@
  */
 package ase_cw.Models;
 
+import static ase_cw.ASE_CW.TIME_STEP;
 import com.sun.jmx.remote.util.OrderClassLoaders;
 import java.util.ArrayList;
 import java.util.TreeSet;
