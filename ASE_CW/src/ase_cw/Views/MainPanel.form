@@ -185,9 +185,6 @@
         <Property name="snapToTicks" type="boolean" value="true"/>
         <Property name="toolTipText" type="java.lang.String" value="min: 0.2 (20%), max:100"/>
       </Properties>
-      <Events>
-        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sliderSimSpeedStateChanged"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>

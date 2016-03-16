@@ -11,6 +11,7 @@ import static ase_cw.Models.Category.MAIN;
 import static ase_cw.Models.Category.STARTER;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,9 +26,9 @@ import java.util.logging.Logger;
 public class TestIO {
     //Global variables
     //Depending on the OS the paths might need to change
-    private static final String inputFileMenu = "src/ase_cw/menu.txt";
-    private static final String inputFileOrder = "src/ase_cw/ordersWrong.txt";
-    private static final String outputFile = "src/ase_cw/output.txt";
+    private static final String inputFileMenu = "src/ase_cw/menu.txt";//"src/ase_cw/menu.txt""menu.txt"
+    private static final String inputFileOrder = "src/ase_cw/orders.txt";//"src/ase_cw/orders.txt""orders.txt"
+    private static final String outputFile = "src/ase_cw/output.txt";//"src/ase_cw/output.txt"
     
     public void readMenu(Menu menu){
         BufferedReader readBuffer;
@@ -38,6 +39,9 @@ public class TestIO {
         TreeSet <MenuItem> desserts = new TreeSet<>();
         TreeSet <MenuItem> drinks = new TreeSet<>();
         try {
+            //To execute this from the id comment the following name and change the direction, up in the declaration and in the new filereader
+            //String path = System.getProperty("user.dir");
+            //readBuffer = new BufferedReader(new FileReader(path + "/"+inputFileMenu));
             readBuffer = new BufferedReader(new FileReader(inputFileMenu));
 
             while ((strRead = readBuffer.readLine()) != null) {
@@ -95,6 +99,9 @@ public class TestIO {
         TreeSet <FoodOrder> table15 = new TreeSet<FoodOrder>();
 
         try {
+            //To execute this from the id comment the following name and change the direction, up in the declaration and in the new filereader
+            //String path = System.getProperty("user.dir");
+            //readbuffer = new BufferedReader(new FileReader(path+"/"+inputFileOrder));
             readbuffer = new BufferedReader(new FileReader(inputFileOrder));
             int i = 0;
             while ((strRead = readbuffer.readLine()) != null) {
@@ -164,7 +171,9 @@ public class TestIO {
     public void writeToFile (String menu, String orders, String numberDish, String unorderedDishes, String profits){
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter(outputFile));
+            //To execute this from the id comment the following name and change the direction, up in the declaration and in the new filereader
+            String path = System.getProperty("user.dir");
+            writer = new BufferedWriter(new FileWriter(path+"/"+outputFile));
             writer.write(menu);
             writer.write("-----------------------------------------------------------------------------------\n");
             writer.write(orders);

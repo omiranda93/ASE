@@ -6,20 +6,40 @@
 package ase_cw.Views;
 
 import ase_cw.Controllers.*;
+import ase_cw.Models.*;
+import ase_cw.Models.WrongDimensionsBillException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
 /**
  *
  * @author giannis
  */
 public class MainPanel extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainPanel
-     */
-    public MainPanel() {
+    private static MonitorProdCons model;
+    private final Controller controller;
+    
+    public MainPanel(MonitorProdCons model) throws WrongDimensionsBillException {
+        this.model = model;
+        this.controller = new Controller(this, model);
         initComponents();
+        this.setVisible(true);
         
         //Init slider position
         sliderSimSpeed.setValue(10);
+        
+        //Register object listeners
+        sliderSimSpeed.addChangeListener(controller);
+        btnStart.addActionListener(controller);
+    }
+    
+    public JButton getButtonStart(){
+        return this.btnStart;
+    }
+    
+    public JButton getButtonStop(){
+        return this.btnStop;
     }
 
     /**
@@ -77,11 +97,6 @@ public class MainPanel extends javax.swing.JFrame {
         sliderSimSpeed.setPaintTicks(true);
         sliderSimSpeed.setSnapToTicks(true);
         sliderSimSpeed.setToolTipText("min: 0.2 (20%), max:100");
-        sliderSimSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sliderSimSpeedStateChanged(evt);
-            }
-        });
 
         jLabel7.setText("Select simulation speed");
 
@@ -174,10 +189,6 @@ public class MainPanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void sliderSimSpeedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderSimSpeedStateChanged
-        lbSimSpeed.setText("x" + String.valueOf(sliderSimSpeed.getValue()*1.0/10));
-    }//GEN-LAST:event_sliderSimSpeedStateChanged
-
     /**
      * @param args the command line arguments
      */
@@ -208,7 +219,11 @@ public class MainPanel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainPanel().setVisible(true);
+                try {
+                    new MainPanel(model).setVisible(true);
+                } catch (WrongDimensionsBillException ex) {
+                    Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
