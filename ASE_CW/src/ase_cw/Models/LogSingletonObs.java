@@ -1,6 +1,4 @@
-package ase_cw.Views;
-
-import ase_cw.Models.Manager;
+package ase_cw.Models;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

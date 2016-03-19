@@ -200,23 +200,6 @@ public class MainPanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-    /**
-     * Gets update from the subject = serving waiters thread
-     * @param dish: food item to transfer from the kitchen box to its table box
-     */
-    public static void update(FoodOrder dish, ArrayList<FoodOrder> kitchen, ArrayList<FoodOrder> served) {
-        //Remove the item from the kitchen
-        //System.out.println("truc "+dish.getTableId() + " & "+dish.getDishName());
-        kitchen.remove(kitchen.indexOf(dish));
-        //System.out.println("kitchen = " + kitchen.size());
-
-        //Add the item to the served dishes list
-        served.add(dish);   //Added at the end
-        //System.out.println("machin-chouette = " + served.size());
-        //Methods for displaying contents into boxes <HERE!>
-    }
-
     /**
      * @param args the command line arguments
      */

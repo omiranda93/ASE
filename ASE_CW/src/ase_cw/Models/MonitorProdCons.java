@@ -5,11 +5,8 @@
  */
 package ase_cw.Models;
 
-import static ase_cw.ASE_CW.TIME_STEP;
+import ase_cw.Controllers.Controller;
 
-import ase_cw.Views.LogSingletonObs;
-import ase_cw.Views.MainPanel;
-import com.sun.jmx.remote.util.OrderClassLoaders;
 import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.concurrent.Semaphore;
@@ -111,8 +108,8 @@ public class MonitorProdCons {
         Cerrojo.lock();
         try{
             //Notify the observer for the updating the kitchen & tables boxed
-            MainPanel.printArray(notedOrders);
-            //MainPanel.update(dish, notedOrders, servedOrders);
+            //MainPanel.printArray(readyOrders);
+            Controller.update(dish, notedOrders, servedOrders);
 
             servedOrders.add(dish);
             Eat.signal();
