@@ -8,6 +8,9 @@ package ase_cw.Views;
 import ase_cw.Controllers.*;
 import ase_cw.Models.*;
 import ase_cw.Models.WrongDimensionsBillException;
+
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -197,6 +200,23 @@ public class MainPanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+    /**
+     * Gets update from the subject = serving waiters thread
+     * @param dish: food item to transfer from the kitchen box to its table box
+     */
+    public static void update(FoodOrder dish, ArrayList<FoodOrder> kitchen, ArrayList<FoodOrder> served) {
+        //Remove the item from the kitchen
+        //System.out.println("truc "+dish.getTableId() + " & "+dish.getDishName());
+        kitchen.remove(kitchen.indexOf(dish));
+        //System.out.println("kitchen = " + kitchen.size());
+
+        //Add the item to the served dishes list
+        served.add(dish);   //Added at the end
+        //System.out.println("machin-chouette = " + served.size());
+        //Methods for displaying contents into boxes <HERE!>
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -204,7 +224,7 @@ public class MainPanel extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -256,4 +276,11 @@ public class MainPanel extends javax.swing.JFrame {
     private java.awt.TextArea tbl4Frame;
     private java.awt.TextArea tbl5Frame;
     // End of variables declaration//GEN-END:variables
+
+    public static void printArray(ArrayList<FoodOrder> e) {
+        System.out.println(e.size() + "#################################");
+        for (FoodOrder f : e) {
+            System.out.println("#### "+f.getTableId() + "&" + f.getDishName() + "####");
+        }
+    }
 }

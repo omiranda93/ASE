@@ -8,7 +8,7 @@ package ase_cw.Test;
 import java.util.Set;
 import java.util.TreeSet;
 
-import ase_cw.Model.*;
+import ase_cw.Models.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;

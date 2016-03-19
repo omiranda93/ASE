@@ -6,6 +6,9 @@
 package ase_cw.Models;
 
 import static ase_cw.ASE_CW.TIME_STEP;
+
+import ase_cw.Views.LogSingletonObs;
+import ase_cw.Views.MainPanel;
 import com.sun.jmx.remote.util.OrderClassLoaders;
 import java.util.ArrayList;
 import java.util.TreeSet;
@@ -25,7 +28,7 @@ public class MonitorProdCons {
     private ArrayList<FoodOrder> readyOrders;
     private ArrayList<FoodOrder> servedOrders;
     CollectionFoodOrders orders;
-    
+
     private static int capacityOfKitchen = 6;
     private final ReentrantLock Cerrojo = new ReentrantLock();
     private final Condition Eat = Cerrojo.newCondition();
@@ -36,8 +39,8 @@ public class MonitorProdCons {
 
     private static Semaphore semaforoEntrar;
     private static Semaphore[] semaforoTenedor;
-    
-    
+
+
     public MonitorProdCons(CollectionFoodOrders orders) {
         notedOrders = new ArrayList<>();
         readyOrders = new ArrayList<>();
@@ -49,10 +52,19 @@ public class MonitorProdCons {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Each thread can be assimilated to a subject. Every action they performed is notify to a single observer
+     * (c'est-à-dire LogSingletonObs)
+     */
+    public void notifyObserver() {
+
+    }
+
     public synchronized void consumidor(int id) {
         FoodOrder dish;
         while (this.notedOrders.size() == 0) {
-            System.out.println("Kitchen: Bloqued, no orders available.");
+            //System.out.println("Kitchen: Bloqued, no orders available.");
+            LogSingletonObs.getInstance().update("The kitchen is not working. It is waiting for orders");
             try {
                 this.wait();
             } catch (InterruptedException ex) {
@@ -60,7 +72,9 @@ public class MonitorProdCons {
             }
         }
         dish = notedOrders.get(0);
-        System.out.println("Kitchen: Order for table#" + notedOrders.remove(0).getTableId() + " cooked and ready to serve.");
+        //System.out.println("Kitchen: Order for table#" + notedOrders.remove(0).getTableId() + " cooked and ready to serve.");
+        LogSingletonObs.getInstance().update("In the kitchen. Cooks have completed the dish "+ dish.getDishName()+" for" +
+                "table n°" +notedOrders.remove(0).getTableId()+ ". Ready to be served");
         try {
             Thread.sleep(2000);
         } catch (InterruptedException ex) {
@@ -69,11 +83,13 @@ public class MonitorProdCons {
         this.readyOrders.add(dish);
         this.notifyAll();
     }
-    
+
     public synchronized void waiter(int id) {
         FoodOrder dish;
         while (this.readyOrders.size() == 0) {
-            System.out.println("Waiter #" + id + " bloqued, no order to serve.");
+            //System.out.println("Waiter #" + id + " bloqued, no order to serve.");
+            LogSingletonObs.getInstance().update("Waiter n° " + id + " is ready to serve customers ... but nothing has " +
+                    "been ordered yet!");
             try {
                 this.wait();
             } catch (InterruptedException ex) {
@@ -81,7 +97,11 @@ public class MonitorProdCons {
             }
         }
         dish = readyOrders.get(0);
-        System.out.println("Waiter #" + id + " dish served to table: " + readyOrders.remove(0).getTableId());
+        //System.out.println("Waiter #" + id + " dish served to table: " + readyOrders.remove(0).getTableId());
+        //Notify the observer for updating te log file's content
+        LogSingletonObs.getInstance().update("Waiter n° " + id + "has served the dish " + dish.getDishName() + " to the " +
+                "table n° " + readyOrders.remove(0).getTableId());
+
         try {
             Thread.sleep(100);
         } catch (InterruptedException ex) {
@@ -90,13 +110,17 @@ public class MonitorProdCons {
         this.notifyAll();
         Cerrojo.lock();
         try{
+            //Notify the observer for the updating the kitchen & tables boxed
+            MainPanel.printArray(notedOrders);
+            //MainPanel.update(dish, notedOrders, servedOrders);
+
             servedOrders.add(dish);
             Eat.signal();
         }finally{
             Cerrojo.unlock();
         }
     }
-    
+
     //For the table simulation:
 
 //    private static int tenedorIzq;
@@ -166,8 +190,8 @@ public class MonitorProdCons {
             createThread(i, tableN);
         }
     }
-    
-    
+
+
     public synchronized void table(int id) {
         int tableN;
         Cerrojo.lock();
@@ -192,10 +216,13 @@ public class MonitorProdCons {
         FoodOrder order = ordersToSelect.pollFirst();
         return order;
     }
-    
+
     public synchronized void productor(int id) {
         while (this.notedOrders.size() == capacityOfKitchen) {
-            System.out.println("Waiter taking notes #" + id + " blocked, the kitchen can get more orders.");
+            //System.out.println("Waiter taking notes #" + id + " blocked, the kitchen can get more orders.");
+            LogSingletonObs.getInstance().update("Waiter n°" + id + " ready to take notes ... but he/she will have to " +
+                    "wait because the kitchen can't get more orders (capacity of the kitchen = "+ capacityOfKitchen + ")");
+
             try {
                 this.wait();
             } catch (InterruptedException ex) {
@@ -203,7 +230,11 @@ public class MonitorProdCons {
             }
         }
         FoodOrder newOrder = getRandOrder();
-        System.out.println("Waiter taking notes #" + id + " order for table: " + newOrder.getTableId() + " noted.");
+
+        //System.out.println("Waiter taking notes #" + id + " order for table: " + newOrder.getTableId() + " noted.");
+        LogSingletonObs.getInstance().update("Waiter n°"+ id + " taking notes. Order "+ newOrder.getDishName() +
+                "for table: " + newOrder.getTableId() + " noted.");
+
         this.notedOrders.add(newOrder);
         try {
             Thread.sleep(100);

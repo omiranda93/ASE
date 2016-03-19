@@ -26,6 +26,7 @@ public class Manager {
      * MAX_TOTAL : Width of the maximum size of totals (final or not)
      * MENU: Title of the menu
      * TABLE_SUMMARY : Title of the order summary
+     * PATH_LOG_FILE : Location of the log file
      */
     public static final int WIDTH_BILL = 120;
     public static final int ALINEA_DISHNAME = 2;
@@ -38,6 +39,7 @@ public class Manager {
     public static final int MAX_TOTAL = 6;
     public static final String MENU = "MENU";
     public static final String TABLE_SUMMARY = "TABLES SUMMARY";
+    public static final String PATH_LOG_FILE = "ASE_CW/src/ase_cw/log.txt";  //To be changed at convenience
 
      /**
      * Tuneable

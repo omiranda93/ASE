@@ -1,6 +1,6 @@
 package ase_cw.Test;
 
-import ase_cw.Model.*;
+import ase_cw.Models.*;
 
 import org.junit.*;
 
