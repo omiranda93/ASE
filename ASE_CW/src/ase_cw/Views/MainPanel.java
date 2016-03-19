@@ -22,7 +22,10 @@ public class MainPanel extends javax.swing.JFrame {
 
     private static MonitorProdCons model;
     private final Controller controller;
-    
+    private static ArrayList<FoodOrder> notedOrders;
+    private static ArrayList<FoodOrder> readyOrders;
+    private static ArrayList<FoodOrder> servedOrders;
+        
     public MainPanel(MonitorProdCons model) throws WrongDimensionsBillException {
         this.model = model;
         this.controller = new Controller(this, model);
@@ -205,18 +208,19 @@ public class MainPanel extends javax.swing.JFrame {
      * Gets update from the subject = serving waiters thread
      * @param dish: food item to transfer from the kitchen box to its table box
      */
-    public static void update(FoodOrder dish, ArrayList<FoodOrder> kitchen, ArrayList<FoodOrder> served) {
-        //Remove the item from the kitchen
-        //System.out.println("truc "+dish.getTableId() + " & "+dish.getDishName());
-        kitchen.remove(kitchen.indexOf(dish));
-        //System.out.println("kitchen = " + kitchen.size());
-
-        //Add the item to the served dishes list
-        served.add(dish);   //Added at the end
-        //System.out.println("machin-chouette = " + served.size());
-        //Methods for displaying contents into boxes <HERE!>
+    public void updateNoted(ArrayList<FoodOrder> kitchen) {
+        notedOrders = kitchen;
+        printKitchen();
     }
-
+    public void updateReady(ArrayList<FoodOrder> kitchen) {
+        readyOrders = kitchen;
+        printTables();
+    }
+    
+    public void updateOutOfOrthers() {
+        printKitchenCloseOrder();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -277,10 +281,57 @@ public class MainPanel extends javax.swing.JFrame {
     private java.awt.TextArea tbl5Frame;
     // End of variables declaration//GEN-END:variables
 
-    public static void printArray(ArrayList<FoodOrder> e) {
-        System.out.println(e.size() + "#################################");
+    public static String printArray(ArrayList<FoodOrder> e) {
+        String s = "";
+        s += e.size() + "#################################\n";
         for (FoodOrder f : e) {
-            System.out.println("#### "+f.getTableId() + "&" + f.getDishName() + "####");
+            s += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+        }
+        return s;
+    }
+    public static void printArray2(ArrayList<FoodOrder> e) {
+        System.out.println(e.size() + "#################################\n");
+        for (FoodOrder f : e) {
+            System.out.println("#### "+f.getTableId() + "&" + f.getDishName() + "####\n");
         }
     }
+    
+    public void printKitchen(){
+        kitchenFrame.setText(printArray(notedOrders));
+    }
+    public void printKitchenCloseOrder(){
+        kitchenFrame.setText("There are no more orders, closing...");
+    }
+    public void printTables(){
+        String s1 = "";
+        String s2 = "";
+        String s3 = "";
+        String s4 = "";
+        String s5 = "";
+        for (FoodOrder f : readyOrders) {
+            switch(f.getTableId()){
+                case 1: s1 += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+                    break;
+                    
+                case 2: s2 += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+                    break;
+                    
+                case 3: s3 += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+                    break;
+                    
+                case 4: s4 += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+                    break;
+                    
+                case 5: s5 += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+                    break;
+            }
+            
+        }
+        tbl1Frame.setText(s1);
+        tbl2Frame.setText(s2);
+        tbl3Frame.setText(s3);
+        tbl4Frame.setText(s4);
+        tbl5Frame.setText(s5);
+    }
+    
 }

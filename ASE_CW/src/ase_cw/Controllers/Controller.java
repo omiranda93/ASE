@@ -23,7 +23,7 @@ public class Controller implements ChangeListener, ActionListener{
     private static final int nKitchens = 1;
     private static final int nWaitersNote = 2;
     private static final int nWaiters = 2;
-    private static final int nTables = 10;
+    private static final int nTables = 5;
     
     private MainPanel view;
     private MonitorProdCons model;
@@ -53,15 +53,16 @@ public class Controller implements ChangeListener, ActionListener{
                 new HiloWaiter(model, i).start();
             }
             for (int i = 0; i < nKitchens; i++) {
-                new HiloConsumidor(model, i).start();
+                new HiloKitchen(model, i).start();
             }
             for (int i = 0; i < nWaitersNote; i++) {
-                new HiloProductor(model, i).start();
-            }
-            for (int i = 0; i < nTables; i++) {
-                new HiloTable(model, i).start();
+                new HiloNoter(model, i).start();
             }
         }
+    }
+    
+    public void stopThreads(){
+        
     }
      
 }

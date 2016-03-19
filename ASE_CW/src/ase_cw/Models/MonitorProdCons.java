@@ -25,6 +25,12 @@ public class MonitorProdCons {
     private ArrayList<FoodOrder> readyOrders;
     private ArrayList<FoodOrder> servedOrders;
     CollectionFoodOrders orders;
+    
+    //Stop variables
+    boolean outOfOrders = false;
+    
+    //Reference to panel for updates
+    MainPanel panel;
 
     private static int capacityOfKitchen = 6;
     private final ReentrantLock Cerrojo = new ReentrantLock();
@@ -45,9 +51,12 @@ public class MonitorProdCons {
         this.orders = orders;
     }
 
-    MonitorProdCons() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setPanel(MainPanel panel) {
+        this.panel = panel;
     }
+    
+
+
 
     /**
      * Each thread can be assimilated to a subject. Every action they performed is notify to a single observer
@@ -57,7 +66,12 @@ public class MonitorProdCons {
 
     }
 
-    public synchronized void consumidor(int id) {
+    public synchronized void kitchen(int id) {
+        if (outOfOrders && notedOrders.isEmpty()){
+            panel.updateOutOfOrthers();
+            Thread.currentThread().interrupt();
+            return;
+        }
         FoodOrder dish;
         while (this.notedOrders.size() == 0) {
             //System.out.println("Kitchen: Bloqued, no orders available.");
@@ -69,9 +83,17 @@ public class MonitorProdCons {
             }
         }
         dish = notedOrders.get(0);
+        panel.updateNoted(notedOrders);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+
+        }
+        //MainPanel.printArray2(notedOrders);
         //System.out.println("Kitchen: Order for table#" + notedOrders.remove(0).getTableId() + " cooked and ready to serve.");
         LogSingletonObs.getInstance().update("In the kitchen. Cooks have completed the dish "+ dish.getDishName()+" for" +
                 "table n°" +notedOrders.remove(0).getTableId()+ ". Ready to be served");
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException ex) {
@@ -82,6 +104,10 @@ public class MonitorProdCons {
     }
 
     public synchronized void waiter(int id) {
+        if (outOfOrders && readyOrders.isEmpty()){
+            Thread.currentThread().interrupt();
+            return;
+        }
         FoodOrder dish;
         while (this.readyOrders.size() == 0) {
             //System.out.println("Waiter #" + id + " bloqued, no order to serve.");
@@ -96,11 +122,17 @@ public class MonitorProdCons {
         dish = readyOrders.get(0);
         //System.out.println("Waiter #" + id + " dish served to table: " + readyOrders.remove(0).getTableId());
         //Notify the observer for updating te log file's content
+        panel.updateReady(readyOrders);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+
+        }
         LogSingletonObs.getInstance().update("Waiter n° " + id + "has served the dish " + dish.getDishName() + " to the " +
                 "table n° " + readyOrders.remove(0).getTableId());
-
+        panel.updateReady(readyOrders);
         try {
-            Thread.sleep(100);
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
 
         }
@@ -109,8 +141,7 @@ public class MonitorProdCons {
         try{
             //Notify the observer for the updating the kitchen & tables boxed
             //MainPanel.printArray(readyOrders);
-            MainPanel.update(dish, notedOrders, servedOrders);
-
+            //MainPanel.update(dish, notedOrders, servedOrders);
             servedOrders.add(dish);
             Eat.signal();
         }finally{
@@ -126,7 +157,7 @@ public class MonitorProdCons {
         int cont = 0;
         Thread p = new Thread(() -> {
             try {
-                entrar(i, cont);
+                clientEat(i, cont);
             } catch (InterruptedException ex) {
                 Logger.getLogger(MonitorProdCons.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -134,7 +165,7 @@ public class MonitorProdCons {
         p.start();
     }
 
-    public static void entrar(int i, int cont) throws InterruptedException {
+    public static void clientEat(int i, int cont) throws InterruptedException {
         semaforoEntrar.acquire();
 
         int tenedorDer = i;
@@ -190,6 +221,10 @@ public class MonitorProdCons {
 
 
     public synchronized void table(int id) {
+        if (outOfOrders && servedOrders.isEmpty()){
+            Thread.currentThread().interrupt();
+            return;
+        }
         int tableN;
         Cerrojo.lock();
         try{
@@ -208,13 +243,13 @@ public class MonitorProdCons {
     }
 
     public FoodOrder getRandOrder(){
-        int number = ((Double) (Math.random() * 10)).intValue() + 1;
+        int number = ((Double) (Math.random() * 5)).intValue() + 1;
         TreeSet<FoodOrder> ordersToSelect = orders.getValue(number);
         FoodOrder order = ordersToSelect.pollFirst();
         return order;
     }
 
-    public synchronized void productor(int id) {
+    public synchronized void noter(int id) {
         while (this.notedOrders.size() == capacityOfKitchen) {
             //System.out.println("Waiter taking notes #" + id + " blocked, the kitchen can get more orders.");
             LogSingletonObs.getInstance().update("Waiter n°" + id + " ready to take notes ... but he/she will have to " +
@@ -228,16 +263,22 @@ public class MonitorProdCons {
         }
         FoodOrder newOrder = getRandOrder();
 
+        if(newOrder == null){
+            System.out.println("There are no more others");
+            outOfOrders = true;
+            Thread.currentThread().interrupt();
+            return;
+        }
         //System.out.println("Waiter taking notes #" + id + " order for table: " + newOrder.getTableId() + " noted.");
         LogSingletonObs.getInstance().update("Waiter n°"+ id + " taking notes. Order "+ newOrder.getDishName() +
                 "for table: " + newOrder.getTableId() + " noted.");
-
+        panel.updateNoted(notedOrders);
         this.notedOrders.add(newOrder);
         try {
-            Thread.sleep(100);
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
-
         }
         this.notifyAll();
+
     }
 }

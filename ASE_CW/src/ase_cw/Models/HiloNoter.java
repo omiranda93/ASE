@@ -9,12 +9,12 @@ package ase_cw.Models;
  *
  * @author Varito
  */
-public class HiloProductor extends Thread {
+public class HiloNoter extends Thread {
 
     private MonitorProdCons monitor;
     private int id;
 
-    public HiloProductor(MonitorProdCons initMonitor, int id) {
+    public HiloNoter(MonitorProdCons initMonitor, int id) {
         this.monitor = initMonitor;
         this.id = id;
     }
@@ -22,7 +22,7 @@ public class HiloProductor extends Thread {
     @Override
     public void run() {
         while (true) {
-            this.monitor.productor(id);
+            this.monitor.noter(id);
         }
     }
 }

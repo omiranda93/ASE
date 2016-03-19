@@ -9,8 +9,8 @@ package ase_cw;
 import ase_cw.Models.Manager;
 import ase_cw.Models.WrongDimensionsBillException;
 
-import ase_cw.Models.HiloConsumidor;
-import ase_cw.Models.HiloProductor;
+import ase_cw.Models.HiloKitchen;
+import ase_cw.Models.HiloNoter;
 import ase_cw.Models.HiloTable;
 import ase_cw.Models.HiloWaiter;
 import ase_cw.Models.Manager;
@@ -51,6 +51,7 @@ public class ASE_CW {
             
             
             MainPanel view = new MainPanel(model);
+            model.setPanel(view);
 
             //Initialise the threads
 //            for (int i = 0; i < nWaiters; i++) {
