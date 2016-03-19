@@ -9,7 +9,6 @@ import ase_cw.Models.*;
 import ase_cw.Views.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -63,22 +62,6 @@ public class Controller implements ChangeListener, ActionListener{
                 new HiloTable(model, i).start();
             }
         }
-    }
-
-    /**
-     * Gets update from the subject = serving waiters thread
-     * @param dish: food item to transfer from the kitchen box to its table box
-     */
-    public static void update(FoodOrder dish, ArrayList<FoodOrder> kitchen, ArrayList<FoodOrder> served) {
-        //Remove the item from the kitchen
-        //System.out.println("truc "+dish.getTableId() + " & "+dish.getDishName());
-        kitchen.remove(kitchen.indexOf(dish));
-        //System.out.println("kitchen = " + kitchen.size());
-
-        //Add the item to the served dishes list
-        served.add(dish);   //Added at the end
-        //System.out.println("machin-chouette = " + served.size());
-        //Methods for displaying contents into boxes <HERE!>
     }
      
 }

@@ -5,7 +5,7 @@
  */
 package ase_cw.Models;
 
-import ase_cw.Controllers.Controller;
+import ase_cw.Views.MainPanel;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
@@ -109,7 +109,7 @@ public class MonitorProdCons {
         try{
             //Notify the observer for the updating the kitchen & tables boxed
             //MainPanel.printArray(readyOrders);
-            Controller.update(dish, notedOrders, servedOrders);
+            MainPanel.update(dish, notedOrders, servedOrders);
 
             servedOrders.add(dish);
             Eat.signal();
