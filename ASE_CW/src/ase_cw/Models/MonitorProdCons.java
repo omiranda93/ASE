@@ -5,6 +5,7 @@
  */
 package ase_cw.Models;
 
+import static ase_cw.ASE_CW.sleep_time;
 import ase_cw.Views.MainPanel;
 
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class MonitorProdCons {
 
     public synchronized void kitchen(int id) {
         if (outOfOrders && notedOrders.isEmpty()){
-            panel.updateOutOfOrthers();
+            panel.updateOutOfOrders();
             Thread.currentThread().interrupt();
             return;
         }
@@ -85,7 +86,7 @@ public class MonitorProdCons {
         dish = notedOrders.get(0);
         panel.updateNoted(notedOrders);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(2*sleep_time);
         } catch (InterruptedException ex) {
 
         }
@@ -95,7 +96,7 @@ public class MonitorProdCons {
                 "table n°" +notedOrders.remove(0).getTableId()+ ". Ready to be served");
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(2*sleep_time);
         } catch (InterruptedException ex) {
 
         }
@@ -124,7 +125,7 @@ public class MonitorProdCons {
         //Notify the observer for updating te log file's content
         panel.updateReady(readyOrders);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(2*sleep_time);
         } catch (InterruptedException ex) {
 
         }
@@ -132,7 +133,7 @@ public class MonitorProdCons {
                 "table n° " + readyOrders.remove(0).getTableId());
         panel.updateReady(readyOrders);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(sleep_time);
         } catch (InterruptedException ex) {
 
         }
@@ -182,7 +183,7 @@ public class MonitorProdCons {
             semaforoTenedor[tenedorIzq].acquire();
 
             System.out.println(Thread.currentThread().getName() + ": Im hungry, let´s eat");
-            Thread.sleep(1000);
+            Thread.sleep(sleep_time);
 
             //System.out.println(Thread.currentThread().getName() + ": dropping right fork, nº " + tenedorDer);
             semaforoTenedor[tenedorDer].release();
@@ -275,7 +276,7 @@ public class MonitorProdCons {
         panel.updateNoted(notedOrders);
         this.notedOrders.add(newOrder);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(sleep_time);
         } catch (InterruptedException ex) {
         }
         this.notifyAll();

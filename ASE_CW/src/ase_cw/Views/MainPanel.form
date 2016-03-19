@@ -84,9 +84,9 @@
                               </Group>
                               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="sliderSimSpeed" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
+                              <Component id="sliderSimSpeed" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbSimSpeed" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -133,14 +133,29 @@
       </AccessibilityProperties>
     </Component>
     <Component class="java.awt.TextArea" name="tbl2Frame">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="java.awt.TextArea" name="tbl4Frame">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="java.awt.TextArea" name="tbl1Frame">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="java.awt.TextArea" name="tbl5Frame">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="java.awt.TextArea" name="tbl3Frame">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -179,11 +194,14 @@
     </Component>
     <Component class="javax.swing.JSlider" name="sliderSimSpeed">
       <Properties>
-        <Property name="maximum" type="int" value="20"/>
-        <Property name="minorTickSpacing" type="int" value="5"/>
+        <Property name="maximum" type="int" value="2"/>
+        <Property name="minimum" type="int" value="-2"/>
+        <Property name="minorTickSpacing" type="int" value="1"/>
+        <Property name="paintLabels" type="boolean" value="true"/>
         <Property name="paintTicks" type="boolean" value="true"/>
         <Property name="snapToTicks" type="boolean" value="true"/>
-        <Property name="toolTipText" type="java.lang.String" value="min: 0.2 (20%), max:100"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="value" type="int" value="0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">

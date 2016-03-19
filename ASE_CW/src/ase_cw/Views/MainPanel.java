@@ -33,11 +33,12 @@ public class MainPanel extends javax.swing.JFrame {
         this.setVisible(true);
         
         //Init slider position
-        sliderSimSpeed.setValue(10);
+        sliderSimSpeed.setValue(0);
         
         //Register object listeners
         sliderSimSpeed.addChangeListener(controller);
         btnStart.addActionListener(controller);
+        btnStop.addActionListener(controller);
     }
     
     public JButton getButtonStart(){
@@ -92,6 +93,16 @@ public class MainPanel extends javax.swing.JFrame {
 
         jLabel1.setText("KICHEN");
 
+        tbl2Frame.setEditable(false);
+
+        tbl4Frame.setEditable(false);
+
+        tbl1Frame.setEditable(false);
+
+        tbl5Frame.setEditable(false);
+
+        tbl3Frame.setEditable(false);
+
         jLabel2.setText("TABLE 1");
 
         jLabel3.setText("TABLE 2");
@@ -106,11 +117,14 @@ public class MainPanel extends javax.swing.JFrame {
 
         btnStop.setText("STOP");
 
-        sliderSimSpeed.setMaximum(20);
-        sliderSimSpeed.setMinorTickSpacing(5);
+        sliderSimSpeed.setMaximum(2);
+        sliderSimSpeed.setMinimum(-2);
+        sliderSimSpeed.setMinorTickSpacing(1);
+        sliderSimSpeed.setPaintLabels(true);
         sliderSimSpeed.setPaintTicks(true);
         sliderSimSpeed.setSnapToTicks(true);
-        sliderSimSpeed.setToolTipText("min: 0.2 (20%), max:100");
+        sliderSimSpeed.setToolTipText("");
+        sliderSimSpeed.setValue(0);
 
         jLabel7.setText("Select simulation speed");
 
@@ -172,9 +186,9 @@ public class MainPanel extends javax.swing.JFrame {
                                     .addComponent(btnStop))
                                 .addGap(23, 23, 23)
                                 .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sliderSimSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(sliderSimSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel8)
                                     .addComponent(lbSimSpeed))))
@@ -217,7 +231,7 @@ public class MainPanel extends javax.swing.JFrame {
         printTables();
     }
     
-    public void updateOutOfOrthers() {
+    public void updateOutOfOrders() {
         printKitchenCloseOrder();
     }
     

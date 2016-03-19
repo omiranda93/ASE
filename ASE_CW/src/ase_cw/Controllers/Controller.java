@@ -5,6 +5,8 @@
  */
 package ase_cw.Controllers;
 
+import ase_cw.ASE_CW;
+import static ase_cw.ASE_CW.TIME_STEP;
 import ase_cw.Models.*;
 import ase_cw.Views.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +14,9 @@ import java.awt.event.ActionListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import static ase_cw.ASE_CW.TIME_STEP;
+import static ase_cw.ASE_CW.sleep_time;
+import static java.lang.Math.abs;
+import java.util.ArrayList;
 /**
  *
  * @author giannis
@@ -28,6 +32,9 @@ public class Controller implements ChangeListener, ActionListener{
     private MainPanel view;
     private MonitorProdCons model;
     
+    private ArrayList<Thread> threadCollection = new ArrayList<>();
+    private Thread t;
+    
     public Controller(MainPanel view, MonitorProdCons model) throws WrongDimensionsBillException{
         this.view = view;
         this.model = model;
@@ -36,11 +43,23 @@ public class Controller implements ChangeListener, ActionListener{
     
     @Override
     public void stateChanged(ChangeEvent e) {
-        int speed = view.getSlider().getValue()/5;
-        //Change the simulation speed (TODO)
-        TIME_STEP = TIME_STEP * speed;
-        System.out.println("Simulation speed set to: x" + speed);
-        view.getSpeedLabel().setText("x" + speed);
+        String rate = "";
+        int speed = view.getSlider().getValue();
+        
+        //Change the simulation speed
+        if (speed == 0){
+            sleep_time = TIME_STEP;
+            rate = "1";
+        } else if (speed < 0){
+            sleep_time = TIME_STEP * (abs(speed) + 1);
+            rate = "1/" + String.valueOf(abs(speed) + 1);
+        } else {
+            sleep_time = TIME_STEP / (speed + 1);
+            rate = String.valueOf(speed + 1);
+        }
+        
+        System.out.println("Simulation speed set to: x" + rate);
+        view.getSpeedLabel().setText("x" + rate);
     }
 
     @Override
@@ -50,14 +69,32 @@ public class Controller implements ChangeListener, ActionListener{
             
         //Initialise the threads
             for (int i = 0; i < nWaiters; i++) {
-                new HiloWaiter(model, i).start();
+               t = new HiloWaiter(model, i);
+               t.start();
+               threadCollection.add(t);
             }
             for (int i = 0; i < nKitchens; i++) {
-                new HiloKitchen(model, i).start();
+                t = new HiloKitchen(model, i);
+                t.start();
+               threadCollection.add(t);
             }
             for (int i = 0; i < nWaitersNote; i++) {
-                new HiloNoter(model, i).start();
+                t = new HiloNoter(model, i);
+                t.start();
+               threadCollection.add(t);
             }
+        }
+        
+        if (e.getSource() == view.getButtonStop()){
+            
+            //Stopping the threads. We are using the depricated stop() here, as we don't need use any cooperative proccess for this simple example.
+            try{
+            for (Thread thread: threadCollection) {
+                thread.stop();
+                System.out.println("Stopping thread: " + thread.getName());
+            }
+            System.out.println("All threads have stopped");
+            }catch (Exception ex){}
         }
     }
     

@@ -32,7 +32,8 @@ public class ASE_CW {
 //    private static final int nWaiters = 2;
 //    private static final int nTables = 10;
     
-    public static int TIME_STEP = 100;
+    public static final int TIME_STEP = 1000;
+    public static int sleep_time = 1000;
     
     /**
      * @param args the command line arguments
