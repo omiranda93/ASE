@@ -333,5 +333,12 @@ public class MainPanel extends javax.swing.JFrame {
         tbl4Frame.setText(s4);
         tbl5Frame.setText(s5);
     }
+    public void printTablesClosed(){
+        tbl1Frame.setText("The clients left, cleaning up table...");
+        tbl2Frame.setText("The clients left, cleaning up table...");
+        tbl3Frame.setText("The clients left, cleaning up table...");
+        tbl4Frame.setText("The clients left, cleaning up table...");
+        tbl5Frame.setText("The clients left, cleaning up table...");
+    }
     
 }
