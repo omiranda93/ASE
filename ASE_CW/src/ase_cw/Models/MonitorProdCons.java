@@ -92,7 +92,7 @@ public class MonitorProdCons {
         }
         //MainPanel.printArray2(notedOrders);
         //System.out.println("Kitchen: Order for table#" + notedOrders.remove(0).getTableId() + " cooked and ready to serve.");
-        LogSingletonObs.getInstance().update("In the kitchen. Cooks have completed the dish "+ dish.getDishName()+" for" +
+        LogSingletonObs.getInstance().update("In the kitchen. Cooks have completed the dish "+ dish.getDishName()+" for " +
                 "table n°" +notedOrders.remove(0).getTableId()+ ". Ready to be served");
 
         try {

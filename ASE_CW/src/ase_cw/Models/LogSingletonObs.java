@@ -42,14 +42,6 @@ public class LogSingletonObs {
     }
 
     /**
-     * Gets all the events recorded since the call of thi method
-     * @return all the events recorded (since the call of this method)
-     */
-    public String getEvents() {
-        return all_events;
-    }
-
-    /**
      *  Gets update from the subject = thread
      */
     public void update(String event) {
@@ -59,15 +51,14 @@ public class LogSingletonObs {
 
     /**
      * Write all log events into an output file
-     * @param logs : all events in one string
      */
-    public void writeLogFile (String logs){
+    public void writeLogFile (){
         BufferedWriter writer = null;
         try {
             //To execute this from the id comment the following name and change the direction, up in the declaration and in the new filereader
             String path = System.getProperty("user.dir");
             writer = new BufferedWriter(new FileWriter(path+"/"+ Manager.PATH_LOG_FILE));
-            writer.write(logs);
+            writer.write(all_events);
             writer.close();
         } catch (IOException ex) {
             Logger.getLogger(LogSingletonObs.class.getName()).log(Level.SEVERE, null, ex);

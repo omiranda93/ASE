@@ -94,6 +94,13 @@ public class Controller implements ChangeListener, ActionListener{
                 System.out.println("Stopping thread: " + thread.getName());
             }
             System.out.println("All threads have stopped");
+
+                //Every time the simulation starts, clean the boxes by mesure de précaution
+                view.setTextAreas("");
+
+                //Write the events inside a log file
+                LogSingletonObs.getInstance().writeLogFile();
+
             }catch (Exception ex){}
         }
     }

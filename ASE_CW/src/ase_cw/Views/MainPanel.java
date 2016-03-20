@@ -57,6 +57,15 @@ public class MainPanel extends javax.swing.JFrame {
         return this.lbSimSpeed;
     }
 
+    public void setTextAreas(String value) {
+        kitchenFrame.setText(value);
+        tbl1Frame.setText(value);
+        tbl2Frame.setText(value);
+        tbl3Frame.setText(value);
+        tbl4Frame.setText(value);
+        tbl5Frame.setText(value);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -218,10 +227,7 @@ public class MainPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    /**
-     * Gets update from the subject = serving waiters thread
-     * @param dish: food item to transfer from the kitchen box to its table box
-     */
+
     public void updateNoted(ArrayList<FoodOrder> kitchen) {
         notedOrders = kitchen;
         printKitchen();
@@ -297,17 +303,11 @@ public class MainPanel extends javax.swing.JFrame {
 
     public static String printArray(ArrayList<FoodOrder> e) {
         String s = "";
-        s += e.size() + "#################################\n";
+        //s += e.size() + "#################################\n";
         for (FoodOrder f : e) {
-            s += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+            s += "TABLE ID: "+f.getTableId() + " | ITEM: " + f.getDishName() + " | QUANTITY: "+ f.getQuantity() + "\n";
         }
         return s;
-    }
-    public static void printArray2(ArrayList<FoodOrder> e) {
-        System.out.println(e.size() + "#################################\n");
-        for (FoodOrder f : e) {
-            System.out.println("#### "+f.getTableId() + "&" + f.getDishName() + "####\n");
-        }
     }
     
     public void printKitchen(){
@@ -324,19 +324,19 @@ public class MainPanel extends javax.swing.JFrame {
         String s5 = "";
         for (FoodOrder f : readyOrders) {
             switch(f.getTableId()){
-                case 1: s1 += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+                case 1: s1 += "TABLE ID: "+f.getTableId() + " | ITEM: " + f.getDishName() + " * "+ f.getQuantity() +"\n";
                     break;
                     
-                case 2: s2 += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+                case 2: s2 += "TABLE ID: "+f.getTableId() + " | ITEM: " + f.getDishName() + " * "+ f.getQuantity() +"\n";
                     break;
                     
-                case 3: s3 += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+                case 3: s3 += "TABLE ID: "+f.getTableId() + " | ITEM: " + f.getDishName() + " * "+ f.getQuantity() +"\n";
                     break;
                     
-                case 4: s4 += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+                case 4: s4 += "TABLE ID: "+f.getTableId() + " | ITEM: " + f.getDishName() + " * "+ f.getQuantity() +"\n";
                     break;
                     
-                case 5: s5 += "#### "+f.getTableId() + "&" + f.getDishName() + "####\n";
+                case 5: s5 += "TABLE ID: "+f.getTableId() + " | ITEM: " + f.getDishName() + " * "+ f.getQuantity() +"\n";
                     break;
             }
             
