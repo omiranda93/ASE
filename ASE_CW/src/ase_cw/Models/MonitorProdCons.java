@@ -26,6 +26,7 @@ public class MonitorProdCons {
     private ArrayList<FoodOrder> readyOrders;
     private ArrayList<FoodOrder> servedOrders;
     CollectionFoodOrders orders;
+    CollectionFoodOrders ordersProcessed;
     
     //Stop variables
     boolean outOfOrders = false;
@@ -43,6 +44,8 @@ public class MonitorProdCons {
 
     private static Semaphore semaforoEntrar;
     private static Semaphore[] semaforoTenedor;
+    
+
 
 
     public MonitorProdCons(CollectionFoodOrders orders) {
@@ -50,13 +53,17 @@ public class MonitorProdCons {
         readyOrders = new ArrayList<>();
         servedOrders = new ArrayList<>();
         this.orders = orders;
+        this.ordersProcessed = new CollectionFoodOrders(orders.getMenu());
     }
 
     public void setPanel(MainPanel panel) {
         this.panel = panel;
     }
-    
 
+    public CollectionFoodOrders getOrders() {
+        return orders;
+    }
+    
 
 
     /**
@@ -70,7 +77,7 @@ public class MonitorProdCons {
     public synchronized void kitchen(int id) {
         if (outOfOrders && notedOrders.isEmpty()){
             panel.updateOutOfOrders();
-            Thread.currentThread().interrupt();
+            Thread.currentThread().stop();
             return;
         }
         FoodOrder dish;
@@ -84,31 +91,44 @@ public class MonitorProdCons {
             }
         }
         dish = notedOrders.get(0);
+        //MainPanel.printArray2(notedOrders);
+        //System.out.println("Kitchen: Order for table#" + notedOrders.remove(0).getTableId() + " cooked and ready to serve.");
+        LogSingletonObs.getInstance().update("In the kitchen. Cooks have completed the dish "+ dish.getDishName()+" for " +
+                "table n°" +notedOrders.remove(0).getTableId()+ ". Ready to be served");
         panel.updateNoted(notedOrders);
         try {
             Thread.sleep(2*sleep_time);
         } catch (InterruptedException ex) {
 
         }
-        //MainPanel.printArray2(notedOrders);
-        //System.out.println("Kitchen: Order for table#" + notedOrders.remove(0).getTableId() + " cooked and ready to serve.");
-        LogSingletonObs.getInstance().update("In the kitchen. Cooks have completed the dish "+ dish.getDishName()+" for " +
-                "table n°" +notedOrders.remove(0).getTableId()+ ". Ready to be served");
-
         try {
             Thread.sleep(2*sleep_time);
         } catch (InterruptedException ex) {
 
         }
         this.readyOrders.add(dish);
+        panel.updateReady(readyOrders);
+        try {
+            Thread.sleep(2*sleep_time);
+        } catch (InterruptedException ex) {
+
+        }
         this.notifyAll();
     }
 
     public synchronized void waiter(int id) {
+        //Stop condition
         if (outOfOrders && readyOrders.isEmpty()){
-            Thread.currentThread().interrupt();
+            panel.printTablesClosed();
+            try {
+                ordersProcessed.showTableBill();
+            } catch (NoMatchingIDException ex) {
+                Logger.getLogger(MonitorProdCons.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Thread.currentThread().stop();
             return;
         }
+        
         FoodOrder dish;
         while (this.readyOrders.size() == 0) {
             //System.out.println("Waiter #" + id + " bloqued, no order to serve.");
@@ -121,14 +141,9 @@ public class MonitorProdCons {
             }
         }
         dish = readyOrders.get(0);
+        ordersProcessed.addValue(dish.getTableId(), dish);
         //System.out.println("Waiter #" + id + " dish served to table: " + readyOrders.remove(0).getTableId());
         //Notify the observer for updating te log file's content
-        panel.updateReady(readyOrders);
-        try {
-            Thread.sleep(2*sleep_time);
-        } catch (InterruptedException ex) {
-
-        }
         LogSingletonObs.getInstance().update("Waiter n° " + id + "has served the dish " + dish.getDishName() + " to the " +
                 "table n° " + readyOrders.remove(0).getTableId());
         panel.updateReady(readyOrders);
@@ -223,7 +238,7 @@ public class MonitorProdCons {
 
     public synchronized void table(int id) {
         if (outOfOrders && servedOrders.isEmpty()){
-            Thread.currentThread().interrupt();
+            Thread.currentThread().stop();
             return;
         }
         int tableN;
@@ -244,9 +259,14 @@ public class MonitorProdCons {
     }
 
     public FoodOrder getRandOrder(){
-        int number = ((Double) (Math.random() * 5)).intValue() + 1;
-        TreeSet<FoodOrder> ordersToSelect = orders.getValue(number);
-        FoodOrder order = ordersToSelect.pollFirst();
+        FoodOrder order = null;
+        int cont = 0;
+        while(order == null && cont != 20){
+            int number = ((Double) (Math.random() * 5)).intValue() + 1;
+            TreeSet<FoodOrder> ordersToSelect = orders.getValue(number);
+            order = ordersToSelect.pollFirst();
+            cont ++;
+        }
         return order;
     }
 
@@ -267,7 +287,7 @@ public class MonitorProdCons {
         if(newOrder == null){
             System.out.println("There are no more others");
             outOfOrders = true;
-            Thread.currentThread().interrupt();
+            Thread.currentThread().stop();
             return;
         }
         //System.out.println("Waiter taking notes #" + id + " order for table: " + newOrder.getTableId() + " noted.");

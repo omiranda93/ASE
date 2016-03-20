@@ -344,5 +344,10 @@ public class CollectionFoodOrders {
         price.set(i, price.get(j));
         price.set(j, temp);
     }
+
+    public Menu getMenu() {
+        return menu;
+    }
+    
 }
     

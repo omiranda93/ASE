@@ -17,6 +17,8 @@ import javax.swing.event.ChangeListener;
 import static ase_cw.ASE_CW.sleep_time;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author giannis
@@ -83,6 +85,7 @@ public class Controller implements ChangeListener, ActionListener{
                 t.start();
                threadCollection.add(t);
             }
+            
         }
         
         if (e.getSource() == view.getButtonStop()){
