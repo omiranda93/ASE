@@ -16,10 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Varito
- */
+
 public class MonitorProdCons {
 
     private ArrayList<FoodOrder> notedOrders;
@@ -96,11 +93,6 @@ public class MonitorProdCons {
         LogSingletonObs.getInstance().update("In the kitchen. Cooks have completed the dish "+ dish.getDishName()+" for " +
                 "table n°" +notedOrders.remove(0).getTableId()+ ". Ready to be served");
         panel.updateNoted(notedOrders);
-        try {
-            Thread.sleep(2*sleep_time);
-        } catch (InterruptedException ex) {
-
-        }
         try {
             Thread.sleep(2*sleep_time);
         } catch (InterruptedException ex) {

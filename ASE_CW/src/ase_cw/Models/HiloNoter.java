@@ -5,10 +5,7 @@
  */
 package ase_cw.Models;
 
-/**
- *
- * @author Varito
- */
+
 public class HiloNoter extends Thread {
 
     private MonitorProdCons monitor;
