@@ -317,6 +317,10 @@ public class MainPanel extends javax.swing.JFrame {
     }
     public void updateReady(ArrayList<FoodOrder> kitchen) {
         readyOrders = kitchen;
+        printWaiter();
+    }
+    public void updateServed(ArrayList<FoodOrder> kitchen) {
+        servedOrders = kitchen;
         printTables();
     }
     
@@ -404,8 +408,14 @@ public class MainPanel extends javax.swing.JFrame {
     public void printKitchen(){
         kitchenFrame.setText(printArray(notedOrders));
     }
+    public void printWaiter(){
+        waiterFrame.setText(printArray(readyOrders));
+    }
     public void printKitchenCloseOrder(){
         kitchenFrame.setText("There are no more orders, closing...");
+    }
+    public void printWaiterClosed(){
+        waiterFrame.setText("There are no more orders, closing...");
     }
     public void printTables(){
         String s1 = "";
@@ -413,7 +423,7 @@ public class MainPanel extends javax.swing.JFrame {
         String s3 = "";
         String s4 = "";
         String s5 = "";
-        for (FoodOrder f : readyOrders) {
+        for (FoodOrder f : servedOrders) {
             switch(f.getTableId()){
                 case 1: s1 += "TABLE ID: "+f.getTableId() + " | ITEM: " + f.getDishName() + " * "+ f.getQuantity() +"\n";
                     break;

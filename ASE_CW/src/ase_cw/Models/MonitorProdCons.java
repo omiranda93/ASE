@@ -37,7 +37,7 @@ public class MonitorProdCons {
 
     //For the table simulation
     private final static int NumCustomers = 3;
-    private final static int NumChairs = 2;
+    private final static int NumChairs = 3;
 
     private static Semaphore semaforoEntrar;
     private static Semaphore[] semaforoTenedor;
@@ -77,7 +77,7 @@ public class MonitorProdCons {
         outOfOrders = true;
     }
 
-    public synchronized void kitchen(int id) {
+    public synchronized void kitchen(int id) {System.out.println("Hola");
         if (outOfOrders && notedOrders.isEmpty()){
             panel.updateOutOfOrders();
             Thread.currentThread().stop();
@@ -117,7 +117,7 @@ public class MonitorProdCons {
     public synchronized void waiter(int id) {
         //Stop condition
         if (outOfOrders && readyOrders.isEmpty()){
-            panel.printTablesClosed();
+            panel.printWaiterClosed();
 //            try {
 //                ordersProcessed.showTableBill();
 //            } catch (NoMatchingIDException ex) {
@@ -150,17 +150,20 @@ public class MonitorProdCons {
         } catch (InterruptedException ex) {
 
         }
-        this.notifyAll();
-        Cerrojo.lock();
-        try{
-            //Notify the observer for the updating the kitchen & tables boxed
-            //MainPanel.printArray(readyOrders);
-            //MainPanel.update(dish, notedOrders, servedOrders);
-            servedOrders.add(dish);
-            Eat.signal();
-        }finally{
-            Cerrojo.unlock();
+        
+        
+        //Notify the observer for the updating the kitchen & tables boxed
+        //MainPanel.printArray(readyOrders);
+        //MainPanel.update(dish, notedOrders, servedOrders);
+        servedOrders.add(dish);
+        panel.updateServed(servedOrders);
+        try {
+            Thread.sleep(sleep_time);
+        } catch (InterruptedException ex) {
+
         }
+        this.notifyAll();
+
     }
 
     //For the table simulation:
@@ -188,7 +191,7 @@ public class MonitorProdCons {
         //System.out.println(Thread.currentThread().getName() + ": Preparing to eat.");
 
         Thread.sleep((long) Math.random());
-
+        try{
         if ((i % NumCustomers) == 0) {
             //System.out.println(Thread.currentThread().getName() + ": get the right fork, nº " + tenedorDer);
             semaforoTenedor[tenedorDer].acquire();
@@ -202,6 +205,7 @@ public class MonitorProdCons {
             semaforoTenedor[tenedorDer].release();
             //System.out.println(Thread.currentThread().getName() + ": dropping left fork, nº " + tenedorIzq);
             semaforoTenedor[tenedorIzq].release();
+            System.out.println(Thread.currentThread().getName() + ": Tasty!! I´ done eating");
         } else {
             //System.out.println(Thread.currentThread().getName() + ": get the left fork, nº " + tenedorIzq);
             semaforoTenedor[tenedorIzq].acquire();
@@ -214,7 +218,11 @@ public class MonitorProdCons {
             semaforoTenedor[tenedorIzq].release();
             //System.out.println(Thread.currentThread().getName() + ": dropping right fork, nº " + tenedorDer);
             semaforoTenedor[tenedorDer].release();
+            System.out.println(Thread.currentThread().getName() + ": Tasty!! I´ done eating");
 
+        }
+        }catch(Exception e){
+            
         }
         cont++;
         semaforoEntrar.release();
@@ -235,25 +243,29 @@ public class MonitorProdCons {
 
 
     public synchronized void table(int id) {
-        if (outOfOrders && servedOrders.isEmpty()){
+        if(outOfOrders && servedOrders.isEmpty()){
+            panel.printTablesClosed();
             Thread.currentThread().stop();
             return;
         }
         int tableN;
-        Cerrojo.lock();
-        try{
-            try {
-                while(servedOrders.size()==0){
-                    Eat.await();
-                }
-            } catch (InterruptedException ex) {
-                Logger.getLogger(MonitorProdCons.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            while(servedOrders.size()==0){
+                this.wait();
             }
-            tableN = servedOrders.get(0).getTableId();
-            execute(tableN);
-        }finally{
-            Cerrojo.unlock();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MonitorProdCons.class.getName()).log(Level.SEVERE, null, ex);
         }
+        tableN = servedOrders.get(0).getTableId();
+        execute(tableN);
+        servedOrders.remove(0);
+        panel.updateServed(servedOrders);
+        try {
+            Thread.sleep(sleep_time);
+        } catch (InterruptedException ex) {
+
+        }
+
     }
 
     public FoodOrder getRandOrder(){
@@ -291,8 +303,8 @@ public class MonitorProdCons {
         //System.out.println("Waiter taking notes #" + id + " order for table: " + newOrder.getTableId() + " noted.");
         LogSingletonObs.getInstance().update("Waiter n°"+ id + " taking notes. Order "+ newOrder.getDishName() +
                 "for table: " + newOrder.getTableId() + " noted.");
-        panel.updateNoted(notedOrders);
         this.notedOrders.add(newOrder);
+        panel.updateNoted(notedOrders);
         try {
             Thread.sleep(sleep_time);
         } catch (InterruptedException ex) {

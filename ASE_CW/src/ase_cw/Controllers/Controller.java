@@ -86,6 +86,11 @@ public class Controller implements ChangeListener, ActionListener{
                 t.start();
                threadCollection.add(t);
             }
+            for (int i = 0; i < nTables; i++) {
+                t = new HiloTable(model, i);
+                t.start();
+                threadCollection.add(t);
+            }
             
         }
         
