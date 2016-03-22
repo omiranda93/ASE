@@ -19,6 +19,7 @@ import static java.lang.Math.abs;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author giannis
@@ -105,6 +106,32 @@ public class Controller implements ChangeListener, ActionListener{
                 LogSingletonObs.getInstance().writeLogFile();
 
             }catch (Exception ex){}
+        }
+        
+        if (e.getSource() == view.getButtonCloseKitchen()){
+            view.getButtonReqBill().setEnabled(true);
+            view.getTxtReqBill().setEnabled(true);
+            
+            model.closeKitchen();
+        }
+        
+        if (e.getSource() == view.getButtonReqBill()){
+            switch (view.getTxtReqBill().getText()) {
+                case "":
+                    JOptionPane.showMessageDialog(null, "Wrong table ID or empty", "Attention", JOptionPane.ERROR_MESSAGE);
+                    break;
+                case "0":
+                    view.getBillArea().setText(model.getOrdersProcessed().toString());
+                    break;
+                default:
+                    try{
+                        view.getBillArea().setText(model.getOrdersProcessed().getBill(Integer.parseInt(view.getTxtReqBill().getText())));
+                    }catch(NumberFormatException ex){
+                        JOptionPane.showMessageDialog(null, "TableID should be a number", "Attention", JOptionPane.ERROR_MESSAGE);
+                    }catch(NullPointerException ex){}
+                    break;
+            }
+            
         }
     }
     

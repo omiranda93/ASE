@@ -61,7 +61,9 @@ public class MonitorProdCons {
         return orders;
     }
     
-
+    public CollectionFoodOrders getOrdersProcessed(){
+        return ordersProcessed;
+    }
 
     /**
      * Each thread can be assimilated to a subject. Every action they performed is notify to a single observer
@@ -69,6 +71,10 @@ public class MonitorProdCons {
      */
     public void notifyObserver() {
 
+    }
+    
+    public void closeKitchen(){
+        outOfOrders = true;
     }
 
     public synchronized void kitchen(int id) {
@@ -112,11 +118,11 @@ public class MonitorProdCons {
         //Stop condition
         if (outOfOrders && readyOrders.isEmpty()){
             panel.printTablesClosed();
-            try {
-                ordersProcessed.showTableBill();
-            } catch (NoMatchingIDException ex) {
-                Logger.getLogger(MonitorProdCons.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                ordersProcessed.showTableBill();
+//            } catch (NoMatchingIDException ex) {
+//                Logger.getLogger(MonitorProdCons.class.getName()).log(Level.SEVERE, null, ex);
+//            }
             Thread.currentThread().stop();
             return;
         }
@@ -277,7 +283,7 @@ public class MonitorProdCons {
         FoodOrder newOrder = getRandOrder();
 
         if(newOrder == null){
-            System.out.println("There are no more others");
+            System.out.println("There are no more orders");
             outOfOrders = true;
             Thread.currentThread().stop();
             return;
