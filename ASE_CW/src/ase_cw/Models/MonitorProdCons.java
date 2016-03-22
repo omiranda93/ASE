@@ -64,20 +64,12 @@ public class MonitorProdCons {
     public CollectionFoodOrders getOrdersProcessed(){
         return ordersProcessed;
     }
-
-    /**
-     * Each thread can be assimilated to a subject. Every action they performed is notify to a single observer
-     * (c'est-à-dire LogSingletonObs)
-     */
-    public void notifyObserver() {
-
-    }
     
     public void closeKitchen(){
         outOfOrders = true;
     }
 
-    public synchronized void kitchen(int id) {System.out.println("Hola");
+    public synchronized void kitchen(int id) {
         if (outOfOrders && notedOrders.isEmpty()){
             panel.updateOutOfOrders();
             Thread.currentThread().stop();
@@ -85,7 +77,6 @@ public class MonitorProdCons {
         }
         FoodOrder dish;
         while (this.notedOrders.size() == 0) {
-            //System.out.println("Kitchen: Bloqued, no orders available.");
             LogSingletonObs.getInstance().update("The kitchen is not working. It is waiting for orders");
             try {
                 this.wait();
@@ -94,8 +85,6 @@ public class MonitorProdCons {
             }
         }
         dish = notedOrders.get(0);
-        //MainPanel.printArray2(notedOrders);
-        //System.out.println("Kitchen: Order for table#" + notedOrders.remove(0).getTableId() + " cooked and ready to serve.");
         LogSingletonObs.getInstance().update("In the kitchen. Cooks have completed the dish "+ dish.getDishName()+" for " +
                 "table n°" +notedOrders.remove(0).getTableId()+ ". Ready to be served");
         panel.updateNoted(notedOrders);
@@ -115,21 +104,16 @@ public class MonitorProdCons {
     }
 
     public synchronized void waiter(int id) {
+        
         //Stop condition
         if (outOfOrders && readyOrders.isEmpty()){
             panel.printWaiterClosed();
-//            try {
-//                ordersProcessed.showTableBill();
-//            } catch (NoMatchingIDException ex) {
-//                Logger.getLogger(MonitorProdCons.class.getName()).log(Level.SEVERE, null, ex);
-//            }
             Thread.currentThread().stop();
             return;
         }
         
         FoodOrder dish;
         while (this.readyOrders.size() == 0) {
-            //System.out.println("Waiter #" + id + " bloqued, no order to serve.");
             LogSingletonObs.getInstance().update("Waiter n° " + id + " is ready to serve customers ... but nothing has " +
                     "been ordered yet!");
             try {
@@ -140,8 +124,8 @@ public class MonitorProdCons {
         }
         dish = readyOrders.get(0);
         ordersProcessed.addValue(dish.getTableId(), dish);
-        //System.out.println("Waiter #" + id + " dish served to table: " + readyOrders.remove(0).getTableId());
-        //Notify the observer for updating te log file's content
+        
+        //Notify the panel for updating te log file's content
         LogSingletonObs.getInstance().update("Waiter n° " + id + "has served the dish " + dish.getDishName() + " to the " +
                 "table n° " + readyOrders.remove(0).getTableId());
         panel.updateReady(readyOrders);
@@ -152,9 +136,7 @@ public class MonitorProdCons {
         }
         
         
-        //Notify the observer for the updating the kitchen & tables boxed
-        //MainPanel.printArray(readyOrders);
-        //MainPanel.update(dish, notedOrders, servedOrders);
+        //Notify the panel for the updating the kitchen & tables boxed
         servedOrders.add(dish);
         panel.updateServed(servedOrders);
         try {
@@ -188,37 +170,27 @@ public class MonitorProdCons {
         int tenedorDer = i;
         int tenedorIzq = (i == 0) ? NumCustomers - 1 : i - 1;
 
-        //System.out.println(Thread.currentThread().getName() + ": Preparing to eat.");
-
         Thread.sleep((long) Math.random());
         try{
         if ((i % NumCustomers) == 0) {
-            //System.out.println(Thread.currentThread().getName() + ": get the right fork, nº " + tenedorDer);
             semaforoTenedor[tenedorDer].acquire();
-            //System.out.println(Thread.currentThread().getName() + ": get the left fork, nº " + tenedorIzq);
             semaforoTenedor[tenedorIzq].acquire();
 
-            System.out.println(Thread.currentThread().getName() + ": Im hungry, let´s eat");
+            System.out.println(Thread.currentThread().getName() + ": I'm hungry, let´s eat");
             Thread.sleep(sleep_time);
 
-            //System.out.println(Thread.currentThread().getName() + ": dropping right fork, nº " + tenedorDer);
             semaforoTenedor[tenedorDer].release();
-            //System.out.println(Thread.currentThread().getName() + ": dropping left fork, nº " + tenedorIzq);
             semaforoTenedor[tenedorIzq].release();
-            System.out.println(Thread.currentThread().getName() + ": Tasty!! I´ done eating");
+            System.out.println(Thread.currentThread().getName() + ": Tasty!! I´m done eating");
         } else {
-            //System.out.println(Thread.currentThread().getName() + ": get the left fork, nº " + tenedorIzq);
             semaforoTenedor[tenedorIzq].acquire();
-            //System.out.println(Thread.currentThread().getName() + ": get the right fork, nº " + tenedorDer);
             semaforoTenedor[tenedorDer].acquire();
 
-            System.out.println(Thread.currentThread().getName() + ": Im hungry, let´s eat");
+            System.out.println(Thread.currentThread().getName() + ": I'm hungry, let´s eat");
 
-            //System.out.println(Thread.currentThread().getName() + ": dropping left fork, nº " + tenedorIzq);
             semaforoTenedor[tenedorIzq].release();
-            //System.out.println(Thread.currentThread().getName() + ": dropping right fork, nº " + tenedorDer);
             semaforoTenedor[tenedorDer].release();
-            System.out.println(Thread.currentThread().getName() + ": Tasty!! I´ done eating");
+            System.out.println(Thread.currentThread().getName() + ": Tasty!! I´m done eating");
 
         }
         }catch(Exception e){
@@ -282,7 +254,6 @@ public class MonitorProdCons {
 
     public synchronized void noter(int id) {
         while (this.notedOrders.size() == capacityOfKitchen) {
-            //System.out.println("Waiter taking notes #" + id + " blocked, the kitchen can get more orders.");
             LogSingletonObs.getInstance().update("Waiter n°" + id + " ready to take notes ... but he/she will have to " +
                     "wait because the kitchen can't get more orders (capacity of the kitchen = "+ capacityOfKitchen + ")");
 
@@ -300,7 +271,6 @@ public class MonitorProdCons {
             Thread.currentThread().stop();
             return;
         }
-        //System.out.println("Waiter taking notes #" + id + " order for table: " + newOrder.getTableId() + " noted.");
         LogSingletonObs.getInstance().update("Waiter n°"+ id + " taking notes. Order "+ newOrder.getDishName() +
                 "for table: " + newOrder.getTableId() + " noted.");
         this.notedOrders.add(newOrder);

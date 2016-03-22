@@ -5,7 +5,6 @@
  */
 package ase_cw.Controllers;
 
-import ase_cw.ASE_CW;
 import static ase_cw.ASE_CW.TIME_STEP;
 import ase_cw.Models.*;
 import ase_cw.Views.*;
@@ -17,8 +16,6 @@ import javax.swing.event.ChangeListener;
 import static ase_cw.ASE_CW.sleep_time;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 /**
  *
@@ -96,7 +93,7 @@ public class Controller implements ChangeListener, ActionListener{
         
         if (e.getSource() == view.getButtonStop()){
             
-            //Stopping the threads. We are using the depricated stop() here, as we don't need use any cooperative proccess for this simple example.
+            //Stopping the threads. We are using the depricated stop() here, as we don't need use any cooperative process for this simple example.
             try{
             for (Thread thread: threadCollection) {
                 thread.stop();
@@ -104,7 +101,7 @@ public class Controller implements ChangeListener, ActionListener{
             }
             System.out.println("All threads have stopped");
 
-                //Every time the simulation starts, clean the boxes by mesure de précaution
+                //Every time the simulation starts, clear the boxes 
                 view.setTextAreas("");
 
                 //Write the events inside a log file

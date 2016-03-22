@@ -398,7 +398,6 @@ public class MainPanel extends javax.swing.JFrame {
 
     public static String printArray(ArrayList<FoodOrder> e) {
         String s = "";
-        //s += e.size() + "#################################\n";
         for (FoodOrder f : e) {
             s += "TABLE ID: "+f.getTableId() + " | ITEM: " + f.getDishName() + " | QUANTITY: "+ f.getQuantity() + "\n";
         }
